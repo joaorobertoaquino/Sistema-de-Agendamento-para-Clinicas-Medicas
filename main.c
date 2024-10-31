@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "paciente/paciente.h"
 #include "medico/medico.h"
-#include "procedimento.h"
+#include "procedimento/procedimento.h"
 #include "agendamento/agendamento.h"
 #include "informacoes/informacoes.h"
 #include "relatorio.h"
