@@ -1,57 +1,48 @@
-# Nome do executável
-EXEC = sistema_agendamento
+# Makefile
 
-# Compilador
-CC = gcc
+# Compiler
+CC := gcc
 
-# Opções de compilação
-CFLAGS = -Wall
+# Compiler flags
+CFLAGS := -Wall -Wextra -pedantic
 
-# Diretórios de arquivos-fonte e objeto
-SRCDIR = .
-OBJDIR = obj
+# Source files
+SRCS := main.c agendamento/agendamento.c informacoes/informacoes.c medico/medico.c paciente/paciente.c procedimento/procedimento.c relatorio/relatorio.c validacoes/validacoes.c
 
-# Lista de arquivos objeto, considerando que os arquivos fonte estão em suas respectivas pastas
-OBJS = $(OBJDIR)/main.o $(OBJDIR)/paciente.o $(OBJDIR)/medico.o $(OBJDIR)/agendamento.o \
-       $(OBJDIR)/procedimento.o $(OBJDIR)/informacoes.o $(OBJDIR)/relatorio.o \
-       $(OBJDIR)/validacoes.o
+# Object files
+OBJS := $(SRCS:.c=.o)
 
-# Regra padrão
-all: $(OBJDIR) $(EXEC)
+# Header files
+HDRS := agendamento/agendamento.h informacoes/informacoes.h medico/medico.h paciente/paciente.h procedimento/procedimento.h relatorio/relatorio.h validacoes/validacoes.h
 
-# Regras para compilar o executável
-$(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS)
+# Executable name
+TARGET := main
 
-# Criação do diretório obj caso não exista
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
+# Windows-specific settings
+ifeq ($(OS),Windows_NT)
+    RM := del /Q
+    TARGET := $(TARGET).exe
+else
+    RM := rm -f
+endif
 
-# Regras para compilar os arquivos-fonte em arquivos objeto
-$(OBJDIR)/main.o: main.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -c main.c -o $(OBJDIR)/main.o
+# Default target
+all: $(TARGET)
 
-$(OBJDIR)/paciente.o: paciente/paciente.c paciente/paciente.h | $(OBJDIR)
-	$(CC) $(CFLAGS) -c paciente/paciente.c -o $(OBJDIR)/paciente.o
+# Compile object files
+%.o: %.c $(HDRS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJDIR)/medico.o: medico/medico.c medico/medico.h | $(OBJDIR)
-	$(CC) $(CFLAGS) -c medico/medico.c -o $(OBJDIR)/medico.o
+# Link object files to create executable
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
 
-$(OBJDIR)/agendamento.o: agendamento/agendamento.c agendamento/agendamento.h | $(OBJDIR)
-	$(CC) $(CFLAGS) -c agendamento/agendamento.c -o $(OBJDIR)/agendamento.o
+# Run the executable
+run: $(TARGET)
+	./$(TARGET)
 
-$(OBJDIR)/procedimento.o: procedimento/procedimento.c procedimento/procedimento.h | $(OBJDIR)
-	$(CC) $(CFLAGS) -c procedimento/procedimento.c -o $(OBJDIR)/procedimento.o
-
-$(OBJDIR)/informacoes.o: informacoes/informacoes.c informacoes/informacoes.h | $(OBJDIR)
-	$(CC) $(CFLAGS) -c informacoes/informacoes.c -o $(OBJDIR)/informacoes.o
-
-$(OBJDIR)/relatorio.o: relatorio/relatorio.c relatorio/relatorio.h | $(OBJDIR)
-	$(CC) $(CFLAGS) -c relatorio/relatorio.c -o $(OBJDIR)/relatorio.o
-
-$(OBJDIR)/validacoes.o: validacoes/validacoes.c validacoes/validacoes.h | $(OBJDIR)
-	$(CC) $(CFLAGS) -c validacoes/validacoes.c -o $(OBJDIR)/validacoes.o
-
-# Limpeza dos arquivos gerados
+# Clean up object files and executable
 clean:
-	rm -rf $(OBJDIR)/*.o $(EXEC)
+	$(RM) $(OBJS) $(TARGET)
+
+# Reference: https://github.com/Lleusxam/c-recipes/blob/main/makefile
