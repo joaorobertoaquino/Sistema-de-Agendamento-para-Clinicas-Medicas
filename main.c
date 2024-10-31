@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "paciente.h"
+#include "paciente/paciente.h"
 #include "medico.h"
 #include "procedimento.h"
 #include "agendamento.h"

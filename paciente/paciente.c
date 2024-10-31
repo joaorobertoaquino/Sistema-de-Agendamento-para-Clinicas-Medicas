@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "paciente.h"
+#include "paciente/paciente.h"
 
 //PACIENTE
 void tela_paciente() {
