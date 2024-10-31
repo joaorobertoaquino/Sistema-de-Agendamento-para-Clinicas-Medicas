@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "agendamento.h"
+#include "agendamento/agendamento.h"
 
 void tela_agendamento(void) {
   int opcao;
