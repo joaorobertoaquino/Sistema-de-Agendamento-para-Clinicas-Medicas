@@ -4,7 +4,7 @@
 #include "medico.h"
 #include "procedimento.h"
 #include "agendamento.h"
-#include "informacoes.h"
+#include "informacoes/informacoes.h"
 #include "relatorio.h"
 
 void tela_menu_principal(void);
