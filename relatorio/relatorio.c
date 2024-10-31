@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "relatorio.h"
+#include "relatorio/relatorio.h"
 
 
 void tela_relatorio(void){

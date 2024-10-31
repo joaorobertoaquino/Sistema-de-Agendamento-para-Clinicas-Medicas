@@ -5,7 +5,7 @@
 #include "procedimento/procedimento.h"
 #include "agendamento/agendamento.h"
 #include "informacoes/informacoes.h"
-#include "relatorio.h"
+#include "relatorio/relatorio.h"
 #include "validacoes/validacoes.h"
 
 void tela_menu_principal(void);
