@@ -18,7 +18,7 @@ int main(void) {
     getchar();
     switch (opcao) {
       case 1:
-        tela_paciente();
+        modulo_paciente();
         break;
       case 2:
         tela_medico();

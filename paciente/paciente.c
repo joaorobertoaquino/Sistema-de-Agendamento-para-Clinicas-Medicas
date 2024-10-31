@@ -1,27 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "paciente.h"
 
-//PACIENTE
-void tela_paciente() {
+
+void modulo_paciente(void){
   int opcao;
   do{
-    system("clear||cls");
-    printf("\n");
-    printf("*******************************************************************************\n");
-    printf("***                                                                         ***\n");
-    printf("***                 ------ PACIENTE ------                                  ***\n");
-    printf("***                                                                         ***\n");
-    printf("***                 1. Cadastrar Paciente                                   ***\n");
-    printf("***                 2. Pesquisar Paciente                                   ***\n");
-    printf("***                 3. Atualizar Paciente                                   ***\n");
-    printf("***                 4. Remover Paciente                                     ***\n");
-    printf("***                 0. Cancelar e sair                                      ***\n");
-    printf("***                                                                         ***\n");
-    printf("***                 Escolha a opção desejada: ");
-  
-    scanf("%d", &opcao);
-    getchar();
+    opcao = tela_paciente();
     switch (opcao) {
       case 1:
         tela_cadastrar_paciente();
@@ -42,6 +28,30 @@ void tela_paciente() {
         break;
     }
   }while(opcao != 0);
+
+}
+//PACIENTE
+int tela_paciente(void) {
+    int opcao;
+    system("clear||cls");
+    printf("\n");
+    printf("*******************************************************************************\n");
+    printf("***                                                                         ***\n");
+    printf("***                 ------ PACIENTE ------                                  ***\n");
+    printf("***                                                                         ***\n");
+    printf("***                 1. Cadastrar Paciente                                   ***\n");
+    printf("***                 2. Pesquisar Paciente                                   ***\n");
+    printf("***                 3. Atualizar Paciente                                   ***\n");
+    printf("***                 4. Remover Paciente                                     ***\n");
+    printf("***                 0. Cancelar e sair                                      ***\n");
+    printf("***                                                                         ***\n");
+    printf("***                 Escolha a opção desejada: ");
+  
+    scanf("%d", &opcao);
+    getchar();
+    printf("\t\t\t<<< ... Aguarde ... >>>\n");
+    sleep(1);
+    return opcao;
 }
 
 
