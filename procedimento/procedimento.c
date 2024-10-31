@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "procedimento/procedimento.h"
+#include "procedimento.h"
 
 void tela_procedimentos(void) {
   int opcao;

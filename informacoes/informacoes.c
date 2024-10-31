@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "informacoes/informacoes.h"
+#include "informacoes.h"
 
 void tela_sobre(void) {
   system("clear||cls");
