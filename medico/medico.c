@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "medico.h"
+#include "medico/medico.h"
 
 //MEDICOS
 void tela_medico(void) {
