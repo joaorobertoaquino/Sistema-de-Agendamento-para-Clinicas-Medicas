@@ -6,6 +6,7 @@
 #include "agendamento/agendamento.h"
 #include "informacoes/informacoes.h"
 #include "relatorio.h"
+#include "validacoes/validacoes.h"
 
 void tela_menu_principal(void);
 
