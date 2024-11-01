@@ -64,7 +64,6 @@ void tela_menu_principal(void) {
   printf("║                          7. Módulo Sobre                                    ║\n");
   printf("║                                                                             ║\n");
   printf("║                          0. Sair                                            ║\n");
-  printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
   printf("║  ↪Escolha a opção desejada: ");
 }
