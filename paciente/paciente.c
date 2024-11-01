@@ -2,7 +2,7 @@
 #include <stdlib.h>
 // #include <unistd.h>
 #include "paciente.h"
-
+#include "../validacoes/validacoes.h"
 
 void modulo_paciente(void){
   int opcao;
@@ -56,8 +56,11 @@ int tela_paciente(void) {
 
 
 void tela_cadastrar_paciente() {
+  char nome[51];
+  char CPF [11];
   system("clear||cls");
   printf("\n");
+  solicitar_nome(nome);
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR PACIENTE                                ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
@@ -115,4 +118,23 @@ void tela_ver_paciente() {
   printf("\n");
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
+}
+
+//o ponteiro permite que a função modifique diretamente o conteúdo de nome sem precisar retornar o valor.
+void solicitar_nome(char *nome) {
+    int valido = 0; // Inicializando como não válido
+    do {
+        printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+        printf("║  ↪Informe o nome comepleto do paciente:                                     ║\n");
+        printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+        printf("╚══ Nome Completo:");
+        scanf(" %[^\n]", nome); // coloquei pra ler até o \n
+        if (validarNome(nome)==1) { 
+            valido = 1; // Marca como válido
+        } else {
+            printf("╠══↪Entrada inválida, digite apenas letras e espaços                       ═══╣\n");
+            valido = 0; // Marca como não válido
+            while (getchar() != '\n'); // Limpar o buffer
+        }
+    } while (!valido); // até ser valido
 }
