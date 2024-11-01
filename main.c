@@ -52,18 +52,19 @@ void tela_menu_principal(void) {
   system("clear||cls");
   printf("\n");
   printf("*******************************************************************************\n");
-  printf("***                                                                         ***\n");
   printf("***            Sistema de Agendamento para Clinicas Medicas                 ***\n");
+  printf("*******************************************************************************\n");
   printf("***                                                                         ***\n");
-  printf("***                 1. Módulo Paciente                                      ***\n");
-  printf("***                 2. Módulo Médico                                        ***\n");
-  printf("***                 3. Módulo Procedimento                                  ***\n");
-  printf("***                 4. Módulo Agendamento                                   ***\n");
-  printf("***                 5. Módulo Relatórios                                    ***\n");
-  printf("***                 6. Módulo Informações                                   ***\n");
-  printf("***                 7. Módulo Sobre                                         ***\n");
-  printf("***                 0. Sair                                                 ***\n");
+  printf("***                        1. Módulo Paciente                               ***\n");
+  printf("***                        2. Módulo Médico                                 ***\n");
+  printf("***                        3. Módulo Procedimento                           ***\n");
+  printf("***                        4. Módulo Agendamento                            ***\n");
+  printf("***                        5. Módulo Relatórios                             ***\n");
+  printf("***                        6. Módulo Informações                            ***\n");
+  printf("***                        7. Módulo Sobre                                  ***\n");
+  printf("***                        0. Sair                                          ***\n");
   printf("***                                                                         ***\n");
-  printf("***                 Escolha a opção desejada: ");
+  printf("*******************************************************************************\n");
+  printf("***  ↪Escolha a opção desejada: ");
 }
 
