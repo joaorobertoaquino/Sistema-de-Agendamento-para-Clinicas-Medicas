@@ -58,10 +58,14 @@ int tela_paciente(void) {
 void tela_cadastrar_paciente() {
   char nome[51];
   char CPF [12];
+  char data_nascimento[10];
+  char celular[13];
   system("clear||cls");
   printf("\n");
   solicitar_nome(nome);
   solicitar_CPF(CPF);
+  solicitar_data_nascimento(data_nascimento);
+  solicitar_celular();
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR PACIENTE                                ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
@@ -71,6 +75,7 @@ void tela_cadastrar_paciente() {
   printf("║    CPF:                                                                     ║\n");
   printf("CPF: %s\n",CPF);
   printf("║    Data de nascimento:                                                      ║\n");
+  printf("Data nascimento:%s\n",data_nascimento);
   printf("║    Celular:                                                                 ║\n");
   printf("║    Email:                                                                   ║\n");
   printf("║    Endereço:                                                                ║\n");
@@ -153,6 +158,26 @@ void solicitar_CPF(char *CPF){
       scanf(" %[^\n]", CPF); 
       getchar();
       if (validar_cpf(CPF)==1) { 
+          valido = 1; // Marca como válido
+      } else {
+          printf("╠══↪Entrada inválida, digite apenas números                                ═══╣\n");
+          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          valido = 0; // Marca como não válido
+          while (getchar() != '\n'); // Limpar o buffer
+      }
+  } while (!valido); // até ser valido
+
+}
+void solicitar_data_nascimento(char *data_nascimento){
+  int valido = 0; // Inicializando como não válido
+  do {
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("║  ↪Informe o data de Nascimento do paciente:                                 ║\n");
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("╚══ Data:");
+      scanf(" %[^\n]", data_nascimento); 
+      getchar();
+      if (validar_data(data_nascimento)==1) { 
           valido = 1; // Marca como válido
       } else {
           printf("╠══↪Entrada inválida, digite apenas números                                ═══╣\n");

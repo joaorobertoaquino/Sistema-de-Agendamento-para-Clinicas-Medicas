@@ -88,3 +88,49 @@ int validar_cpf(const char *cpf) {
     return 1; // CPF válido
 }
 // Referência: https://github.com/joaorobertoaquino/Validacoes.git.
+
+int validar_data(char* data) {
+    // Verifica se a data tem exatamente 8 caracteres
+    if (strlen(data) != 8) {
+        printf("Data inválida. Use o formato DDMMAAAA com 8 dígitos.\n");
+        return 0;
+    }
+
+    // Verifica se todos os caracteres são numéricos
+    for (int i = 0; i < 8; i++) {
+        if (data[i] < '0' || data[i] > '9') {
+            printf("Data inválida. A data deve conter apenas números.\n");
+            return 0;
+        }
+    }
+
+    // Extrai o dia, mês e ano da string
+    int dia = (data[0] - '0') * 10 + (data[1] - '0');  // Converte "dd" para inteiro
+    int mes = (data[2] - '0') * 10 + (data[3] - '0');  // Converte "mm" para inteiro
+    int ano = (data[4] - '0') * 1000 + (data[5] - '0') * 100 + (data[6] - '0') * 10 + (data[7] - '0'); // Converte "aaaa" para inteiro
+
+    // Valida o mês (deve ser entre 1 e 12)
+    if (mes < 1 || mes > 12) {
+        printf("Data inválida. O mês deve estar entre 01 e 12.\n");
+        return 0;
+    }
+
+    // Valida o dia com base no mês e no ano
+    int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Ajusta para ano bissexto se o mês for fevereiro
+    if (mes == 2) {
+        int anoBissexto = (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
+        if (anoBissexto) {
+            diasPorMes[1] = 29;
+        }
+    }
+
+    // Valida o dia (deve estar dentro do limite para o mês)
+    if (dia < 1 || dia > diasPorMes[mes - 1]) {
+        printf("Data inválida. O dia está fora do intervalo permitido para o mês.\n");
+        return 0;
+    }
+
+    return 1;  // Data válida
+}
