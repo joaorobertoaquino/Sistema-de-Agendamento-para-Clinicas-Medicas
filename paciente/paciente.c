@@ -70,24 +70,20 @@ void tela_cadastrar_paciente() {
   solicitar_celular(celular);
   solicitar_email(email);
   solicitar_endereco(endereco);
+  printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR PACIENTE                                ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
-  printf("║    Nome:                                                                    ║\n");
-  printf("Nome: %s\n",nome);
-  printf("║    CPF:                                                                     ║\n");
-  printf("CPF: %s\n",CPF);
-  printf("║    Data de nascimento:                                                      ║\n");
-  printf("Data nascimento:%s\n",data_nascimento);
-  printf("║    Celular:                                                                 ║\n");
-  printf("Celular:%s\n",celular);
-  printf("║    Email:                                                                   ║\n");
-  printf("Email: %s\n",email);
-  printf("║    Endereço:                                                                ║\n");
-  printf("Endereço: %s\n",endereco);
+  printf("║    Nome: %-67s║\n", nome);
+  printf("║    CPF: %-68s║\n", CPF);
+  printf("║    Data de nascimento: %-53s║\n", data_nascimento);
+  printf("║    Celular: %-64s║\n", celular);
+  printf("║    Email: %-66s║\n", email);
+  printf("║    Endereço: %-63s║\n", endereco);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+  printf("CLIENTE cadastrado com sucesso.");
   printf("\n");
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
@@ -139,17 +135,14 @@ void tela_ver_paciente() {
 void solicitar_nome(char *nome) {
     int valido = 0; // Inicializando como não válido
     do {
-        printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-        printf("║  ↪Informe o nome completo do paciente:                                      ║\n");
-        printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-        printf("╚══ Nome Completo:");
+        printf("║ ↪Nome Completo:");
         scanf(" %[^\n]", nome);
         getchar();
         if (validarNome(nome)==1) { 
             valido = 1; // Marca como válido
         } else {
-            printf("╠══↪Entrada inválida, digite apenas letras e espaços                       ═══╣\n");
-            printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+            printf("==⊳ Entrada inválida, digite apenas letras e espaços                          ║\n");
+            printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
             valido = 0; // Marca como não válido
             while (getchar() != '\n'); // Limpar o buffer
         }
@@ -158,17 +151,14 @@ void solicitar_nome(char *nome) {
 void solicitar_CPF(char *CPF){
   int valido = 0; // Inicializando como não válido
   do {
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("║  ↪Informe o CPF do paciente:                                                ║\n");
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("╚══ CPF:");
+      printf("║ ↪CPF:");
       scanf(" %[^\n]", CPF); 
       getchar();
       if (validar_cpf(CPF)==1) { 
           valido = 1; // Marca como válido
       } else {
-          printf("╠══↪Entrada inválida, digite apenas números                                ═══╣\n");
-          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          printf("==⊳ Entrada inválida, digite apenas números                                   ║\n");
+          printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
           valido = 0; // Marca como não válido
           while (getchar() != '\n'); // Limpar o buffer
       }
@@ -178,17 +168,14 @@ void solicitar_CPF(char *CPF){
 void solicitar_data_nascimento(char *data_nascimento){
   int valido = 0; // Inicializando como não válido
   do {
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("║  ↪Informe o Data de Nascimento do paciente:                                 ║\n");
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("╚══ Data:");
+      printf("║ ↪Data de Nascimento:");
       scanf(" %[^\n]", data_nascimento); 
       getchar();
       if (validar_data(data_nascimento)==1) { 
           valido = 1; // Marca como válido
       } else {
-          printf("╠══↪Entrada inválida, digite apenas números                                ═══╣\n");
-          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          printf("==⊳ Entrada inválida, digite apenas números                                   ║\n");
+          printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
           valido = 0; // Marca como não válido
           while (getchar() != '\n'); // Limpar o buffer
       }
@@ -198,17 +185,14 @@ void solicitar_data_nascimento(char *data_nascimento){
 void solicitar_celular(char *celular){
   int valido = 0; // Inicializando como não válido
   do {
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("║  ↪Informe o Celular do paciente:                                            ║\n");
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("╚══ Celular:");
+      printf("║ ↪Celular:");
       scanf(" %[^\n]", celular); 
       getchar();
       if (validar_celular(celular)==1) { 
           valido = 1; // Marca como válido
       } else {
-          printf("╠══↪Entrada inválida, digite apenas números                                ═══╣\n");
-          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          printf("==⊳ Entrada inválida, digite apenas números                                   ║\n");
+          printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
           valido = 0; // Marca como não válido
           while (getchar() != '\n'); // Limpar o buffer
       }
@@ -218,17 +202,14 @@ void solicitar_celular(char *celular){
 void solicitar_email(char *email){
   int valido = 0; // Inicializando como não válido
   do {
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("║  ↪Informe o Email do paciente:                                              ║\n");
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("╚══ Email:");
+      printf("║ ↪Email:");
       scanf(" %[^\n]", email); 
       getchar();
       if (validar_email(email)==1) { 
           valido = 1; // Marca como válido
       } else {
-          printf("╠══↪Entrada inválida, Digite o Email correto                               ═══╣\n");
-          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          printf("==⊳ Entrada inválida, Digite o Email correto                                  ║\n");
+          printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
           valido = 0; // Marca como não válido
           while (getchar() != '\n'); // Limpar o buffer
       }
@@ -238,17 +219,14 @@ void solicitar_email(char *email){
 void solicitar_endereco(char *endereco){
   int valido = 0; // Inicializando como não válido
   do {
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("║  ↪Informe o Endereço do paciente:                                              ║\n");
-      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("╚══ Endereço:");
+      printf("║ ↪Endereço:");
       scanf(" %[^\n]", endereco); 
       getchar();
       if (validar_endereco(endereco)==1) { 
           valido = 1; // Marca como válido
       } else {
-          printf("╠══↪Entrada inválida, Digite o endereço correto                            ═══╣\n");
-          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          printf("==⊳ Entrada inválida, Digite o endereço correto                               ║\n");
+          printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
           valido = 0; // Marca como não válido
           while (getchar() != '\n'); // Limpar o buffer
       }
