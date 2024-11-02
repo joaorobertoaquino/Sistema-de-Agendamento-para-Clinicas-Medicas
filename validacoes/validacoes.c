@@ -134,3 +134,29 @@ int validar_data(char* data) {
 
     return 1;  // Data válida
 }
+
+// referencia: https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_data.c
+
+
+///
+/// Retorna 1 se o número de celular recebido for válido (apenas números e 11 dígitos)
+/// ou retorna 0 caso contrário.
+///
+int validar_celular(char *celular) {
+    // Verifica se o celular tem exatamente 11 dígitos
+    if (strlen(celular) != 11) { // Comprimento esperado
+        printf("Quantidade de números do celular inválida. Deve ter 11 dígitos.\n");
+        return 0; // Número de celular inválido
+    }
+
+    // Verifica se todos os caracteres são numéricos
+    for (int i = 0; i < 11; i++) {
+        if (celular[i] < '0' || celular[i] > '9') { // Verifica se não é um número entre '0' e '9'
+            printf("O celular deve conter apenas dígitos.\n");
+            return 0; // Número de celular inválido
+        }
+    }
+
+    return 1; // Número de celular válido
+}
+//https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_celular

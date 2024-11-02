@@ -57,15 +57,15 @@ int tela_paciente(void) {
 
 void tela_cadastrar_paciente() {
   char nome[51];
-  char CPF [12];
-  char data_nascimento[10];
+  char CPF [13];
+  char data_nascimento[11];
   char celular[13];
   system("clear||cls");
   printf("\n");
   solicitar_nome(nome);
   solicitar_CPF(CPF);
   solicitar_data_nascimento(data_nascimento);
-  solicitar_celular();
+  solicitar_celular(celular);
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR PACIENTE                                ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
@@ -77,6 +77,7 @@ void tela_cadastrar_paciente() {
   printf("║    Data de nascimento:                                                      ║\n");
   printf("Data nascimento:%s\n",data_nascimento);
   printf("║    Celular:                                                                 ║\n");
+  printf("Celular:%s\n",celular);
   printf("║    Email:                                                                   ║\n");
   printf("║    Endereço:                                                                ║\n");
   printf("║                                                                             ║\n");
@@ -188,4 +189,23 @@ void solicitar_data_nascimento(char *data_nascimento){
   } while (!valido); // até ser valido
 
 }
+void solicitar_celular(char *celular){
+  int valido = 0; // Inicializando como não válido
+  do {
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("║  ↪Informe o Celular do paciente:                                            ║\n");
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("╚══ Celular:");
+      scanf(" %[^\n]", celular); 
+      getchar();
+      if (validar_celular(celular)==1) { 
+          valido = 1; // Marca como válido
+      } else {
+          printf("╠══↪Entrada inválida, digite apenas números                                ═══╣\n");
+          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          valido = 0; // Marca como não válido
+          while (getchar() != '\n'); // Limpar o buffer
+      }
+  } while (!valido); // até ser valido
 
+}
