@@ -208,3 +208,25 @@ int validar_email(char *email) {
 }
 
 //https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_email.c
+
+int validar_endereco(char *endereco) {
+    if (strlen(endereco) == 0) {
+        printf("Erro: o endereço não pode ser vazio.\n");
+        return 0; // Endereço inválido
+    }
+
+    // Verifica se todos os caracteres são válidos
+    for (int i = 0; i < strlen(endereco); i++) {
+        char c = endereco[i];
+        
+        // Verifica se o caractere não é alfanumérico, espaço ou um dos caracteres especiais permitidos
+        if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') 
+        || c == ' ' || c == '.' || c == '-' || c == '/' || c == ',')) {
+            printf("Erro: o endereço deve conter apenas caracteres válidos.\n");
+            return 0; // Endereço inválido
+        }
+    }
+
+    return 1; // Endereço válido
+}
+//https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_endereco.c

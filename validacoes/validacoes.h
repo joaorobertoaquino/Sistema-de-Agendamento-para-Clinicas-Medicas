@@ -4,3 +4,4 @@ int validar_cpf(const char *cpf); //Verifica se o cpf é válido
 int validar_data(char *data);
 int validar_celular(char *celular);
 int validar_email(char *email);
+int validar_endereco(char *endereco);

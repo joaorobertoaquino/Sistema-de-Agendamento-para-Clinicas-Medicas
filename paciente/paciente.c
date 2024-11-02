@@ -61,6 +61,7 @@ void tela_cadastrar_paciente() {
   char data_nascimento[11];
   char celular[13];
   char email[51];
+  char endereco[80];
   system("clear||cls");
   printf("\n");
   solicitar_nome(nome);
@@ -68,6 +69,7 @@ void tela_cadastrar_paciente() {
   solicitar_data_nascimento(data_nascimento);
   solicitar_celular(celular);
   solicitar_email(email);
+  solicitar_endereco(endereco);
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR PACIENTE                                ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
@@ -81,8 +83,9 @@ void tela_cadastrar_paciente() {
   printf("║    Celular:                                                                 ║\n");
   printf("Celular:%s\n",celular);
   printf("║    Email:                                                                   ║\n");
-  printf("Email: %sn",email);
+  printf("Email: %s\n",email);
   printf("║    Endereço:                                                                ║\n");
+  printf("Endereço: %s\n",endereco);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
   printf("\n");
@@ -176,7 +179,7 @@ void solicitar_data_nascimento(char *data_nascimento){
   int valido = 0; // Inicializando como não válido
   do {
       printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-      printf("║  ↪Informe o data de Nascimento do paciente:                                 ║\n");
+      printf("║  ↪Informe o Data de Nascimento do paciente:                                 ║\n");
       printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
       printf("╚══ Data:");
       scanf(" %[^\n]", data_nascimento); 
@@ -225,6 +228,26 @@ void solicitar_email(char *email){
           valido = 1; // Marca como válido
       } else {
           printf("╠══↪Entrada inválida, Digite o Email correto                               ═══╣\n");
+          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          valido = 0; // Marca como não válido
+          while (getchar() != '\n'); // Limpar o buffer
+      }
+  } while (!valido); // até ser valido
+
+}
+void solicitar_endereco(char *endereco){
+  int valido = 0; // Inicializando como não válido
+  do {
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("║  ↪Informe o Endereço do paciente:                                              ║\n");
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("╚══ Endereço:");
+      scanf(" %[^\n]", endereco); 
+      getchar();
+      if (validar_endereco(endereco)==1) { 
+          valido = 1; // Marca como válido
+      } else {
+          printf("╠══↪Entrada inválida, Digite o endereço correto                            ═══╣\n");
           printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
           valido = 0; // Marca como não válido
           while (getchar() != '\n'); // Limpar o buffer
