@@ -67,6 +67,7 @@ void tela_cadastrar_paciente() {
   solicitar_CPF(CPF);
   solicitar_data_nascimento(data_nascimento);
   solicitar_celular(celular);
+  solicitar_email(email);
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR PACIENTE                                ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
