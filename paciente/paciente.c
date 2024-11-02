@@ -57,16 +57,19 @@ int tela_paciente(void) {
 
 void tela_cadastrar_paciente() {
   char nome[51];
-  char CPF [11];
+  char CPF [12];
   system("clear||cls");
   printf("\n");
   solicitar_nome(nome);
+  solicitar_CPF(CPF);
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR PACIENTE                                ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
   printf("║    Nome:                                                                    ║\n");
+  printf("Nome: %s\n",nome);
   printf("║    CPF:                                                                     ║\n");
+  printf("CPF: %s\n",CPF);
   printf("║    Data de nascimento:                                                      ║\n");
   printf("║    Celular:                                                                 ║\n");
   printf("║    Email:                                                                   ║\n");
@@ -125,16 +128,39 @@ void solicitar_nome(char *nome) {
     int valido = 0; // Inicializando como não válido
     do {
         printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-        printf("║  ↪Informe o nome comepleto do paciente:                                     ║\n");
+        printf("║  ↪Informe o nome completo do paciente:                                      ║\n");
         printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
         printf("╚══ Nome Completo:");
-        scanf(" %[^\n]", nome); // coloquei pra ler até o \n
+        scanf(" %[^\n]", nome);
+        getchar();
         if (validarNome(nome)==1) { 
             valido = 1; // Marca como válido
         } else {
             printf("╠══↪Entrada inválida, digite apenas letras e espaços                       ═══╣\n");
+            printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
             valido = 0; // Marca como não válido
             while (getchar() != '\n'); // Limpar o buffer
         }
     } while (!valido); // até ser valido
 }
+void solicitar_CPF(char *CPF){
+  int valido = 0; // Inicializando como não válido
+  do {
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("║  ↪Informe o CPF do paciente:                                                ║\n");
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("╚══ CPF:");
+      scanf(" %[^\n]", CPF); 
+      getchar();
+      if (validar_cpf(CPF)==1) { 
+          valido = 1; // Marca como válido
+      } else {
+          printf("╠══↪Entrada inválida, digite apenas números                                ═══╣\n");
+          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          valido = 0; // Marca como não válido
+          while (getchar() != '\n'); // Limpar o buffer
+      }
+  } while (!valido); // até ser valido
+
+}
+

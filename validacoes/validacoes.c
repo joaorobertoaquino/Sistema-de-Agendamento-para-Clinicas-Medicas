@@ -87,4 +87,4 @@ int validar_cpf(const char *cpf) {
 
     return 1; // CPF válido
 }
-// FReferência: https://github.com/joaorobertoaquino/Validacoes.git.
+// Referência: https://github.com/joaorobertoaquino/Validacoes.git.
