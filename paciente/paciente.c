@@ -60,6 +60,7 @@ void tela_cadastrar_paciente() {
   char CPF [13];
   char data_nascimento[11];
   char celular[13];
+  char email[51];
   system("clear||cls");
   printf("\n");
   solicitar_nome(nome);
@@ -79,6 +80,7 @@ void tela_cadastrar_paciente() {
   printf("║    Celular:                                                                 ║\n");
   printf("Celular:%s\n",celular);
   printf("║    Email:                                                                   ║\n");
+  printf("Email: %sn",email);
   printf("║    Endereço:                                                                ║\n");
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
@@ -209,3 +211,24 @@ void solicitar_celular(char *celular){
   } while (!valido); // até ser valido
 
 }
+void solicitar_email(char *email){
+  int valido = 0; // Inicializando como não válido
+  do {
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("║  ↪Informe o Email do paciente:                                              ║\n");
+      printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+      printf("╚══ Email:");
+      scanf(" %[^\n]", email); 
+      getchar();
+      if (validar_email(email)==1) { 
+          valido = 1; // Marca como válido
+      } else {
+          printf("╠══↪Entrada inválida, Digite o Email correto                               ═══╣\n");
+          printf("╠══↪DIGITE ENTER para continuar                                            ═══╣\n");
+          valido = 0; // Marca como não válido
+          while (getchar() != '\n'); // Limpar o buffer
+      }
+  } while (!valido); // até ser valido
+
+}
+

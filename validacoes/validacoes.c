@@ -159,4 +159,183 @@ int validar_celular(char *celular) {
 
     return 1; // Número de celular válido
 }
+int validar_email(char *email) {
+    int posArroba = -1; // Posição do '@'
+    int posPonto = -1;  // Posição do último '.'
+
+    for (int i = 0; email[i] != '\0'; i++) {
+        char c = email[i];
+
+        // Verifica se o caractere atual é um dos permitidos
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || 
+            (c >= '0' && c <= '9') || c == '@' || c == '.' || 
+            c == '_' || c == '-') {
+
+            // Se for '@', salva a posição e verifica se já existe um '@'
+            if (c == '@') {
+                if (posArroba != -1) {
+                    printf("Erro: múltiplos '@' não são permitidos.\n");
+                    return 0; // E-mail inválido
+                }
+                posArroba = i;
+            }
+            
+            // Se for '.', salva a posição do último ponto
+            if (c == '.') {
+                posPonto = i;
+            }
+        } else {
+            // Caractere inválido encontrado
+            printf("Erro: caractere '%c' inválido no e-mail.\n", c);
+            return 0; // E-mail inválido
+        }
+    }
+
+    // Verifica se '@' e '.' estão em posições corretas
+    if (posArroba == -1 || posPonto == -1 || posPonto < posArroba || posPonto == strlen(email) - 1) {
+        printf("Erro: o e-mail precisa de '@' e '.' em posições corretas.\n");
+        return 0; // E-mail inválido
+    }
+
+    return 1; // E-mail válido
+}
+////
+/// Função que verifica se o e-mail contém apenas caracteres válidos:
+/// letras, números, '@', '.', '_', e '-'.
+/// Retorna 1 se o e-mail é válido e 0 caso contrário.
+///
+int validar_email(char *email) {
+    int posArroba = -1; // Posição do '@'
+    int posPonto = -1;  // Posição do último '.'
+
+    for (int i = 0; email[i] != '\0'; i++) {
+        char c = email[i];
+
+        // Verifica se o caractere atual é um dos permitidos
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || 
+            (c >= '0' && c <= '9') || c == '@' || c == '.' || 
+            c == '_' || c == '-') {
+
+            // Se for '@', salva a posição e verifica se já existe um '@'
+            if (c == '@') {
+                if (posArroba != -1) {
+                    printf("Erro: múltiplos '@' não são permitidos.\n");
+                    return 0; // E-mail inválido
+                }
+                posArroba = i;
+            }
+            
+            // Se for '.', salva a posição do último ponto
+            if (c == '.') {
+                posPonto = i;
+            }
+        } else {
+            // Caractere inválido encontrado
+            printf("Erro: caractere '%c' inválido no e-mail.\n", c);
+            return 0; // E-mail inválido
+        }
+    }
+
+    // Verifica se '@' e '.' estão em posições corretas
+    if (posArroba == -1 || posPonto == -1 || posPonto < posArroba || posPonto == strlen(email) - 1) {
+        printf("Erro: o e-mail precisa de '@' e '.' em posições corretas.\n");
+        return 0; // E-mail inválido
+    }
+
+    return 1; // E-mail válido
+}
+
 //https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_celular
+
+//
+/// Função que verifica se o e-mail contém apenas caracteres válidos:
+/// letras, números, '@', '.', '_', e '-'.
+/// Retorna 1 se o e-mail é válido e 0 caso contrário.
+///
+int validar_email(char *email) {
+    int posArroba = -1; // Posição do '@'
+    int posPonto = -1;  // Posição do último '.'
+
+    for (int i = 0; email[i] != '\0'; i++) {
+        char c = email[i];
+
+        // Verifica se o caractere atual é um dos permitidos
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || 
+            (c >= '0' && c <= '9') || c == '@' || c == '.' || 
+            c == '_' || c == '-') {
+
+            // Se for '@', salva a posição e verifica se já existe um '@'
+            if (c == '@') {
+                if (posArroba != -1) {
+                    printf("Erro: múltiplos '@' não são permitidos.\n");
+                    return 0; // E-mail inválido
+                }
+                posArroba = i;
+            }
+            
+            // Se for '.', salva a posição do último ponto
+            if (c == '.') {
+                posPonto = i;
+            }
+        } else {
+            // Caractere inválido encontrado
+            printf("Erro: caractere '%c' inválido no e-mail.\n", c);
+            return 0; // E-mail inválido
+        }
+    }
+
+    // Verifica se '@' e '.' estão em posições corretas
+    if (posArroba == -1 || posPonto == -1 || posPonto < posArroba || posPonto == strlen(email) - 1) {
+        printf("Erro: o e-mail precisa de '@' e '.' em posições corretas.\n");
+        return 0; // E-mail inválido
+    }
+
+    return 1; // E-mail válido
+}
+////
+/// Função que verifica se o e-mail contém apenas caracteres válidos:
+/// letras, números, '@', '.', '_', e '-'.
+/// Retorna 1 se o e-mail é válido e 0 caso contrário.
+///
+int validar_email(char *email) {
+    int posArroba = -1; // Posição do '@'
+    int posPonto = -1;  // Posição do último '.'
+
+    for (int i = 0; email[i] != '\0'; i++) {
+        char c = email[i];
+
+        // Verifica se o caractere atual é um dos permitidos
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || 
+            (c >= '0' && c <= '9') || c == '@' || c == '.' || 
+            c == '_' || c == '-') {
+
+            // Se for '@', salva a posição e verifica se já existe um '@'
+            if (c == '@') {
+                if (posArroba != -1) {
+                    printf("Erro: múltiplos '@' não são permitidos.\n");
+                    return 0; // E-mail inválido
+                }
+                posArroba = i;
+            }
+            
+            // Se for '.', salva a posição do último ponto
+            if (c == '.') {
+                posPonto = i;
+            }
+        } else {
+            // Caractere inválido encontrado
+            printf("Erro: caractere '%c' inválido no e-mail.\n", c);
+            return 0; // E-mail inválido
+        }
+    }
+
+    // Verifica se '@' e '.' estão em posições corretas
+    if (posArroba == -1 || posPonto == -1 || posPonto < posArroba || posPonto == strlen(email) - 1) {
+        printf("Erro: o e-mail precisa de '@' e '.' em posições corretas.\n");
+        return 0; // E-mail inválido
+    }
+
+    return 1; // E-mail válido
+}
+
+//https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_email.c
