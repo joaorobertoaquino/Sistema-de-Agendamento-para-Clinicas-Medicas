@@ -273,4 +273,23 @@ int validar_data_cadastro(const char *data_cadastro) {
     }
 
     return 1; // Data válida
+} //chat gpt
+
+
+int validar_hora(const char *hora) {
+    // Verifica se a hora tem o formato HH:MM
+    if (strlen(hora) != 5 || hora[2] != ':') {
+        return 0; // Formato inválido
+    }
+
+    // Extrai horas e minutos
+    int hora_int = (hora[0] - '0') * 10 + (hora[1] - '0');
+    int minuto_int = (hora[3] - '0') * 10 + (hora[4] - '0');
+
+    // Verifica se a hora e os minutos estão em intervalos válidos
+    if (hora_int < 0 || hora_int > 23 || minuto_int < 0 || minuto_int > 59) {
+        return 0; // Hora inválida
+    }
+
+    return 1; // Hora válida
 }

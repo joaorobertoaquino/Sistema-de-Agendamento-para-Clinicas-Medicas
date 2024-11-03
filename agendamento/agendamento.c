@@ -47,11 +47,13 @@ void tela_agendamento(void) {
 
 void tela_cadastrar_agendamento() {
   char data[11];
+  char hora[6];
 
   system("clear||cls");
   printf("\n");
 
   solicitar_data(data);
+  solicitar_hora(hora);
 
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
@@ -59,7 +61,7 @@ void tela_cadastrar_agendamento() {
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
   printf("║    Data: %-67s║\n", data);
-  //printf("║    Hora: %-66s║\n", hora);
+  printf("║    Hora: %-67s║\n", hora);
   //printf("║    ID do agendamento: %-54s║\n", id_agendamento);
   //printf("║    CPF paciente: %-59s║\n", CPF);
   //printf("║    CRE do médico: %-58s║\n", CRE);
@@ -131,4 +133,22 @@ void solicitar_data(char *data_cadastro) {
             while (getchar() != '\n'); // Limpar o buffer
         }
     } while (!valido); // Repete até que seja válido
+}
+
+void solicitar_hora(char *hora) {
+    int valido = 0; // Inicializando como não válido
+    do {
+        printf("║ ↪Hora (HH:MM): ");
+        scanf(" %[^\n]", hora);
+        getchar(); // Limpar o buffer
+
+        // Verifica se a hora é válida
+        if (validar_hora(hora)) { 
+            valido = 1; // Marca como válido
+        } else {
+            printf("==⊳ Entrada inválida, digite uma hora válida (HH:MM)                    ║\n");
+            printf("==⊳ Pressione ENTER para tentar novamente                                    ═══╝\n");
+            valido = 0; // Marca como não válido
+        }
+    } while (!valido); // até ser válido
 }
