@@ -31,26 +31,31 @@ O **SIG-Clinic** é uma solução de agendamento desenvolvida como parte da disc
 ## Instruções de Compilação ⚙️
 
 1. Clone o repositório:
-   ```sh
+```sh
    git clone https://github.com/riamxpp/Sistema-de-Agendamento-para-Clinicas-Medicas.git
+
 2. Navegue até o diretório do projeto:
-   ```sh
+```sh
    cd Sistema-de-Agendamento-para-Clinicas-Medicas
-3. Crie os arquivos .o de todos os módulos:
-   ```sh
-   gcc -Wall -c agendamento.c informacoes.c main.c medico.c paciente.c procedimento.c relatorio.c
-4. Crie o executável com todos os módulos:
-   ```sh
-   gcc -o Sitema_Agendamento_Clinica_Medicas paciente.o main.o medico.o procedimento.o agendamento.o informacoes.o relatorio.o
-5. Execute o executável:
-   ```sh
-   ./Sitema_Agendamento_Clinica_Medicas
+
+3. Compile e execute o projeto usando o Makefile:
+```sh
+   make run
+Esse comando cria automaticamente todos os arquivos .o necessários e executa o programa.
+
+4. Outra alternativa é rodar o projeto no Visual Studio Code, abrindo um novo terminal diretamente na IDE e executando o comando:
+```sh
+   make run
+
+5. Para limpar os arquivos de compilação gerados:
+```sh
+   make clean
 
 ---
 
 ## Semana Atual 🚀
 
-**Semana 5** - Progresso conforme as atividades planejadas para esta semana, seguindo as entregas e objetivos estabelecidos.
+**Semana 7** - Progresso conforme as atividades planejadas para esta semana, seguindo as entregas e objetivos estabelecidos.
 
 ---
 
@@ -60,5 +65,5 @@ Para mais informações, entre em contato com os desenvolvedores:
 
 - @riamxpp - [GitHub](https://github.com/riamxpp)
 - @jGean09 - [GitHub](https://github.com/jGean09) 
-
+- @joaorobertoaquino - [GitHub] (https://github.com/joaorobertoaquino)
 
