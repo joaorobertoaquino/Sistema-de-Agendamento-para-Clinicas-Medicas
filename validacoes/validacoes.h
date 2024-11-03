@@ -7,3 +7,4 @@ int validar_email(char *email);
 int validar_endereco(char *endereco);
 int validar_data_cadastro(const char *data_cadastro);
 int validar_hora(const char *hora);
+int validar_CRE(const char *CRE);

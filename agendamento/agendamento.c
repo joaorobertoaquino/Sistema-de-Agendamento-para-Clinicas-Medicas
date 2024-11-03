@@ -50,6 +50,7 @@ void tela_cadastrar_agendamento() {
   char data[11];
   char hora[6];
   char CPF[13];
+  char CRE[10];
 
   system("clear||cls");
   printf("\n");
@@ -57,6 +58,7 @@ void tela_cadastrar_agendamento() {
   solicitar_data(data);
   solicitar_hora(hora);
   solicitar_CPF(CPF); //"../paciente/paciente.h"
+  solicitar_CRE(CRE);
   
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
@@ -67,7 +69,7 @@ void tela_cadastrar_agendamento() {
   printf("║    Hora: %-67s║\n", hora);
   printf("║    ID do agendamento: (sem informação no momento)                           ║\n");
   printf("║    CPF paciente: %-59s║\n", CPF);
-  //printf("║    CRE do médico: %-58s║\n", CRE);
+  printf("║    CRE do médico: %-58s║\n", CRE);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
   printf("AGENDAMENTO cadastrado com sucesso.\n");
@@ -154,4 +156,22 @@ void solicitar_hora(char *hora) {
             valido = 0; // Marca como não válido
         }
     } while (!valido); // até ser válido
+}
+
+void solicitar_CRE(char *CRE) {
+    int valido = 0; // Inicializa como inválido
+    do {
+        printf("║ ↪CRE (9 dígitos): ");
+        scanf(" %[^\n]", CRE);
+        getchar(); // Limpar o buffer
+
+        // Verifica se o CRE é válido
+        if (validar_CRE(CRE)) { 
+            valido = 1; // Marca como válido
+        } else {
+            printf("==⊳ Entrada inválida, digite um CRE válido (9 dígitos numéricos)        ║\n");
+            printf("==⊳ Pressione ENTER para tentar novamente                                    ═══╝\n");
+            valido = 0; // Marca como não válido
+        }
+    } while (!valido); // Repete até ser válido
 }

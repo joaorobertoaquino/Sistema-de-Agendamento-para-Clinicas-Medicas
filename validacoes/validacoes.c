@@ -297,3 +297,19 @@ int validar_hora(const char *hora) {
 
     return 1; // Hora válida
 }
+
+int validar_CRE(const char *CRE) {
+    // Verifica se o comprimento do CRE é exatamente 9
+    if (strlen(CRE) != 9) {
+        return 0; // Formato inválido
+    }
+
+    // Verifica se todos os caracteres são dígitos
+    for (int i = 0; i < 9; i++) {
+        if (!isdigit(CRE[i])) {
+            return 0; // Contém um caractere que não é dígito
+        }
+    }
+
+    return 1; // CRE válido
+} //chat gpt

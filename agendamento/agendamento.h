@@ -6,3 +6,4 @@ void tela_ver_agendamento(void);
 void solicitar_data(char *data_cadastro);
 void solicitar_hora(char *hora);
 void solicitar_CPF(char *CPF);
+void solicitar_CRE(char *CRE);
