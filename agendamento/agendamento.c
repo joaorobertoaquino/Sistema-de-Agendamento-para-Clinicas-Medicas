@@ -56,7 +56,7 @@ void tela_cadastrar_agendamento() {
 
   solicitar_data(data);
   solicitar_hora(hora);
-  solicitar_CPF(CPF);
+  solicitar_CPF(CPF); //"../paciente/paciente.h"
   
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
@@ -154,22 +154,4 @@ void solicitar_hora(char *hora) {
             valido = 0; // Marca como não válido
         }
     } while (!valido); // até ser válido
-}
-
-void solicitar_CPF(char *CPF){
-  int valido = 0; // Inicializando como não válido
-  do {
-      printf("║ ↪CPF:");
-      scanf(" %[^\n]", CPF); 
-      getchar();
-      if (validar_cpf(CPF)==1) { 
-          valido = 1; // Marca como válido
-      } else {
-          printf("==⊳ Entrada inválida, digite apenas números                                   ║\n");
-          printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
-          valido = 0; // Marca como não válido
-          while (getchar() != '\n'); // Limpar o buffer
-      }
-  } while (!valido); // até ser valido
-
 }

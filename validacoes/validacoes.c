@@ -3,6 +3,7 @@
 #include "validacoes.h"
 #include <string.h>
 #include <ctype.h>
+#include <stdint.h>
 
 ///
 /// Retorna 1 se o caractere recebido for um caractere alfabético 
@@ -169,9 +170,9 @@ int validar_celular(char *celular) {
 ///
 int validar_email(char *email) {
     int posArroba = -1; // Posição do '@'
-    int posPonto = -1;  // Posição do último '.'
+    size_t posPonto = -1;  // Posição do último '.'
 
-    for (int i = 0; email[i] != '\0'; i++) {
+    for (size_t i = 0; email[i] != '\0'; i++) {
         char c = email[i];
 
         // Verifica se o caractere atual é um dos permitidos
@@ -200,7 +201,9 @@ int validar_email(char *email) {
     }
 
     // Verifica se '@' e '.' estão em posições corretas
-    if (posArroba == -1 || posPonto == -1 || posPonto < posArroba || posPonto == strlen(email) - 1) {
+    #include <limits.h> // Para SIZE_MAX
+
+    if (posArroba == SIZE_MAX || posPonto == SIZE_MAX || posPonto < posArroba || posPonto == strlen(email) - 1){
         printf("Erro: o e-mail precisa de '@' e '.' em posições corretas.\n");
         return 0; // E-mail inválido
     }
@@ -209,7 +212,6 @@ int validar_email(char *email) {
 }
 //https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_email.c
 
-
 int validar_endereco(char *endereco) {
     if (strlen(endereco) == 0) {
         printf("Erro: o endereço não pode ser vazio.\n");
@@ -217,7 +219,7 @@ int validar_endereco(char *endereco) {
     }
 
     // Verifica se todos os caracteres são válidos
-    for (int i = 0; i < strlen(endereco); i++) {
+    for (size_t i = 0; i < strlen(endereco); i++) {
         char c = endereco[i];
         
         // Verifica se o caractere não é alfanumérico, espaço ou um dos caracteres especiais permitidos
@@ -230,6 +232,7 @@ int validar_endereco(char *endereco) {
 
     return 1; // Endereço válido
 }
+
 //https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_endereco.
 
 int validar_data_cadastro(const char *data_cadastro) {
@@ -238,7 +241,7 @@ int validar_data_cadastro(const char *data_cadastro) {
     int j = 0;
 
     // Remove barras e formata a data
-    for (int i = 0; i < strlen(data_cadastro); i++) {
+    for (size_t i = 0; i < strlen(data_cadastro); i++) {
         if (isdigit(data_cadastro[i])) {
             data_formatada[j++] = data_cadastro[i];
         }
@@ -273,7 +276,8 @@ int validar_data_cadastro(const char *data_cadastro) {
     }
 
     return 1; // Data válida
-} //chat gpt
+}
+
 
 
 int validar_hora(const char *hora) {
