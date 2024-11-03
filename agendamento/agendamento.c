@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "agendamento.h"
+#include "../paciente/paciente.h"
 #include "../validacoes/validacoes.h"
 
 void tela_agendamento(void) {
@@ -48,13 +49,15 @@ void tela_agendamento(void) {
 void tela_cadastrar_agendamento() {
   char data[11];
   char hora[6];
+  char CPF[13];
 
   system("clear||cls");
   printf("\n");
 
   solicitar_data(data);
   solicitar_hora(hora);
-
+  solicitar_CPF(CPF);
+  
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                         CADASTRAR AGENDAMENTO                               ║\n");
@@ -62,8 +65,8 @@ void tela_cadastrar_agendamento() {
   printf("║                                                                             ║\n");
   printf("║    Data: %-67s║\n", data);
   printf("║    Hora: %-67s║\n", hora);
-  //printf("║    ID do agendamento: %-54s║\n", id_agendamento);
-  //printf("║    CPF paciente: %-59s║\n", CPF);
+  printf("║    ID do agendamento: (sem informação no momento)                           ║\n");
+  printf("║    CPF paciente: %-59s║\n", CPF);
   //printf("║    CRE do médico: %-58s║\n", CRE);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
@@ -151,4 +154,22 @@ void solicitar_hora(char *hora) {
             valido = 0; // Marca como não válido
         }
     } while (!valido); // até ser válido
+}
+
+void solicitar_CPF(char *CPF){
+  int valido = 0; // Inicializando como não válido
+  do {
+      printf("║ ↪CPF:");
+      scanf(" %[^\n]", CPF); 
+      getchar();
+      if (validar_cpf(CPF)==1) { 
+          valido = 1; // Marca como válido
+      } else {
+          printf("==⊳ Entrada inválida, digite apenas números                                   ║\n");
+          printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
+          valido = 0; // Marca como não válido
+          while (getchar() != '\n'); // Limpar o buffer
+      }
+  } while (!valido); // até ser valido
+
 }
