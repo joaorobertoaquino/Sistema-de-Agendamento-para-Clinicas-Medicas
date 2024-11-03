@@ -5,3 +5,4 @@ int validar_data(char *data);
 int validar_celular(char *celular);
 int validar_email(char *email);
 int validar_endereco(char *endereco);
+int validar_data_cadastro(const char *data_cadastro);

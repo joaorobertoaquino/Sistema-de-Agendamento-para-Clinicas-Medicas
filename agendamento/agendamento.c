@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "agendamento.h"
+#include "../validacoes/validacoes.h"
 
 void tela_agendamento(void) {
   int opcao;
@@ -43,21 +44,28 @@ void tela_agendamento(void) {
   } while(opcao != 0);
 }
 
+
 void tela_cadastrar_agendamento() {
+  char data[11];
+
   system("clear||cls");
+  printf("\n");
+
+  solicitar_data(data);
+
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                         CADASTRAR AGENDAMENTO                               ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
-  printf("║    Data:                                                                    ║\n");
-  printf("║    Hora:                                                                    ║\n");
-  printf("║    ID do agendamento:                                                       ║\n");
-  printf("║    CPF paciente:                                                            ║\n");
-  printf("║    CRE do médico:                                                           ║\n");
+  printf("║    Data: %-67s║\n", data);
+  //printf("║    Hora: %-66s║\n", hora);
+  //printf("║    ID do agendamento: %-54s║\n", id_agendamento);
+  //printf("║    CPF paciente: %-59s║\n", CPF);
+  //printf("║    CRE do médico: %-58s║\n", CRE);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
+  printf("AGENDAMENTO cadastrado com sucesso.\n");
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
 }
@@ -105,4 +113,22 @@ void tela_ver_agendamento() {
   printf("\n");
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
+}
+
+void solicitar_data(char *data_cadastro) {
+    int valido = 0; // Inicializando como não válido
+    do {
+        printf("║ ↪Data de Cadastro da Consulta: ");
+        scanf(" %[^\n]", data_cadastro); 
+        getchar();
+
+        if (validar_data_cadastro(data_cadastro) == 1) { 
+            valido = 1; // Marca como válido
+        } else {
+            printf("==⊳ Entrada inválida, digite uma data válida (DD/MM/AAAA)                    ║\n");
+            printf("==⊳ Pressione ENTER para tentar novamente                                    ═══╝\n");
+            valido = 0; // Marca como não válido
+            while (getchar() != '\n'); // Limpar o buffer
+        }
+    } while (!valido); // Repete até que seja válido
 }

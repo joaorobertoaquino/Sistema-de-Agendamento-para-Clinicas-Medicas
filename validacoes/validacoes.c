@@ -161,6 +161,7 @@ int validar_celular(char *celular) {
 }
 //https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_celular
 
+
 ////
 /// Função que verifica se o e-mail contém apenas caracteres válidos:
 /// letras, números, '@', '.', '_', e '-'.
@@ -206,8 +207,8 @@ int validar_email(char *email) {
 
     return 1; // E-mail válido
 }
-
 //https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_email.c
+
 
 int validar_endereco(char *endereco) {
     if (strlen(endereco) == 0) {
@@ -229,4 +230,47 @@ int validar_endereco(char *endereco) {
 
     return 1; // Endereço válido
 }
-//https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_endereco.c
+//https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_endereco.
+
+int validar_data_cadastro(const char *data_cadastro) {
+    // Array para armazenar a data sem barras
+    char data_formatada[9] = ""; 
+    int j = 0;
+
+    // Remove barras e formata a data
+    for (int i = 0; i < strlen(data_cadastro); i++) {
+        if (isdigit(data_cadastro[i])) {
+            data_formatada[j++] = data_cadastro[i];
+        }
+    }
+    data_formatada[j] = '\0'; // Adiciona o terminador de string
+
+    // Verifica se a data sem barras tem exatamente 8 caracteres (DDMMYYYY)
+    if (strlen(data_formatada) != 8) {
+        return 0; // Formato inválido
+    }
+
+    // Extrai dia, mês e ano
+    int dia = (data_formatada[0] - '0') * 10 + (data_formatada[1] - '0'); // Converte para inteiro
+    int mes = (data_formatada[2] - '0') * 10 + (data_formatada[3] - '0'); // Converte para inteiro
+    int ano = (data_formatada[4] - '0') * 1000 + (data_formatada[5] - '0') * 100 +
+              (data_formatada[6] - '0') * 10 + (data_formatada[7] - '0'); // Converte para inteiro
+
+    // Verifica se mês e dia estão em intervalos válidos
+    if (mes < 1 || mes > 12 || dia < 1 || dia > 31) {
+        return 0; // Data inválida
+    }
+
+    // Verificação de dias válidos para cada mês
+    if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30) {
+        return 0; // Meses com 30 dias
+    }
+    if (mes == 2) { // Fevereiro
+        int bissexto = (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
+        if ((bissexto && dia > 29) || (!bissexto && dia > 28)) {
+            return 0; // Fevereiro inválido
+        }
+    }
+
+    return 1; // Data válida
+}
