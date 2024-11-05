@@ -50,7 +50,8 @@ O **SIG-Clinic** é uma solução de agendamento desenvolvida como parte da disc
 
 ## Semana Atual 🚀
 
-**Semana 7** - Progresso conforme as atividades planejadas para esta semana, seguindo as entregas e objetivos estabelecidos.
+**Semana 7** - Progresso conforme as atividades planejadas para esta semana, seguindo as entregas e objetivos estabelecidos. 
+- Semana 7 Finzalizada!!
 
 ---
 
