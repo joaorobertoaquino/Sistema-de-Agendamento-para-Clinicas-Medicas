@@ -21,7 +21,7 @@ int main(void) {
         modulo_paciente();
         break;
       case 2:
-        tela_medico();
+        tela_medico();  
         break;
       case 3:
         tela_procedimentos();
