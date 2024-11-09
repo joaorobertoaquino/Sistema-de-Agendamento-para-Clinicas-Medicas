@@ -118,18 +118,18 @@ void tela_ver_medico() {
 }
 
 void solicitar_especializacao(char *especializacao) {
-    int valido = 0;
+    int valido = 0;  
     do {
-        printf("║ ↪Especialização:");
-        scanf(" %[^\n]", especializacao);
-        getchar();
-        if (validarEspecializacao(especializacao)) {
-            valido = 1; // Marca como válido
+        printf("║ ↪ Especialização: ");
+        scanf(" %[^\n]", especializacao); 
+        getchar();  
+
+        if (validarEspecializacao(especializacao)) { 
+            valido = 1;
         } else {
-            printf("==⊳ Entrada inválida, digite apenas letras e espaços                          ║\n");
-            printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
-            valido = 0; // Marca como não válido
-            while (getchar() != '\n'); // Limpa o buffer
+            printf("==⊳ Entrada inválida, digite apenas letras e espaços                    ║\n");
+            printf("==⊳ Pressione ENTER para tentar novamente                                    ═══╝\n");
+            valido = 0;
         }
-    } while (!valido); // Continua até a entrada ser válida
+    } while (!valido);
 }
