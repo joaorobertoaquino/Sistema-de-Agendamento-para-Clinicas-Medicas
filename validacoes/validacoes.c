@@ -292,23 +292,40 @@ int validar_hora(const char *hora) {
 
 
 //############################################################## 
-//#####                 Validar CRE                        #####  
+//#####                 Validar CRM                        #####  
 //##############################################################
-int validar_CRE(const char *CRE) {
-    // Verifica se o comprimento do CRE é exatamente 9
-    if (strlen(CRE) != 9) {
+int validar_CRM(const char *CRM) {
+    int length = strlen(CRM);
+
+    // Verifica se o comprimento está entre 7 e 11 (4-8 dígitos, hífen, 2 letras)
+    if (length < 7 || length > 11) {
         return 0; // Formato inválido
     }
 
-    // Verifica se todos os caracteres são dígitos
-    for (int i = 0; i < 9; i++) {
-        if (!isdigit(CRE[i])) {
-            return 0; // Contém um caractere que não é dígito
-        }
+    // Verifica se os primeiros caracteres (antes do hífen) são todos dígitos
+    int i = 0;
+    while (i < length && isdigit(CRM[i])) {
+        i++;
     }
 
-    return 1; // CRE válido
-} //chat gpt
+    // Verifica se a quantidade de dígitos está entre 4 e 8
+    if (i < 4 || i > 8) {
+        return 0; // Quantidade inválida de dígitos
+    }
+
+    // Verifica se há um hífen logo após os dígitos
+    if (CRM[i] != '-') {
+        return 0; // Hífen ausente no formato correto
+    }
+    i++; // Avança para a verificação da sigla do estado
+
+    // Verifica se os dois últimos caracteres são letras maiúsculas (sigla do estado)
+    if (!isupper(CRM[i]) || !isupper(CRM[i + 1]) || CRM[i + 2] != '\0') {
+        return 0; // Formato inválido para a sigla do estado
+    }
+
+    return 1; // Formato válido
+}//chat gpt
 
 //############################################################## 
 //#####             Validar Especialização                 #####  
