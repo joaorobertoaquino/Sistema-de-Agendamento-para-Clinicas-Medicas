@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "medico.h"
+#include "../paciente/controller.h"
 
 //MEDICOS
 void tela_medico(void) {
@@ -50,13 +51,20 @@ void tela_medico(void) {
 void tela_cadastrar_medico() {
   system("clear||cls");
   printf("\n");
+  char nome[51];
+  char CRM[10];
+  char especializacao[31];
+
+  solicitar_nome(nome);
+  solicitar_CRE(CRM);
+  solicitar_especializacao(especializacao);
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR MÉDICO                                  ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
-  printf("║    CRE:                                                                     ║\n");
-  printf("║    Nome:                                                                    ║\n");
-  printf("║    Especialização:                                                          ║\n");
+  printf("║    CRE do médico: %-58s║\n", CRM);
+  printf("║    Nome: %-67s║\n", nome);
+  printf("║    Especialização: %-58s║\n", especializacao);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
   printf("\n");
@@ -105,4 +113,21 @@ void tela_ver_medico() {
   printf("\n");
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
+}
+
+void solicitar_especializacao(char *especializacao) {
+    int valido = 0;
+    do {
+        printf("║ ↪Especialização:");
+        scanf(" %[^\n]", especializacao);
+        getchar();
+        if (validarEspecializacao(especializacao)) {
+            valido = 1; // Marca como válido
+        } else {
+            printf("==⊳ Entrada inválida, digite apenas letras e espaços                          ║\n");
+            printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
+            valido = 0; // Marca como não válido
+            while (getchar() != '\n'); // Limpa o buffer
+        }
+    } while (!valido); // Continua até a entrada ser válida
 }

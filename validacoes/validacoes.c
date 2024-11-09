@@ -309,3 +309,15 @@ int validar_CRE(const char *CRE) {
 
     return 1; // CRE válido
 } //chat gpt
+
+//############################################################## 
+//#####             Validar Especialização                 #####  
+//##############################################################
+int validarEspecializacao(char *especializacao) {
+    for (int i = 0; i < strlen(especializacao); i++) {
+        if (!isalpha(especializacao[i]) && !isspace(especializacao[i])) {
+            return 0; // Retorna inválido se encontrar caracteres que não são letras ou espaços
+        }
+    }
+    return 1; // Retorna válido
+}

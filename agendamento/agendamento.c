@@ -50,7 +50,7 @@ void tela_cadastrar_agendamento() {
   char data[11];
   char hora[6];
   char CPF[13];
-  char CRE[10];
+  char CRM[10];
 
   system("clear||cls");
   printf("\n");
@@ -58,7 +58,7 @@ void tela_cadastrar_agendamento() {
   solicitar_data(data);
   solicitar_hora(hora);
   solicitar_CPF(CPF); //"../paciente/paciente.h"
-  solicitar_CRE(CRE);
+  solicitar_CRE(CRM);
   
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
@@ -69,7 +69,7 @@ void tela_cadastrar_agendamento() {
   printf("║    Hora: %-67s║\n", hora);
   printf("║    ID do agendamento: (sem informação no momento)                           ║\n");
   printf("║    CPF paciente: %-59s║\n", CPF);
-  printf("║    CRE do médico: %-58s║\n", CRE);
+  printf("║    CRE do médico: %-58s║\n", CRM);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
   printf("AGENDAMENTO cadastrado com sucesso.\n");
