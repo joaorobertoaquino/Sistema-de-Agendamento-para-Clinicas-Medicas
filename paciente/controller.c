@@ -33,6 +33,23 @@ void modulo_paciente(void){
 
 }
 
+cadastrar_paciente(){
+  char nome[51];
+  char CPF [13];
+  char data_nascimento[11];
+  char celular[13];
+  char email[51];
+  char endereco[80];
+  system("clear||cls");
+  printf("\n");
+  solicitar_nome(nome);
+  solicitar_CPF(CPF);
+  solicitar_data_nascimento(data_nascimento);
+  solicitar_celular(celular);
+  solicitar_email(email);
+  solicitar_endereco(endereco);
+}
+
 
 
 //o ponteiro permite que a função modifique diretamente o conteúdo de nome sem precisar retornar o valor.

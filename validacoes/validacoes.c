@@ -338,3 +338,46 @@ int validarEspecializacao(char *especializacao) {
     }
     return 1; // Retorna válido
 }
+
+int verificar_id(int id) {
+    if (id < 0) {
+        printf("O ID deve ser um número positivo.\n");
+        return 0; // ID inválido
+    }
+    return 1; // ID válido
+}
+
+int validar_tempo(char *duracao) {
+    int horas = 0;
+    int minutos = 0;
+
+    // Verificação manual do formato "HH:MM" e dos valores
+    for (int i = 0; i < 5; i++) {
+        // Verifica o caractere na posição 2 (deve ser ':')
+        if (i == 2) {
+            if (duracao[i] != ':') {
+                printf("Formato incorreto: falta o separador ':' na posição correta.\n");
+                return 0;
+            }
+        } else {
+            // Verifica se é um número entre '0' e '9'
+            if (duracao[i] < '0' || duracao[i] > '9') {
+                printf("Formato incorreto: todos os caracteres fora ':' devem ser números.\n");
+                return 0;
+            }
+        }
+    }
+
+    // Calcula as horas e minutos convertendo os caracteres diretamente
+    horas = (duracao[0] - '0') * 10 + (duracao[1] - '0');
+    minutos = (duracao[3] - '0') * 10 + (duracao[4] - '0');
+
+    // Verifica se as horas e minutos estão dentro dos limites válidos
+    if (horas < 0 || horas > 23 || minutos < 0 || minutos > 59) {
+        printf("Valores de horas ou minutos fora do intervalo permitido.\n");
+        return 0;
+    }
+
+    return 1; // Formato de tempo válido
+}
+//https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_tempo
