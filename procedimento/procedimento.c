@@ -5,7 +5,6 @@
 
 void tela_procedimentos(void) {
   int opcao;
-
   do {
     system("clear||cls");
     printf("\n");
@@ -46,12 +45,12 @@ void tela_procedimentos(void) {
 }
 
 void tela_cadastrar_procedimento() {
-  int ID_procedimento;
-  char nome[52];
-  char duracao[6];
-  solicitar_ID(ID_procedimento);
-  solicitar_nome(nome);
-  solicitar_tempo(duracao);
+  // int ID_procedimento;
+  // char nome[52];
+  // char duracao[6];
+  // solicitar_ID(ID_procedimento);
+  // solicitar_nome(nome);
+  // solicitar_tempo(duracao);
 
   system("clear||cls");
   printf("\n");
@@ -111,52 +110,54 @@ void tela_ver_procedimento() {
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
 }
-void solicitar_ID(int *id){
-  int valido = 0; // Inicializando como não válido
-  do {
-      printf("║ ↪ID do procedimento:");
-      scanf(" %[^\n]", id); 
-      getchar();
-      if (verificar_(id)==1) { 
-          valido = 1; // Marca como válido
-      } else {
-          printf("==⊳ Entrada inválida, digite um número maior que 0                            ║\n");
-          printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
-          valido = 0; // Marca como não válido
-          while (getchar() != '\n'); // Limpar o buffer
-      }
-  } while (!valido); // até ser valido
 
-}
-void solicitar_nome(char *nome) {
-    int valido = 0; // Inicializando como não válido
-    do {
-        printf("║ ↪Nome Completo:");
-        scanf(" %[^\n]", nome);
-        getchar();
-        if (validarNome(nome)==1) { 
-            valido = 1; // Marca como válido
-        } else {
-            printf("==⊳ Entrada inválida, digite apenas letras e espaços                          ║\n");
-            printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
-            valido = 0; // Marca como não válido
-            while (getchar() != '\n'); // Limpar o buffer
-        }
-    } while (!valido); // até ser valido
-}
-void solicitar_tempo(char *duracao) {
-    int valido = 0; // Inicializando como não válido
-    do {
-        printf("║ ↪Digite Duração em HH:MM:");
-        scanf(" %[^\n]", duracao);
-        getchar();
-        if (validar_tempo(duracao)==1) { 
-            valido = 1; // Marca como válido
-        } else {
-            printf("==⊳ Entrada inválida, digite a duração no formato HH:MM                       ║\n");
-            printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
-            valido = 0; // Marca como não válido
-            while (getchar() != '\n'); // Limpar o buffer
-        }
-    } while (!valido); // até ser valido
-}
+// void solicitar_ID(int *ID_procedimento){
+//   int valido = 0; // Inicializando como não válido
+//   do {
+//       printf("║ ↪ID do procedimento:");
+//       scanf("%d", ID_procedimento); 
+//       getchar();
+//       if (validar_ID(ID_procedimento)==1) { 
+//           valido = 1; // Marca como válido
+//       } else {
+//           printf("==⊳ Entrada inválida, digite um número maior que 0                            ║\n");
+//           printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
+//           valido = 0; // Marca como não válido
+//           while (getchar() != '\n'); // Limpar o buffer
+//       }
+//   } while (!valido); // até ser valido
+// }
+
+// void solicitar_nome(char *nome) {
+//     int valido = 0; // Inicializando como não válido
+//     do {
+//         printf("║ ↪Nome Completo:");
+//         scanf(" %[^\n]", nome);
+//         getchar();
+//         if (validarNome(nome)==1) { 
+//             valido = 1; // Marca como válido
+//         } else {
+//             printf("==⊳ Entrada inválida, digite apenas letras e espaços                          ║\n");
+//             printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
+//             valido = 0; // Marca como não válido
+//             while (getchar() != '\n'); // Limpar o buffer
+//         }
+//     } while (!valido); // até ser valido
+// }
+
+// void solicitar_tempo(char *duracao) {
+//     int valido = 0; // Inicializando como não válido
+//     do {
+//         printf("║ ↪Digite Duração em HH:MM:");
+//         scanf(" %[^\n]", duracao);
+//         getchar();
+//         if (validar_tempo(duracao)==1) { 
+//             valido = 1; // Marca como válido
+//         } else {
+//             printf("==⊳ Entrada inválida, digite a duração no formato HH:MM                       ║\n");
+//             printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
+//             valido = 0; // Marca como não válido
+//             while (getchar() != '\n'); // Limpar o buffer
+//         }
+//     } while (!valido); // até ser valido
+// }

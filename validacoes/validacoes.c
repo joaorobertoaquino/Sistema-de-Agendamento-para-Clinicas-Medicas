@@ -161,42 +161,38 @@ int validar_celular(char *celular) {
 /// Função que verifica se o e-mail contém apenas caracteres válidos:
 /// letras, números, '@', '.', '_', e '-'.
 /// Retorna 1 se o e-mail é válido e 0 caso contrário.
-int validar_email(char *email) {
-    int posArroba = -1; // Posição do '@'
-    size_t posPonto = -1;  // Posição do último '.'
-    for (size_t i = 0; email[i] != '\0'; i++) {
+int validar_email(const char *email) {
+    int i, atPos = -1, dotPos = -1;
+    int len = strlen(email);
+
+    // Verifica o comprimento mínimo de um email (ex: a@b.co)
+    if (len < 5) return 0;
+
+    // Percorre cada caractere do email
+    for (i = 0; i < len; i++) {
         char c = email[i];
-        // Verifica se o caractere atual é um dos permitidos
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || 
-            (c >= '0' && c <= '9') || c == '@' || c == '.' || 
-            c == '_' || c == '-') {
-            // Se for '@', salva a posição e verifica se já existe um '@'
-            if (c == '@') {
-                if (posArroba != -1) {
-                    printf("Erro: múltiplos '@' não são permitidos.\n");
-                    return 0; // E-mail inválido
-                }
-                posArroba = i;
-            }
-            
-            // Se for '.', salva a posição do último ponto
-            if (c == '.') {
-                posPonto = i;
-            }
-        } else {
-            // Caractere inválido encontrado
-            printf("Erro: caractere '%c' inválido no e-mail.\n", c);
-            return 0; // E-mail inválido
+
+        // Verifica se há exatamente um '@' e sua posição
+        if (c == '@') {
+            if (atPos != -1) return 0; // Mais de um '@'
+            atPos = i;
+        }
+        // Verifica a posição do último ponto após o '@'
+        else if (c == '.' && atPos != -1) {
+            dotPos = i;
+        }
+        // Verifica caracteres inválidos (não alfanuméricos ou símbolos permitidos)
+        else if (!isalnum(c) && c != '.' && c != '-' && c != '_') {
+            return 0;
         }
     }
-    // Verifica se '@' e '.' estão em posições corretas
-    #include <limits.h> // Para SIZE_MAX
-    if (posArroba == SIZE_MAX || posPonto == SIZE_MAX || posPonto < posArroba || posPonto == strlen(email) - 1){
-        printf("Erro: o e-mail precisa de '@' e '.' em posições corretas.\n");
-        return 0; // E-mail inválido
-    }
-    return 1; // E-mail válido
-} //https://github.com/jGean09/Bibliotecas-em-C/blob/main/validar_email.c
+
+    // Verifica se '@' e '.' estão em posições válidas
+    if (atPos == -1 || dotPos == -1) return 0; // Ausência de '@' ou '.'
+    if (atPos < 1 || dotPos < atPos + 2 || dotPos >= len - 1) return 0;
+
+    return 1; // Email válido
+}
 
 
 //############################################################## 
@@ -331,7 +327,7 @@ int validar_CRM(const char *CRM) {
 //#####             Validar Especialização                 #####  
 //##############################################################
 int validarEspecializacao(char *especializacao) {
-    for (int i = 0; i < strlen(especializacao); i++) {
+    for (size_t i = 0; i < strlen(especializacao); i++) {
         if (!isalpha(especializacao[i]) && !isspace(especializacao[i])) {
             return 0; // Retorna inválido se encontrar caracteres que não são letras ou espaços
         }
@@ -339,14 +335,21 @@ int validarEspecializacao(char *especializacao) {
     return 1; // Retorna válido
 }
 
-int verificar_id(int id) {
-    if (id < 0) {
-        printf("O ID deve ser um número positivo.\n");
-        return 0; // ID inválido
+//############################################################## 
+//#####                   Validar ID                       #####  
+//##############################################################
+int validar_ID(const char *id) {
+    for (size_t i = 0; i < strlen(id); i++) {
+        if (!isdigit(id[i])) { // Verifica se cada caractere é um dígito
+            return 0; // Inválido se encontrar algo que não seja número
+        }
     }
-    return 1; // ID válido
+    return 1; // Válido se todos os caracteres forem números
 }
 
+//############################################################## 
+//#####                 Validar tempo                      #####  
+//##############################################################
 int validar_tempo(char *duracao) {
     int horas = 0;
     int minutos = 0;

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "agendamento.h"
-#include "../paciente/controller.h"
+#include "../paciente/paciente.h"
 #include "../validacoes/validacoes.h"
 
 void tela_agendamento(void) {

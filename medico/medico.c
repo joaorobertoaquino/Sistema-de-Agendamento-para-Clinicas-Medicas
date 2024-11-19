@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "medico.h"
-#include "../paciente/controller.h"
+#include "../paciente/paciente.h"
 #include "../validacoes/validacoes.h"
 #include "../agendamento/agendamento.h"
 
