@@ -49,7 +49,7 @@ int main(void) {
 }
 
 void tela_menu_principal(void) { 
-  system("clear||cls");
+  //system("clear||cls");
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║         ------ Sistema de Agendamento para Clínicas Médicas ------          ║\n");

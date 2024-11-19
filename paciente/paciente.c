@@ -3,6 +3,18 @@
 // #include <unistd.h>
 #include "paciente.h"
 #include "../validacoes/validacoes.h"
+typedef struct paciente Paciente;
+
+struct paciente{
+    char nome[51];
+    char CPF [13];
+    char data_nascimento[11];
+    char celular[13];
+    char email[51];
+    char endereco[80];    
+};
+
+
 
 void modulo_paciente(void){
     int opcao;
@@ -55,31 +67,26 @@ int tela_paciente(void) {
 
 
 void tela_cadastrar_paciente() {
-    char nome[51];
-    char CPF [13];
-    char data_nascimento[11];
-    char celular[13];
-    char email[51];
-    char endereco[80];
+    Paciente paciente1;
     system("clear||cls");
     printf("\n");
-    solicitar_nome(nome);
-    solicitar_CPF(CPF);
-    solicitar_data_nascimento(data_nascimento);
-    solicitar_celular(celular);
-    solicitar_email(email);
-    solicitar_endereco(endereco);
+    solicitar_nome(paciente1.nome);
+    solicitar_CPF(paciente1.CPF);
+    solicitar_data_nascimento(paciente1.data_nascimento);
+    solicitar_celular(paciente1.celular);
+    solicitar_email(paciente1.email);
+    solicitar_endereco(paciente1.endereco);
     printf("\n");
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                           CADASTRAR PACIENTE                                ║\n");
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
     printf("║                                                                             ║\n");
-    printf("║    Nome: %-67s║\n", nome);
-    printf("║    CPF: %-68s║\n", CPF);
-    printf("║    Data de nascimento: %-53s║\n", data_nascimento);
-    printf("║    Celular: %-64s║\n", celular);
-    printf("║    Email: %-66s║\n", email);
-    printf("║    Endereço: %-63s║\n", endereco);
+    printf("║    Nome: %-67s║\n", paciente1.nome);
+    printf("║    CPF: %-68s║\n", paciente1.CPF);
+    printf("║    Data de nascimento: %-53s║\n", paciente1.data_nascimento);
+    printf("║    Celular: %-64s║\n", paciente1.celular);
+    printf("║    Email: %-66s║\n", paciente1.email);
+    printf("║    Endereço: %-63s║\n", paciente1.endereco);
     printf("║                                                                             ║\n");
     printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
     printf("CLIENTE cadastrado com sucesso.");
