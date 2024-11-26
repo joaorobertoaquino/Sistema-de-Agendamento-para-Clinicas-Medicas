@@ -1,3 +1,13 @@
+struct paciente{
+    char nome[51];
+    char CPF [13];
+    char data_nascimento[11];
+    char celular[13];
+    char email[51];
+    char endereco[80];    
+};
+
+
 // ASSINATURA DE PACIENTE
 
 void modulo_paciente(void);
