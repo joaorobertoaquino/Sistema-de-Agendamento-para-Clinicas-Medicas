@@ -1,3 +1,9 @@
+struct procedimentos{
+    int ID_procedimento;
+    char nome[52];
+    char duracao[6];  
+};
+
 void tela_procedimentos(void);
 void tela_cadastrar_procedimento(void);
 void tela_atualizar_procedimento(void);

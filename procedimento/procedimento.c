@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "procedimento.h"
 #include "../validacoes/validacoes.h"
+typedef struct procedimentos Procedimentos;
 
 void tela_procedimentos(void) {
   int opcao;
@@ -45,12 +46,10 @@ void tela_procedimentos(void) {
 }
 
 void tela_cadastrar_procedimento() {
-  // int ID_procedimento;
-  // char nome[52];
-  // char duracao[6];
-  // solicitar_ID(ID_procedimento);
-  // solicitar_nome(nome);
-  // solicitar_tempo(duracao);
+  Procedimentos procedimento1;
+  //solicitar_ID(procedimento1.ID_procedimento);
+  //solicitar_nome(nome);
+  //solicitar_tempo(duracao);
 
   system("clear||cls");
   printf("\n");
@@ -111,7 +110,7 @@ void tela_ver_procedimento() {
   getchar();
 }
 
-// void solicitar_ID(int *ID_procedimento){
+//void solicitar_ID(int *ID_procedimento){
 //   int valido = 0; // Inicializando como não válido
 //   do {
 //       printf("║ ↪ID do procedimento:");
