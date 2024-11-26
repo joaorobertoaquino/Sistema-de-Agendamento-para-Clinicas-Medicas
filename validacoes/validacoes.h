@@ -10,4 +10,5 @@ int validar_hora(const char *hora);
 int validarEspecializacao(char *especializacao);
 int validar_CRM(const char *CRM);
 int validar_tempo(char *duracao);
-int validar_ID(const char *id);
+int validar_ID(int id);
+int validarNome_procedimento(char *nome); 

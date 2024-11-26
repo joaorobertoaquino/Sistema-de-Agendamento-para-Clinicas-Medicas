@@ -39,6 +39,23 @@ int validarNome(char* nome) {
 }// Autor: Flavius Gorgonio
 // referencia: https://github.com/FlaviusGorgonio/LinguaSolta_2021/blob/main/util.c
 
+//############################################################## 
+//#####                  Validar Nome                      #####  
+//##############################################################
+/// Retorna 1 se string recebido for exclusivamente alfabético ou
+/// retorna 0 caso contrário
+/// Adaptado para Valida se a string é composta apenas por letras e espaços
+int validarNome_procedimento(char* nome) {
+    for (int i = 0; nome[i] != '\0'; i++) { // percorre até o \0
+        // Se não for letra e não for espaço, retorna 0
+        if (!ehLetra(nome[i]) && nome[i] != ' ') {
+            return 0; // Nome inválido
+        }
+    }
+    return 1; // Nome válido
+}// Autor: Flavius Gorgonio
+// referencia: https://github.com/FlaviusGorgonio/LinguaSolta_2021/blob/main/util.c
+
 
 //############################################################## 
 //#####                  Validar CPF                       #####  
@@ -338,13 +355,12 @@ int validarEspecializacao(char *especializacao) {
 //############################################################## 
 //#####                   Validar ID                       #####  
 //##############################################################
-int validar_ID(const char *id) {
-    for (size_t i = 0; i < strlen(id); i++) {
-        if (!isdigit(id[i])) { // Verifica se cada caractere é um dígito
-            return 0; // Inválido se encontrar algo que não seja número
-        }
+int validar_ID(int id) {
+    // Verifica se o ID está no intervalo válido
+    if (id > 0 && id < 1000) {
+        return 1; // Válido
     }
-    return 1; // Válido se todos os caracteres forem números
+    return 0; // Inválido
 }
 
 //############################################################## 
