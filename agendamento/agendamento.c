@@ -3,6 +3,8 @@
 #include "agendamento.h"
 #include "../paciente/paciente.h"
 #include "../validacoes/validacoes.h"
+typedef struct agendamento Agendamento;
+Agendamento agendamento1;
 
 void tela_agendamento(void) {
   int opcao;
@@ -47,26 +49,25 @@ void tela_agendamento(void) {
 
 
 void tela_cadastrar_agendamento() {
-  char data[11];
-  char hora[6];
+
   char CPF[13];
   char CRM[10];
 
   system("clear||cls");
   printf("\n");
 
-  solicitar_data(data);
-  solicitar_hora(hora);
-  solicitar_CPF(CPF); //"../paciente/paciente.h"
-  solicitar_CRM(CRM);
+  solicitar_data(agendamento1.data);
+  solicitar_hora(agendamento1.hora);
+  //solicitar_CPF(CPF); //"../paciente/paciente.h"
+  //solicitar_CRM(CRM); //"../medico/medico.h"
   
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                         CADASTRAR AGENDAMENTO                               ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
-  printf("║    Data: %-67s║\n", data);
-  printf("║    Hora: %-67s║\n", hora);
+  printf("║    Data: %-67s║\n", agendamento1.data);
+  printf("║    Hora: %-67s║\n", agendamento1.hora);
   printf("║    ID do agendamento: (sem informação no momento)                           ║\n");
   printf("║    CPF paciente: %-59s║\n", CPF);
   printf("║    CRE do médico: %-58s║\n", CRM);
@@ -156,22 +157,4 @@ void solicitar_hora(char *hora) {
             valido = 0; // Marca como não válido
         }
     } while (!valido); // até ser válido
-}
-
-void solicitar_CRM(char *CRM) {
-    int valido = 0; // Inicializando como não válido
-    do {
-        printf("║ ↪ CRM do médico (formato 0000000-UF): ");
-        scanf(" %[^\n]", CRM);  // Lê até a nova linha
-        getchar(); // Limpa o buffer
-
-        // Verifica se o CRM é válido
-        if (validar_CRM(CRM)) { 
-            valido = 1; // Marca como válido
-        } else {
-            printf("==⊳ Entrada inválida, digite no formato 0000000-UF                          ║\n");
-            printf("==⊳ Pressione ENTER para tentar novamente                                    ═══╝\n");
-            valido = 0; // Marca como não válido
-        }
-    } while (!valido); // Continua até ser válido
 }

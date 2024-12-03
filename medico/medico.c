@@ -131,3 +131,20 @@ void solicitar_especializacao(char *especializacao) {
         }
     } while (!valido);
 }
+void solicitar_CRM(char *CRM) {
+    int valido = 0; // Inicializando como não válido
+    do {
+        printf("║ ↪ CRM do médico (formato 0000000-UF): ");
+        scanf(" %[^\n]", CRM);  // Lê até a nova linha
+        getchar(); // Limpa o buffer
+
+        // Verifica se o CRM é válido
+        if (validar_CRM(CRM)) { 
+            valido = 1; // Marca como válido
+        } else {
+            printf("==⊳ Entrada inválida, digite no formato 0000000-UF                          ║\n");
+            printf("==⊳ Pressione ENTER para tentar novamente                                    ═══╝\n");
+            valido = 0; // Marca como não válido
+        }
+    } while (!valido); // Continua até ser válido
+}

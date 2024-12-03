@@ -1,3 +1,8 @@
+struct agendamento{
+  char data[11];
+  char hora[6];
+};
+
 void tela_agendamento(void);
 void tela_cadastrar_agendamento(void);
 void tela_atualizar_agendamento(void);
