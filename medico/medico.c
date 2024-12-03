@@ -107,7 +107,7 @@ void tela_ver_medico() {
   printf("Digite o CRM que seja buscar:\n");
   scanf("%s",CRM_test);
   getchar();
-  buscar_medico(CRM_test,&medico1);
+  buscar_medico(CRM_test);
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                               VER MÉDICO                                    ║\n");
@@ -166,7 +166,7 @@ void salvar_medico(Medico *medico1) {
     fclose(fp);
     //free(medico1);
 }
-void buscar_medico(const char *crm_busca, Medico *medica1) {
+void buscar_medico(const char *crm_busca) {
     FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir para leitura binária
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
