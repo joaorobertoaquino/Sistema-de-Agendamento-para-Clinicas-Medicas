@@ -1,6 +1,9 @@
-struct agendamento{
-  char data[11];
-  char hora[6];
+
+struct agendamentos{
+    char data[11];
+    char hora[6];
+    char CPF[13];
+    char CRM[10];
 };
 
 void tela_agendamento(void);

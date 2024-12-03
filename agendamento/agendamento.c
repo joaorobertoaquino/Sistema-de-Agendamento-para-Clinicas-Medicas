@@ -3,8 +3,9 @@
 #include "agendamento.h"
 #include "../paciente/paciente.h"
 #include "../validacoes/validacoes.h"
-typedef struct agendamento Agendamento;
-Agendamento agendamento1;
+
+typedef struct agendamentos Agendamentos;
+Agendamentos agendamentos1;
 
 void tela_agendamento(void) {
   int opcao;
@@ -49,6 +50,7 @@ void tela_agendamento(void) {
 
 
 void tela_cadastrar_agendamento() {
+<<<<<<< HEAD
 
   char CPF[13];
   char CRM[10];
@@ -61,16 +63,29 @@ void tela_cadastrar_agendamento() {
   //solicitar_CPF(CPF); //"../paciente/paciente.h"
   //solicitar_CRM(CRM); //"../medico/medico.h"
   
+=======
+  system("clear||cls");
+  printf("\n");
+  solicitar_data(agendamentos1.data);
+  solicitar_hora(agendamentos1.hora);
+  solicitar_CPF(agendamentos1.CPF); //"../paciente/paciente.h"
+  solicitar_CRM(agendamentos1.CRM);
+>>>>>>> ef53351 (feat: criando o struct para o módulo "agendamentos".)
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                         CADASTRAR AGENDAMENTO                               ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
+<<<<<<< HEAD
   printf("║    Data: %-67s║\n", agendamento1.data);
   printf("║    Hora: %-67s║\n", agendamento1.hora);
+=======
+  printf("║    Data: %-67s║\n", agendamentos1.data);
+  printf("║    Hora: %-67s║\n", agendamentos1.hora);
+>>>>>>> ef53351 (feat: criando o struct para o módulo "agendamentos".)
   printf("║    ID do agendamento: (sem informação no momento)                           ║\n");
-  printf("║    CPF paciente: %-59s║\n", CPF);
-  printf("║    CRE do médico: %-58s║\n", CRM);
+  printf("║    CPF paciente: %-59s║\n", agendamentos1.CPF);
+  printf("║    CRE do médico: %-58s║\n", agendamentos1.CRM);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
   printf("AGENDAMENTO cadastrado com sucesso.\n");
