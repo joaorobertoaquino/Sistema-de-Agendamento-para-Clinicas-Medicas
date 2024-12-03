@@ -58,6 +58,7 @@ void tela_cadastrar_medico() {
   solicitar_nome(medico1.nome);
   solicitar_CRM(medico1.CRM);
   solicitar_especializacao(medico1.especializacao);
+  salvar_medico(&medico1);
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR MÉDICO                                  ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
@@ -101,7 +102,12 @@ void tela_deletar_medico() {
   getchar();
 }
 void tela_ver_medico() {
+  char CRM_test[13];
   system("clear||cls");
+  printf("Digite o CRM que seja buscar:\n");
+  scanf("%s",CRM_test);
+  getchar();
+  buscar_medico(CRM_test,&medico1);
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                               VER MÉDICO                                    ║\n");
@@ -147,4 +153,45 @@ void solicitar_CRM(char *CRM) {
             valido = 0; // Marca como não válido
         }
     } while (!valido); // Continua até ser válido
+}
+
+
+void salvar_medico(Medico *medico1) {
+    FILE *fp = fopen("medico/medico.dat", "ab"); // Abrir para adicionar binário
+    if (fp == NULL) {
+        printf("ERro na Abertura");
+        exit(1);
+    }
+    fwrite(medico1, sizeof(Medico), 1, fp); // Grava o conteúdo do struct
+    fclose(fp);
+    //free(medico1);
+}
+void buscar_medico(const char *crm_busca, Medico *medica1) {
+    FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir para leitura binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1);
+    }
+
+    Medico medico;
+    int encontrado = 0;
+
+    // Ler cada registro do arquivo
+    while (fread(&medico, sizeof(Medico), 1, fp)) {
+        // Verificar se o CRM coincide
+        if (strcmp(medico.CRM, crm_busca) == 0) {
+            printf("Médico encontrado:\n");
+            printf("CRM: %s\n", medico.CRM);
+            printf("Nome: %s\n", medico.nome);
+            printf("Especialização: %s\n", medico.especializacao);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Médico com CRM %s não encontrado.\n", crm_busca);
+    }
+
+    fclose(fp);
 }
