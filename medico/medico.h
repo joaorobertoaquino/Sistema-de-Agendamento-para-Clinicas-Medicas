@@ -1,3 +1,10 @@
+struct medico{
+    char CRM[13];
+    char nome[51];
+    char especializacao[31];
+};
+
+
 // MÉDICO
 void tela_medico(void);
 void tela_cadastrar_medico(void);

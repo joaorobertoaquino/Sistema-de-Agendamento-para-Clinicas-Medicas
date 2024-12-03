@@ -4,6 +4,8 @@
 #include "../paciente/paciente.h"
 #include "../validacoes/validacoes.h"
 #include "../agendamento/agendamento.h"
+typedef struct medico Medico;
+Medico medico1;
 
 //MEDICOS
 void tela_medico(void) {
@@ -53,20 +55,16 @@ void tela_medico(void) {
 void tela_cadastrar_medico() {
   system("clear||cls");
   printf("\n");
-  char CRM[13];
-  char nome[51];
-  char especializacao[31];
-
-  solicitar_nome(nome);
-  solicitar_CRM(CRM);
-  solicitar_especializacao(especializacao);
+  solicitar_nome(medico1.nome);
+  solicitar_CRM(medico1.CRM);
+  solicitar_especializacao(medico1.especializacao);
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                           CADASTRAR MÉDICO                                  ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
-  printf("║    CRM do médico: %-58s║\n", CRM);
-  printf("║    Nome: %-67s║\n", nome);
-  printf("║    Especialização: %-58s║\n", especializacao);
+  printf("║    CRM do médico: %-58s║\n", medico1.CRM);
+  printf("║    Nome: %-67s║\n", medico1.nome);
+  printf("║    Especialização: %-58s║\n", medico1.especializacao);
   printf("║                                                                             ║\n");
   printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
   printf("\n");
