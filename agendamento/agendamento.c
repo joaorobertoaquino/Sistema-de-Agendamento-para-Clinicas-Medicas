@@ -50,39 +50,19 @@ void tela_agendamento(void) {
 
 
 void tela_cadastrar_agendamento() {
-<<<<<<< HEAD
-
-  char CPF[13];
-  char CRM[10];
-
-  system("clear||cls");
-  printf("\n");
-
-  solicitar_data(agendamento1.data);
-  solicitar_hora(agendamento1.hora);
-  //solicitar_CPF(CPF); //"../paciente/paciente.h"
-  //solicitar_CRM(CRM); //"../medico/medico.h"
-  
-=======
   system("clear||cls");
   printf("\n");
   solicitar_data(agendamentos1.data);
   solicitar_hora(agendamentos1.hora);
   solicitar_CPF(agendamentos1.CPF); //"../paciente/paciente.h"
   solicitar_CRM(agendamentos1.CRM);
->>>>>>> ef53351 (feat: criando o struct para o módulo "agendamentos".)
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
   printf("║                         CADASTRAR AGENDAMENTO                               ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
-<<<<<<< HEAD
-  printf("║    Data: %-67s║\n", agendamento1.data);
-  printf("║    Hora: %-67s║\n", agendamento1.hora);
-=======
   printf("║    Data: %-67s║\n", agendamentos1.data);
   printf("║    Hora: %-67s║\n", agendamentos1.hora);
->>>>>>> ef53351 (feat: criando o struct para o módulo "agendamentos".)
   printf("║    ID do agendamento: (sem informação no momento)                           ║\n");
   printf("║    CPF paciente: %-59s║\n", agendamentos1.CPF);
   printf("║    CRE do médico: %-58s║\n", agendamentos1.CRM);
