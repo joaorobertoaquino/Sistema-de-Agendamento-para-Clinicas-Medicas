@@ -14,3 +14,5 @@ void solicitar_especializacao(char *especializacao);
 void salvar_medico(Medico *medico1);
 void buscar_medico(const char *crm_busca);
 int verificar_CRM_existente(const char *crm_busca);
+void exibir_medico(Medico medico);
+void alterar_medico(const char *crm_busca);
