@@ -13,3 +13,4 @@ void tela_ver_medico(void);
 void solicitar_especializacao(char *especializacao);
 void salvar_medico(Medico *medico1);
 void buscar_medico(const char *crm_busca);
+int verificar_CRM_existente(const char *crm_busca);
