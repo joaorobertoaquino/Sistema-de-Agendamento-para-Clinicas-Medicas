@@ -1,11 +1,11 @@
-struct paciente{
+typedef struct paciente{
     char nome[51];
     char CPF [13];
     char data_nascimento[11];
     char celular[13];
     char email[51];
     char endereco[80];    
-};
+} Paciente;
 
 
 // ASSINATURA DE PACIENTE
@@ -22,4 +22,5 @@ void solicitar_data_nascimento(char *data_nascimento);
 void solicitar_celular(char *celular);
 void solicitar_email(char *email);
 void solicitar_endereco(char *endereco);
+void salvar_paciente(Paciente *paciente1);
 

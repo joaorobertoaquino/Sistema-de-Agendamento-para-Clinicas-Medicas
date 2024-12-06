@@ -9,8 +9,8 @@ typedef struct medico Medico;
 
 //MEDICOS
 void tela_medico(void) {
-  int opcao;
-  do{
+    int opcao;
+    do{
     system("clear||cls");
     printf("\n");
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
@@ -29,110 +29,110 @@ void tela_medico(void) {
     scanf("%d", &opcao);
     getchar();
     switch (opcao) {
-      case 1:
-        tela_cadastrar_medico();
+        case 1:
+            tela_cadastrar_medico();
+            break;
+        case 2:
+            tela_ver_medico();
+            break;
+        case 3:
+            tela_atualizar_medico();
+            break;
+        case 4:
+            tela_deletar_medico();
+            break;
+        case 0:
+            break;
+        default:
+        printf("Valor invalido");
         break;
-      case 2:
-        tela_ver_medico();
-        break;
-      case 3:
-        tela_atualizar_medico();
-        break;
-      case 4:
-        tela_deletar_medico();
-        break;
-      case 0:
-        break;
-      default:
-      printf("Valor invalido");
-      break;
-      
-    }
-  }while(opcao != 0);
+        
+        }
+    }while(opcao != 0);
 }
 
 
 void tela_cadastrar_medico() {
-  Medico *medico1 = malloc(sizeof(Medico));
-  system("clear||cls");
-  printf("\n");
-  solicitar_nome(medico1->nome);
-  solicitar_CRM(medico1->CRM);
-  solicitar_especializacao(medico1->especializacao);
-  salvar_medico(medico1);
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                           CADASTRAR MÉDICO                                  ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    CRM do médico: %-58s║\n", medico1->CRM);
-  printf("║    Nome: %-67s║\n", medico1->nome);
-  printf("║    Especialização: %-58s║\n", medico1->especializacao);
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
+    Medico *medico1 = malloc(sizeof(Medico));
+    system("clear||cls");
+    printf("\n");
+    solicitar_nome(medico1->nome);
+    solicitar_CRM(medico1->CRM);
+    solicitar_especializacao(medico1->especializacao);
+    salvar_medico(medico1);
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                           CADASTRAR MÉDICO                                  ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+    printf("║    CRM do médico: %-58s║\n", medico1->CRM);
+    printf("║    Nome: %-67s║\n", medico1->nome);
+    printf("║    Especialização: %-58s║\n", medico1->especializacao);
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("\n");
+    printf("Pressione a tecla <ENTER> para continuar...\n");
+    getchar();
 }
 void tela_atualizar_medico() {
-  char CRM_test[13];
-  system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                           ATUALIZAR MÉDICO                                  ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    Informe o CRE do médico que deseja atualizar:                            ║\n");
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
-  scanf("%s", CRM_test);
-  
-  // Verificar se o CRM existe
-  if (verificar_CRM_existente(CRM_test)) {
-      // Se o CRM existir, alterar os dados
-      alterar_medico(CRM_test);
-  } else {
-      printf("Médico com CRM %s não encontrado.\n", CRM_test);
-  }
-  getchar();
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
+    char CRM_test[13];
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                           ATUALIZAR MÉDICO                                  ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+    printf("║    Informe o CRE do médico que deseja atualizar:                            ║\n");
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("\n");
+    scanf("%s", CRM_test);
+    
+    // Verificar se o CRM existe
+    if (verificar_CRM_existente(CRM_test)) {
+        // Se o CRM existir, alterar os dados
+        alterar_medico(CRM_test);
+    } else {
+        printf("Médico com CRM %s não encontrado.\n", CRM_test);
+    }
+    getchar();
+    printf("\n");
+    printf("Pressione a tecla <ENTER> para continuar...\n");
+    getchar();
 }
 
 void tela_deletar_medico() {
-  system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                             DELETAR MÉDICO                                  ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    Informe o CRE do médico que deseja deletar:                              ║\n");
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                             DELETAR MÉDICO                                  ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+    printf("║    Informe o CRE do médico que deseja deletar:                              ║\n");
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
 
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
+    printf("\n");
+    printf("Pressione a tecla <ENTER> para continuar...\n");
+    getchar();
 }
 void tela_ver_medico() {
-  char CRM_test[13];
-  system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                               VER MÉDICO                                    ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    Informe o CRE do médico que deseja ver informações:                      ║\n");
-  printf("║                                                                             ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("╠═↪");
-  scanf("%s",CRM_test);
-  buscar_medico(CRM_test);
-  getchar();
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
+    char CRM_test[13];
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                               VER MÉDICO                                    ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+    printf("║    Informe o CRE do médico que deseja ver informações:                      ║\n");
+    printf("║                                                                             ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("╠═↪");
+    scanf("%s",CRM_test);
+    buscar_medico(CRM_test);
+    getchar();
+    printf("\n");
+    printf("Pressione a tecla <ENTER> para continuar...\n");
+    getchar();
 }
 
 void solicitar_especializacao(char *especializacao) {
@@ -188,6 +188,7 @@ void salvar_medico(Medico *medico1) {
     fclose(fp);
     free(medico1);
 }
+
 void buscar_medico(const char *crm_busca) {
     FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir para leitura binária
     if (fp == NULL) {
@@ -214,6 +215,7 @@ void buscar_medico(const char *crm_busca) {
 
     fclose(fp);
 }
+
 int verificar_CRM_existente(const char *crm_busca) {
     FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir o arquivo para leitura binária
     if (fp == NULL) {

@@ -57,28 +57,20 @@ int tela_paciente(void) {
 
 
 void tela_cadastrar_paciente() {
-    Paciente paciente1;
+    Paciente *paciente1 = malloc(sizeof(Paciente));
     system("clear||cls");
-    printf("\n");
-    solicitar_nome(paciente1.nome);
-    solicitar_CPF(paciente1.CPF);
-    solicitar_data_nascimento(paciente1.data_nascimento);
-    solicitar_celular(paciente1.celular);
-    solicitar_email(paciente1.email);
-    solicitar_endereco(paciente1.endereco);
     printf("\n");
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                           CADASTRAR PACIENTE                                ║\n");
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║                                                                             ║\n");
-    printf("║    Nome: %-67s║\n", paciente1.nome);
-    printf("║    CPF: %-68s║\n", paciente1.CPF);
-    printf("║    Data de nascimento: %-53s║\n", paciente1.data_nascimento);
-    printf("║    Celular: %-64s║\n", paciente1.celular);
-    printf("║    Email: %-66s║\n", paciente1.email);
-    printf("║    Endereço: %-63s║\n", paciente1.endereco);
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    solicitar_nome(paciente1->nome);
+    solicitar_CPF(paciente1->CPF);
+    solicitar_data_nascimento(paciente1->data_nascimento);
+    solicitar_celular(paciente1->celular);
+    solicitar_email(paciente1->email);
+    solicitar_endereco(paciente1->endereco);
+    salvar_paciente(paciente1);
+    printf("\n");
     printf("CLIENTE cadastrado com sucesso.");
     printf("\n");
     printf("Pressione a tecla <ENTER> para continuar...\n");
@@ -216,7 +208,8 @@ void solicitar_endereco(char *endereco){
     int valido = 0; // Inicializando como não válido
     do {
         printf("║ ↪Endereço:");
-        scanf(" %[^\n]", endereco); 
+        scanf(" %[^\n]", endereco);
+        printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
         getchar();
         if (validar_endereco(endereco)==1) { 
             valido = 1; // Marca como válido
@@ -227,5 +220,21 @@ void solicitar_endereco(char *endereco){
             while (getchar() != '\n'); // Limpar o buffer
         }
     } while (!valido); // até ser valido
+}
+
+
+// #############################
+// ##         Arquivo         ##
+// #############################
+
+void salvar_paciente(Paciente *paciente1) {
+    FILE *fp = fopen("paciente/paciente.dat", "ab"); // Abrir para adicionar binário
+    if (fp == NULL) {
+        printf("Erro na Abertura");
+        exit(1);
+    }
+    fwrite(paciente1, sizeof(Paciente), 1, fp); // Grava o conteúdo do struct
+    fclose(fp);
+    free(paciente1);
 }
 
