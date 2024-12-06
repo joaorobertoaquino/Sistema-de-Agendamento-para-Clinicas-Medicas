@@ -106,12 +106,12 @@ void tela_deletar_paciente() {
 }
 
 void tela_ver_paciente() {
-    char CPF_test[13];
+    // char CPF_test[13];
     system("clear||cls");
     printf("\n");
     printf("↪ Informe o CPF do paciente que deseja ver informações: ");
-    scanf("%s",CPF_test);
-    buscar_paciente(CPF_test);
+    // scanf("%s",CPF_test);
+    // buscar_paciente(CPF_test);
     getchar();
     printf("\n");
     printf("Pressione a tecla <ENTER> para continuar...\n");

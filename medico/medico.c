@@ -125,6 +125,45 @@ void tela_ver_medico() {
     getchar();
 }
 
+void buscar_medico(const char *crm_busca) {
+    FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir para leitura binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1);
+    }
+    Medico medico;
+    int encontrado = 0;
+    // Ler cada registro do arquivo
+    while (fread(&medico, sizeof(Medico), 1, fp)) {
+        // Verificar se o CRM coincide
+        if (strcmp(medico.CRM, crm_busca) == 0) {
+            exibir_medico(medico); // Chama a função que exibe os dados do médico
+            encontrado = 1;
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Médico com CRM %s não encontrado.\n", crm_busca);
+    }
+    fclose(fp);
+}
+
+void exibir_medico(Medico medico) {
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                               VER MÉDICO                                    ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+    printf("║    CRM: %-68s║\n", medico.CRM);
+    printf("║    Nome: %-67s║\n", medico.nome);
+    printf("║    Especialização: %-57s║\n", medico.especializacao);
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+}
+
+
+// ##########################
+// ##    Funçoes de Ler    ##
+// ##########################
 void solicitar_especializacao(char *especializacao) {
     int valido = 0;  
     do {
@@ -195,41 +234,7 @@ void salvar_medico(Medico *medico1) {
     free(medico1);
 }
 
-void buscar_medico(const char *crm_busca) {
-    FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir para leitura binária
-    if (fp == NULL) {
-        printf("Erro ao abrir o arquivo\n");
-        exit(1);
-    }
-    Medico medico;
-    int encontrado = 0;
-    // Ler cada registro do arquivo
-    while (fread(&medico, sizeof(Medico), 1, fp)) {
-        // Verificar se o CRM coincide
-        if (strcmp(medico.CRM, crm_busca) == 0) {
-            exibir_medico(medico); // Chama a função que exibe os dados do médico
-            encontrado = 1;
-            break;
-        }
-    }
-    if (!encontrado) {
-        printf("Médico com CRM %s não encontrado.\n", crm_busca);
-    }
-    fclose(fp);
-}
 
-
-void exibir_medico(Medico medico) {
-    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                               VER MÉDICO                                    ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║                                                                             ║\n");
-    printf("║    CRM: %-68s║\n", medico.CRM);
-    printf("║    Nome: %-67s║\n", medico.nome);
-    printf("║    Especialização: %-57s║\n", medico.especializacao);
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-}
 void alterar_medico(const char *crm_busca) {
     FILE *fp = fopen("medico/medico.dat", "rb+"); // Abrir para leitura e escrita binária
     if (fp == NULL) {
