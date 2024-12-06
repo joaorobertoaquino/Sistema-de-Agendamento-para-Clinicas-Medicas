@@ -106,14 +106,13 @@ void tela_deletar_paciente() {
 }
 
 void tela_ver_paciente() {
+    char CPF_test[13];
     system("clear||cls");
     printf("\n");
-    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                               VER PACIENTE                                  ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║  ↪Informe o CPF do paciente que deseja ver informações:                     ║\n");
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("↪ Informe o CPF do paciente que deseja ver informações: ");
+    scanf("%s",CPF_test);
+    buscar_paciente(CPF_test);
+    getchar();
     printf("\n");
     printf("Pressione a tecla <ENTER> para continuar...\n");
     getchar();
@@ -136,6 +135,7 @@ void solicitar_nome(char *nome) {
         }
     } while (!valido); // até ser valido
 }
+
 void solicitar_CPF(char *CPF){
     int valido = 0; // Inicializando como não válido
     do {
