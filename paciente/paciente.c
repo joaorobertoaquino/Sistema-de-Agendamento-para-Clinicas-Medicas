@@ -56,7 +56,9 @@ int tela_paciente(void) {
     return opcao;
 }
 
-
+// ##########################
+// ##      Cadastrar       ##
+// ##########################
 void tela_cadastrar_paciente() {
     Paciente *paciente1 = malloc(sizeof(Paciente));
     system("clear||cls");
@@ -78,34 +80,10 @@ void tela_cadastrar_paciente() {
     getchar();
 }
 
-void tela_atualizar_paciente() {
-    system("clear||cls");
-    printf("\n");
-    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                          ATUALIZAR PACIENTE                                 ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║  ↪Informe o CPF do paciente que deseja atualizar:                           ║\n");
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-    printf("\n");
-    printf("Pressione a tecla <ENTER> para continuar...\n");
-    getchar();
-}
 
-void tela_deletar_paciente() {
-    system("clear||cls");
-    printf("\n");
-    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                            DELETAR PACIENTE                                 ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║  ↪Informe o CPF do paciente que deseja deletar:                             ║\n");
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-    printf("\n");
-    printf("Pressione a tecla <ENTER> para continuar...\n");
-    getchar();
-}
-
+// ##########################
+// ##      Pesquisar       ##
+// ##########################
 void tela_ver_paciente() {
     char CPF_test[13];
     system("clear||cls");
@@ -127,7 +105,6 @@ void buscar_paciente(const char *cpf_busca) {
     }
     Paciente paciente;
     int encontrado = 0;
-
     while (fread(&paciente, sizeof(Paciente), 1, fp)) {
         if (strcmp(paciente.CPF, cpf_busca) == 0) {
             exibir_paciente(paciente);
@@ -143,7 +120,7 @@ void buscar_paciente(const char *cpf_busca) {
 
 void exibir_paciente(Paciente paciente){
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                           CADASTRAR PACIENTE                                ║\n");
+    printf("║                             EXIBIR PACIENTE                                 ║\n");
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
     printf("║                                                                             ║\n");
     printf("║    Nome: %-67s║\n", paciente.nome);
@@ -155,6 +132,43 @@ void exibir_paciente(Paciente paciente){
     printf("║                                                                             ║\n");
     printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
 }
+
+
+// ##########################
+// ##       Atualizar      ##
+// ##########################
+void tela_atualizar_paciente() {
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                          ATUALIZAR PACIENTE                                 ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║  ↪Informe o CPF do paciente que deseja atualizar:                           ║\n");
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("\n");
+    printf("Pressione a tecla <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+// ##########################
+// ##        Deletar       ##
+// ##########################
+void tela_deletar_paciente() {
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                            DELETAR PACIENTE                                 ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║  ↪Informe o CPF do paciente que deseja deletar:                             ║\n");
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("\n");
+    printf("Pressione a tecla <ENTER> para continuar...\n");
+    getchar();
+}
+
 
 // ##########################
 // ##    Funçoes de Ler    ##

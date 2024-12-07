@@ -52,6 +52,9 @@ void tela_medico(void) {
 }
 
 
+// ##########################
+// ##      Cadastrar       ##
+// ##########################
 void tela_cadastrar_medico() {
     Medico *medico1 = malloc(sizeof(Medico));
     system("clear||cls");
@@ -69,49 +72,11 @@ void tela_cadastrar_medico() {
     printf("Pressione a tecla <ENTER> para continuar...\n");
     getchar();
 }
-void tela_atualizar_medico() {
-    char CRM_test[13];
-    system("clear||cls");
-    printf("\n");
-    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                           ATUALIZAR MÉDICO                                  ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║                                                                             ║\n");
-    printf("║    Informe o CRE do médico que deseja atualizar:                            ║\n");
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-    printf("\n");
-    scanf("%s", CRM_test);
-    
-    // Verificar se o CRM existe
-    if (verificar_CRM_existente(CRM_test)) {
-        // Se o CRM existir, alterar os dados
-        alterar_medico(CRM_test);
-    } else {
-        printf("Médico com CRM %s não encontrado.\n", CRM_test);
-    }
-    getchar();
-    printf("\n");
-    printf("Pressione a tecla <ENTER> para continuar...\n");
-    getchar();
-}
 
-void tela_deletar_medico() {
-    system("clear||cls");
-    printf("\n");
-    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                             DELETAR MÉDICO                                  ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║                                                                             ║\n");
-    printf("║    Informe o CRE do médico que deseja deletar:                              ║\n");
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
 
-    printf("\n");
-    printf("Pressione a tecla <ENTER> para continuar...\n");
-    getchar();
-}
-
+// ##########################
+// ##      Pesquisar       ##
+// ##########################
 void tela_ver_medico() {
     char CRM_test[13];
     system("clear||cls");
@@ -158,6 +123,57 @@ void exibir_medico(Medico medico) {
     printf("║    Especialização: %-57s║\n", medico.especializacao);
     printf("║                                                                             ║\n");
     printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+}
+
+
+// ##########################
+// ##       Atualizar      ##
+// ##########################
+void tela_atualizar_medico() {
+    char CRM_test[13];
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                           ATUALIZAR MÉDICO                                  ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+    printf("║    Informe o CRE do médico que deseja atualizar:                            ║\n");
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("\n");
+    scanf("%s", CRM_test);
+    
+    // Verificar se o CRM existe
+    if (verificar_CRM_existente(CRM_test)) {
+        // Se o CRM existir, alterar os dados
+        alterar_medico(CRM_test);
+    } else {
+        printf("Médico com CRM %s não encontrado.\n", CRM_test);
+    }
+    getchar();
+    printf("\n");
+    printf("Pressione a tecla <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+// ##########################
+// ##        Deletar       ##
+// ##########################
+void tela_deletar_medico() {
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                             DELETAR MÉDICO                                  ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+    printf("║    Informe o CRE do médico que deseja deletar:                              ║\n");
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+
+    printf("\n");
+    printf("Pressione a tecla <ENTER> para continuar...\n");
+    getchar();
 }
 
 
