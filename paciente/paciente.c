@@ -141,15 +141,55 @@ void tela_atualizar_paciente() {
     char CPF_test[13];
     system("clear||cls");
     printf("\n");
-    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                          ATUALIZAR PACIENTE                                 ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║  ↪Informe o CPF do paciente que deseja atualizar:                           ║\n");
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("↪ Informe o CPF do paciente que deseja atualizar:");
+    scanf("%s",CPF_test);
+
+    if (verificar_CPF_existente(CPF_test)) {
+    alterar_paciente(CPF_test);
+    } 
+    else {
+        printf("Paciente com CPF %s não encontrado.\n", CPF_test);
+    }
+    getchar();
     printf("\n");
     printf("Pressione a tecla <ENTER> para continuar...\n");
     getchar();
+}
+
+void alterar_paciente(const char *cpf_busca) {
+    FILE *fp = fopen("paciente/paciente.dat", "rb+"); // Abrir para leitura e escrita binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1);
+    }
+    Paciente paciente;
+    int encontrado = 0;
+    while (fread(&paciente, sizeof(Paciente), 1, fp)) {
+        if (strcmp(paciente.CPF, cpf_busca) == 0) {
+            exibir_paciente(paciente);
+            printf("\n");
+            printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+            printf("║                         ALTERAR DADOS DO PACIENTE                           ║\n");
+            printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+            printf("║                                                                             ║\n");
+            solicitar_nome(paciente.nome);
+            solicitar_CPF(paciente.CPF);
+            solicitar_data_nascimento(paciente.data_nascimento);
+            solicitar_celular(paciente.celular);
+            solicitar_email(paciente.email);
+            solicitar_endereco(paciente.endereco);
+
+            fseek(fp, -sizeof(Paciente), SEEK_CUR);
+            fwrite(&paciente, sizeof(Paciente), 1, fp); // Sobrescreve o registro
+            printf("\n╠══════ Dados do paciente atualizados com sucesso! ══════╣\n");
+            encontrado = 1;
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Paciente com CPF %s não encontrado.\n", cpf_busca);
+    }
+    fclose(fp);
 }
 
 
@@ -264,7 +304,7 @@ void solicitar_endereco(char *endereco){
     do {
         printf("║ ↪Endereço:");
         scanf(" %[^\n]", endereco);
-        printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+        printf("═══════════════════════════════════════════════════════════════════════════════\n");
         getchar();
         if (validar_endereco(endereco)==1) { 
             valido = 1; // Marca como válido
@@ -293,38 +333,22 @@ void salvar_paciente(Paciente *paciente1) {
     free(paciente1);
 }
 
-void alterar_paciente(const char *cpf_busca) {
-    FILE *fp = fopen("paciente/paciente.dat", "rb+"); // Abrir para leitura e escrita binária
+
+int verificar_CPF_existente(const char *cpf_busca) {
+    FILE *fp = fopen("paciente/paciente.dat", "rb"); 
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
-        exit(1);
+        return 0;
     }
     Paciente paciente;
-    int encontrado = 0;
     while (fread(&paciente, sizeof(Paciente), 1, fp)) {
         if (strcmp(paciente.CPF, cpf_busca) == 0) {
-            exibir_medico(paciente);
-            printf("\n");
-            printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-            printf("║                         ALTERAR DADOS DO PACIENTE                           ║\n");
-            printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-            printf("║                                                                             ║\n");
-            solicitar_nome(paciente.nome);
-            solicitar_CPF(paciente.CPF);
-            solicitar_data_nascimento(paciente.data_nascimento);
-            solicitar_celular(paciente.celular);
-            solicitar_email(paciente.email);
-            solicitar_endereco(paciente.endereco);
-
-            fseek(fp, -sizeof(Paciente), SEEK_CUR);
-            fwrite(&paciente, sizeof(Paciente), 1, fp); // Sobrescreve o registro
-            printf("\n╠══════ Dados do paciente atualizados com sucesso! ══════╣\n");
-            encontrado = 1;
-            break;
+            fclose(fp);
+            return 1;  
         }
     }
-    if (!encontrado) {
-        printf("Médico com CRM %s não encontrado.\n", cpf_busca);
-    }
-    fclose(fp);
+    fclose(fp); 
+    return 0;  
 }
+
+
