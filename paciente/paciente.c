@@ -138,6 +138,7 @@ void exibir_paciente(Paciente paciente){
 // ##       Atualizar      ##
 // ##########################
 void tela_atualizar_paciente() {
+    char CPF_test[13];
     system("clear||cls");
     printf("\n");
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
@@ -292,3 +293,38 @@ void salvar_paciente(Paciente *paciente1) {
     free(paciente1);
 }
 
+void alterar_paciente(const char *cpf_busca) {
+    FILE *fp = fopen("paciente/paciente.dat", "rb+"); // Abrir para leitura e escrita binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1);
+    }
+    Paciente paciente;
+    int encontrado = 0;
+    while (fread(&paciente, sizeof(Paciente), 1, fp)) {
+        if (strcmp(paciente.CPF, cpf_busca) == 0) {
+            exibir_medico(paciente);
+            printf("\n");
+            printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+            printf("║                         ALTERAR DADOS DO PACIENTE                           ║\n");
+            printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+            printf("║                                                                             ║\n");
+            solicitar_nome(paciente.nome);
+            solicitar_CPF(paciente.CPF);
+            solicitar_data_nascimento(paciente.data_nascimento);
+            solicitar_celular(paciente.celular);
+            solicitar_email(paciente.email);
+            solicitar_endereco(paciente.endereco);
+
+            fseek(fp, -sizeof(Paciente), SEEK_CUR);
+            fwrite(&paciente, sizeof(Paciente), 1, fp); // Sobrescreve o registro
+            printf("\n╠══════ Dados do paciente atualizados com sucesso! ══════╣\n");
+            encontrado = 1;
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Médico com CRM %s não encontrado.\n", cpf_busca);
+    }
+    fclose(fp);
+}
