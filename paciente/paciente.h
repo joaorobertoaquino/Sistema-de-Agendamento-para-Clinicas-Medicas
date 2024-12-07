@@ -23,4 +23,6 @@ void solicitar_celular(char *celular);
 void solicitar_email(char *email);
 void solicitar_endereco(char *endereco);
 void salvar_paciente(Paciente *paciente1);
+void buscar_paciente(const char *cpf_busca);
+void exibir_paciente(Paciente paciente);
 

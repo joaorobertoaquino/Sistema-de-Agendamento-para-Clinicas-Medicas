@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 // #include <unistd.h>
 #include "paciente.h"
 #include "../validacoes/validacoes.h"
@@ -119,18 +120,17 @@ void tela_ver_paciente() {
 }
 
 void buscar_paciente(const char *cpf_busca) {
-    FILE *fp = fopen("paciente/paciente.dat", "rb"); // Abrir para leitura binária
+    FILE *fp = fopen("paciente/paciente.dat", "rb"); 
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
     }
     Paciente paciente;
     int encontrado = 0;
-    // Ler cada registro do arquivo
+
     while (fread(&paciente, sizeof(Paciente), 1, fp)) {
-        // Verificar se o CRM coincide
         if (strcmp(paciente.CPF, cpf_busca) == 0) {
-            exibir_paciente(paciente); // Chama a função que exibe os dados do médico
+            exibir_paciente(paciente);
             encontrado = 1;
             break;
         }
@@ -141,7 +141,24 @@ void buscar_paciente(const char *cpf_busca) {
     fclose(fp);
 }
 
-//o ponteiro permite que a função modifique diretamente o conteúdo de nome sem precisar retornar o valor.
+void exibir_paciente(Paciente paciente){
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                           CADASTRAR PACIENTE                                ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+    printf("║    Nome: %-67s║\n", paciente.nome);
+    printf("║    CPF: %-68s║\n", paciente.CPF);
+    printf("║    Data de nascimento: %-53s║\n", paciente.data_nascimento);
+    printf("║    Celular: %-64s║\n", paciente.celular);
+    printf("║    Email: %-66s║\n", paciente.email);
+    printf("║    Endereço: %-63s║\n", paciente.endereco);
+    printf("║                                                                             ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+}
+
+// ##########################
+// ##    Funçoes de Ler    ##
+// ##########################
 void solicitar_nome(char *nome) {
     int valido = 0; // Inicializando como não válido
     do {
