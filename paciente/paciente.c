@@ -106,16 +106,39 @@ void tela_deletar_paciente() {
 }
 
 void tela_ver_paciente() {
-    // char CPF_test[13];
+    char CPF_test[13];
     system("clear||cls");
     printf("\n");
     printf("↪ Informe o CPF do paciente que deseja ver informações: ");
-    // scanf("%s",CPF_test);
-    // buscar_paciente(CPF_test);
+    scanf("%s",CPF_test);
+    buscar_paciente(CPF_test);
     getchar();
     printf("\n");
     printf("Pressione a tecla <ENTER> para continuar...\n");
     getchar();
+}
+
+void buscar_paciente(const char *cpf_busca) {
+    FILE *fp = fopen("paciente/paciente.dat", "rb"); // Abrir para leitura binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1);
+    }
+    Paciente paciente;
+    int encontrado = 0;
+    // Ler cada registro do arquivo
+    while (fread(&paciente, sizeof(Paciente), 1, fp)) {
+        // Verificar se o CRM coincide
+        if (strcmp(paciente.CPF, cpf_busca) == 0) {
+            exibir_paciente(paciente); // Chama a função que exibe os dados do médico
+            encontrado = 1;
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Médico com CRM %s não encontrado.\n", cpf_busca);
+    }
+    fclose(fp);
 }
 
 //o ponteiro permite que a função modifique diretamente o conteúdo de nome sem precisar retornar o valor.
