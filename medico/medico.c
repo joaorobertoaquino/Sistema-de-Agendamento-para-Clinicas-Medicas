@@ -90,6 +90,7 @@ void tela_ver_medico() {
     getchar();
 }
 
+
 void buscar_medico(const char *crm_busca) {
     FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir para leitura binária
     if (fp == NULL) {
