@@ -72,6 +72,7 @@ void tela_cadastrar_paciente() {
     solicitar_celular(paciente1->celular);
     solicitar_email(paciente1->email);
     solicitar_endereco(paciente1->endereco);
+    paciente1->status = 'a';
     salvar_paciente(paciente1);
     printf("\n");
     printf("CLIENTE cadastrado com sucesso.");
@@ -90,14 +91,14 @@ void tela_ver_paciente() {
     printf("\n");
     printf("↪ Informe o CPF do paciente que deseja ver informações: ");
     scanf("%s",CPF_test);
-    buscar_paciente(CPF_test);
+    buscar_paciente_ativo(CPF_test);
     getchar();
     printf("\n");
     printf("Pressione a tecla <ENTER> para continuar...\n");
     getchar();
 }
 
-void buscar_paciente(const char *cpf_busca) {
+void buscar_paciente_ativo(const char *cpf_busca) {
     FILE *fp = fopen("paciente/paciente.dat", "rb"); 
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
@@ -107,9 +108,15 @@ void buscar_paciente(const char *cpf_busca) {
     int encontrado = 0;
     while (fread(&paciente, sizeof(Paciente), 1, fp)) {
         if (strcmp(paciente.CPF, cpf_busca) == 0) {
-            exibir_paciente(paciente);
-            encontrado = 1;
-            break;
+            if (paciente.status == "i") {
+                printf("O paciente com CPF:%s está inativo.",paciente.CPF);
+                encontrado = 1;
+                break;
+            }else{
+                exibir_paciente(paciente);
+                encontrado = 1;
+                break;
+            }
         }
     }
     if (!encontrado) {
