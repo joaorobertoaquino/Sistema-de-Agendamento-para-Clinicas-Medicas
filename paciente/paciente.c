@@ -24,6 +24,9 @@ void modulo_paciente(void){
         case 4:
             tela_deletar_paciente();
             break;
+        case 5:
+            listar_pacientes();
+            break;
         case 0:
             break;
         default:
@@ -46,6 +49,7 @@ int tela_paciente(void) {
     printf("║                          2. Pesquisar Paciente                              ║\n");
     printf("║                          3. Atualizar Paciente                              ║\n");
     printf("║                          4. Remover Paciente                                ║\n");
+    printf("║                          5. Listar Pacientes                                ║\n");
     printf("║                                                                             ║\n");
     printf("║                          0. Cancelar e sair                                 ║\n");
     printf("║                                                                             ║\n");
@@ -94,7 +98,7 @@ void tela_ver_paciente() {
     buscar_paciente_ativo(CPF_test);
     getchar();
     printf("\n");
-    printf("Pressione a tecla <ENTER> para continuar...\n");
+    printf("\nPressione a tecla <ENTER> para continuar...");
     getchar();
 }
 
@@ -211,7 +215,7 @@ void tela_deletar_paciente() {
     scanf("%s", CPF_test);
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                            DELETAR PACIENTE                                 ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
     excluirPaciente(CPF_test);
     getchar();
     printf("\n");
@@ -244,6 +248,47 @@ void tela_deletar_paciente() {
 }
 
 
+// ##########################
+// ##   Listar Clientes    ##
+// ##########################
+void listar_pacientes() {
+    int opcao;
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                          LISTAR PACIENTES CADASTRADOS                       ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                  1. Listar Todos os Pacientes (Ativos e Inativos)           ║\n");
+    printf("║                  2. Listar Apenas Pacientes Ativos                          ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("\n ↪ Escolha a opção para listar os pacientes: ");
+    scanf("%d", &opcao);
+    system("clear||cls");
+
+    FILE *fp = fopen("paciente/paciente.dat", "rb"); // Abrir o arquivo em modo de leitura binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de médicos.\n");
+        return;
+    }
+
+    Paciente paciente;
+    int encontrou = 0; 
+    
+    while (fread(&paciente, sizeof(Paciente), 1, fp)) {
+        if ((opcao == 1) || (opcao == 2 && paciente.status == 'a')) { 
+            exibir_paciente(paciente); 
+            encontrou = 1;
+        }
+    }
+    if (!encontrou) {
+        printf("Nenhum paciente encontrado.\n");
+    }
+    fclose(fp);
+
+    while (getchar() != '\n');
+    printf("\nPressione <ENTER> para continuar...");
+    getchar(); 
+}
 
 // ##########################
 // ##    Funçoes de Ler    ##

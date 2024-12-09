@@ -29,4 +29,5 @@ void exibir_paciente(Paciente paciente);
 void alterar_paciente(const char *cpf_busca);
 int verificar_CPF_existente(const char *cpf_busca);
 void excluirPaciente(const char *CPF_busca);
+void listar_pacientes();
 
