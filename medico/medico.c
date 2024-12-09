@@ -43,6 +43,7 @@ void tela_medico(void) {
             tela_deletar_medico();
             break;
         case 5:
+            listar_medicos();
             break;
         case 0:
             break;
@@ -364,4 +365,46 @@ void excluirMedico(const char *crm_busca) {
     }
 
     fclose(fp);
+}
+// Função para listar médicos com a opção de escolher entre todos ou apenas ativos
+void listar_medicos() {
+    int opcao;
+    printf("\nEscolha a opção para listar os médicos:\n");
+    printf("1. Listar todos os médicos (ativos e inativos)\n");
+    printf("2. Listar apenas médicos ativos\n");
+    printf("Digite a opção: ");
+    scanf("%d", &opcao);
+
+    FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir o arquivo em modo de leitura binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de médicos.\n");
+        return;
+    }
+
+    Medico medico;
+    int encontrou = 0; // Para verificar se encontrou algum médico
+
+    printf("\n╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                            LISTAR MÉDICOS CADASTRADOS                      ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                                                                             ║\n");
+
+    // Ler o arquivo e exibir as informações de cada médico
+    while (fread(&medico, sizeof(Medico), 1, fp)) {
+        if ((opcao == 1) || (opcao == 2 && medico.status == 'a')) { // Se for para listar todos ou apenas ativos
+            exibir_medico(medico); // Chama a função para exibir os dados do médico
+            encontrou = 1;
+        }
+    }
+
+    if (!encontrou) {
+        printf("Nenhum médico encontrado.\n");
+    }
+
+    fclose(fp);
+
+    // Limpar o buffer de entrada
+    while (getchar() != '\n'); // Limpar qualquer caractere pendente no buffer
+    printf("Pressione <ENTER> para continuar...\n");
+    getchar(); // Aguarda o usuário pressionar ENTER
 }

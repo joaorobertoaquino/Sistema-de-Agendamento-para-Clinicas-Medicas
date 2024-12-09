@@ -19,3 +19,4 @@ int verificar_CRM_existente(const char *crm_busca);
 void exibir_medico(Medico medico);
 void alterar_medico(const char *crm_busca);
 void excluirMedico(const char *crm_busca);
+void listar_medicos();
