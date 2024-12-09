@@ -175,24 +175,16 @@ void tela_atualizar_medico() {
 void tela_deletar_medico() {
     char CRM_test[13];
     system("clear||cls");
+    printf("\n↪ Informe o CRE do médico que deseja deletar: ");
+    scanf("%s", CRM_test);
     printf("\n");
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                             DELETAR MÉDICO                                  ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║                                                                             ║\n");
-    printf("║    Informe o CRE do médico que deseja deletar:                              ║\n");
-    printf("║                                                                             ║\n");
     printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-
-    // Solicita o CRM do médico
-    printf("\n↪ Informe o CRE do médico que deseja deletar: ");
-    scanf("%s", CRM_test);
-    
-    // Chama a função de deletar médico
     excluirMedico(CRM_test);
     
-    // Aguardar a tecla ENTER
     getchar();
+    printf("\n");
     printf("\nPressione a tecla <ENTER> para continuar...\n");
     getchar();
 }

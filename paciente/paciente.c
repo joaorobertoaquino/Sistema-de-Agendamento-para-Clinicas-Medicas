@@ -210,9 +210,9 @@ void alterar_paciente(const char *cpf_busca) {
 void tela_deletar_paciente() {
     char CPF_test[13];
     system("clear||cls");
-    printf("\n");
-    printf("↪ Informe o CPF do paciente que deseja deletar: ");
+    printf("\n↪ Informe o CPF do paciente que deseja deletar: ");
     scanf("%s", CPF_test);
+    printf("\n");
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                            DELETAR PACIENTE                                 ║\n");
     printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
