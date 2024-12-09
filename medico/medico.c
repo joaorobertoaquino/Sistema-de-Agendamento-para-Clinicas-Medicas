@@ -21,6 +21,7 @@ void tela_medico(void) {
     printf("║                           2. Pesquisar Médico                               ║\n");
     printf("║                           3. Atualizar Médico                               ║\n");
     printf("║                           4. Remover Médico                                 ║\n");
+    printf("║                           5. Listar Médicos                                 ║\n");
     printf("║                                                                             ║\n");
     printf("║                           0. Cancelar e sair                                ║\n");
     printf("║                                                                             ║\n");
@@ -40,6 +41,8 @@ void tela_medico(void) {
             break;
         case 4:
             tela_deletar_medico();
+            break;
+        case 5:
             break;
         case 0:
             break;
