@@ -2,6 +2,7 @@ typedef struct medico {
     char CRM[13];
     char nome[51];
     char especializacao[31];
+    char status;
 } Medico;
 
 // MÉDICO
