@@ -108,8 +108,8 @@ void buscar_paciente_ativo(const char *cpf_busca) {
     int encontrado = 0;
     while (fread(&paciente, sizeof(Paciente), 1, fp)) {
         if (strcmp(paciente.CPF, cpf_busca) == 0) {
-            if (paciente.status == "i") {
-                printf("O paciente com CPF:%s está inativo.",paciente.CPF);
+            if (paciente.status == 'i') {
+                printf("\nO paciente com CPF:%s está inativo.",paciente.CPF);
                 encontrado = 1;
                 break;
             }else{
@@ -120,7 +120,7 @@ void buscar_paciente_ativo(const char *cpf_busca) {
         }
     }
     if (!encontrado) {
-        printf("Médico com CRM %s não encontrado.\n", cpf_busca);
+        printf("Paciente com CPF %s não encontrado.\n", cpf_busca);
     }
     fclose(fp);
 }
@@ -204,18 +204,45 @@ void alterar_paciente(const char *cpf_busca) {
 // ##        Deletar       ##
 // ##########################
 void tela_deletar_paciente() {
+    char CPF_test[13];
     system("clear||cls");
     printf("\n");
+    printf("↪ Informe o CPF do paciente que deseja deletar: ");
+    scanf("%s", CPF_test);
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                            DELETAR PACIENTE                                 ║\n");
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║  ↪Informe o CPF do paciente que deseja deletar:                             ║\n");
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    excluirPaciente(CPF_test);
+    getchar();
     printf("\n");
     printf("Pressione a tecla <ENTER> para continuar...\n");
     getchar();
 }
+
+    void excluirPaciente(const char *CPF_busca) {
+    FILE *fp = fopen("paciente/paciente.dat", "rb+"); // Abrir para leitura e escrita binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1);
+    }
+    Paciente paciente;
+    int encontrado = 0;
+    while (fread(&paciente, sizeof(Paciente), 1, fp)) {
+        if (strcmp(paciente.CPF, CPF_busca) == 0) {
+            paciente.status = 'i';
+            fseek(fp, -sizeof(Paciente), SEEK_CUR);  // Volta ao local do registro
+            fwrite(&paciente, sizeof(Paciente), 1, fp);  // Sobrescreve com o novo status
+            printf("Paciente com CPF:%s agora está inativo.\n", CPF_busca);
+            encontrado = 1;
+            break;
+        }
+    }
+    if (!encontrado) {
+        printf("Paciente com CPF %s não encontrado.\n", CPF_busca);
+    }
+    fclose(fp);
+}
+
 
 
 // ##########################

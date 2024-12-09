@@ -205,7 +205,7 @@ void tela_deletar_medico() {
 void solicitar_nome_medico(char *nome) {
     int valido = 0; // Inicializando como não válido
     do {
-        printf("║ ↪Nome Completo do Médico:");
+        printf("║ ↪ Nome Completo do Médico:");
         scanf(" %[^\n]", nome);
         getchar();
         if (validarNome(nome)==1) { 
@@ -366,6 +366,7 @@ void excluirMedico(const char *crm_busca) {
 
     fclose(fp);
 }
+
 // Função para listar médicos com a opção de escolher entre todos ou apenas ativos
 void listar_medicos() {
     int opcao;
@@ -385,9 +386,8 @@ void listar_medicos() {
     int encontrou = 0; // Para verificar se encontrou algum médico
 
     printf("\n╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                            LISTAR MÉDICOS CADASTRADOS                      ║\n");
+    printf("║                            LISTAR MÉDICOS CADASTRADOS                       ║\n");
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║                                                                             ║\n");
 
     // Ler o arquivo e exibir as informações de cada médico
     while (fread(&medico, sizeof(Medico), 1, fp)) {
