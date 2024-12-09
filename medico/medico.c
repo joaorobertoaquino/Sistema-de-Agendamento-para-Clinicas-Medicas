@@ -56,15 +56,16 @@ void tela_medico(void) {
 // ##      Cadastrar       ##
 // ##########################
 void tela_cadastrar_medico() {
-    Medico *medico1 = malloc(sizeof(Medico));
+    Medico *medico1 = malloc(sizeof(Medico)); // free está dentro da função salvar_medico.
     system("clear||cls");
     printf("\n");
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                           CADASTRAR MÉDICO                                  ║\n");
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    solicitar_nome(medico1->nome);
     solicitar_CRM(medico1->CRM);
+    solicitar_nome_medico(medico1->nome);
     solicitar_especializacao(medico1->especializacao);
+    medico1->status = 'a'; // Define o status como 'a' para ativo ao cadastrar o médico
     salvar_medico(medico1);
     printf("\n");
     printf("MÉDICO cadastrado com sucesso.");
@@ -83,7 +84,7 @@ void tela_ver_medico() {
     printf("\n");
     printf("↪ Informe o CRE do médico que deseja ver informações: ");
     scanf("%s",CRM_test);
-    buscar_medico(CRM_test);
+    buscar_medico_ativo(CRM_test);
     getchar();
     printf("\n");
     printf("Pressione a tecla <ENTER> para continuar...\n");
@@ -91,7 +92,7 @@ void tela_ver_medico() {
 }
 
 
-void buscar_medico(const char *crm_busca) {
+void buscar_medico_ativo(const char *crm_busca) {
     FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir para leitura binária
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
@@ -100,12 +101,18 @@ void buscar_medico(const char *crm_busca) {
     Medico medico;
     int encontrado = 0;
     // Ler cada registro do arquivo
-    while (fread(&medico, sizeof(Medico), 1, fp)) {
+    while (fread(&medico, sizeof(Medico), 1, fp)) { //fread ler os blocos de dados binários
         // Verificar se o CRM coincide
-        if (strcmp(medico.CRM, crm_busca) == 0) {
-            exibir_medico(medico); // Chama a função que exibe os dados do médico
-            encontrado = 1;
-            break;
+        if (strcmp(medico.CRM, crm_busca) == 0) { //strcmp compara as strings
+            if(medico.status == 'i'){
+                printf("O medico com o CRM: %s está inativo\n",medico.CRM);
+                encontrado = 1; // encontrado inativo
+                break;
+            }else{
+                exibir_medico(medico); // Chama a função que exibe os dados do médico
+                encontrado = 1; // encontrado ativo
+                break;
+            }
         }
     }
     if (!encontrado) {
@@ -162,6 +169,7 @@ void tela_atualizar_medico() {
 // ##        Deletar       ##
 // ##########################
 void tela_deletar_medico() {
+    char CRM_test[13];
     system("clear||cls");
     printf("\n");
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
@@ -172,15 +180,40 @@ void tela_deletar_medico() {
     printf("║                                                                             ║\n");
     printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
 
-    printf("\n");
-    printf("Pressione a tecla <ENTER> para continuar...\n");
+    // Solicita o CRM do médico
+    printf("\n↪ Informe o CRE do médico que deseja deletar: ");
+    scanf("%s", CRM_test);
+    
+    // Chama a função de deletar médico
+    excluirMedico(CRM_test);
+    
+    // Aguardar a tecla ENTER
+    getchar();
+    printf("\nPressione a tecla <ENTER> para continuar...\n");
     getchar();
 }
+
 
 
 // ##########################
 // ##    Funçoes de Ler    ##
 // ##########################
+void solicitar_nome_medico(char *nome) {
+    int valido = 0; // Inicializando como não válido
+    do {
+        printf("║ ↪Nome Completo do Médico:");
+        scanf(" %[^\n]", nome);
+        getchar();
+        if (validarNome(nome)==1) { 
+            valido = 1; // Marca como válido
+        } else {
+            printf("==⊳ Entrada inválida, digite apenas letras e espaços                          ║\n");
+            printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
+            valido = 0; // Marca como não válido
+            while (getchar() != '\n'); // Limpar o buffer
+        }
+    } while (!valido); // até ser valido
+}
 void solicitar_especializacao(char *especializacao) {
     int valido = 0;  
     do {
@@ -258,13 +291,16 @@ void alterar_medico(const char *crm_busca) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
     }
+
     Medico medico;
     int encontrado = 0;
+
     // Ler cada registro do arquivo
     while (fread(&medico, sizeof(Medico), 1, fp)) {
         // Verificar se o CRM coincide
         if (strcmp(medico.CRM, crm_busca) == 0) {
             exibir_medico(medico); // Exibe os dados atuais
+
             // Solicitar novas informações
             printf("\n");
             printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
@@ -273,11 +309,22 @@ void alterar_medico(const char *crm_busca) {
             printf("║                                                                             ║\n");
             solicitar_nome(medico.nome);
             solicitar_especializacao(medico.especializacao);
-            // Não é necessário solicitar o CRM novamente, pois é o mesmo
-            // Voltar ao início do arquivo e sobrescrever o registro do médico
+            
+            // Alterar o status, se necessário
+            printf("║ ↪ O médico está ativo? (Digite 1 para ativo, 0 para inativo): ");
+            int status;
+            scanf("%d", &status);
+            if (status == 1) {
+                medico.status = 'a'; // Médico ativo
+            } else {
+                medico.status = 'i'; // Médico inativo
+            }
+
+            // Voltar ao início do registro e sobrescrever
             fseek(fp, -sizeof(Medico), SEEK_CUR);
             fwrite(&medico, sizeof(Medico), 1, fp); // Sobrescreve o registro
-            printf("\n╠══════ Dados do médico atualizados com sucesso! ══════╣\n");
+
+            printf("\n╠══════ Dados do médico atualizados com sucesso! ═════════════════════════════╝\n");
             encontrado = 1;
             break;
         }
@@ -285,5 +332,33 @@ void alterar_medico(const char *crm_busca) {
     if (!encontrado) {
         printf("Médico com CRM %s não encontrado.\n", crm_busca);
     }
+    fclose(fp);
+}
+
+void excluirMedico(const char *crm_busca) {
+    FILE *fp = fopen("medico/medico.dat", "rb+"); // Abrir para leitura e escrita binária
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1);
+    }
+
+    Medico medico;
+    int encontrado = 0;
+    while (fread(&medico, sizeof(Medico), 1, fp)) {
+        if (strcmp(medico.CRM, crm_busca) == 0) {
+            // Antes de deletar, altere o status para inativo
+            medico.status = 'i'; // Marca como inativo
+            fseek(fp, -sizeof(Medico), SEEK_CUR);  // Volta ao local do registro
+            fwrite(&medico, sizeof(Medico), 1, fp);  // Sobrescreve com o novo status
+            printf("Médico %s agora está inativo.\n", crm_busca);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Médico com CRM %s não encontrado.\n", crm_busca);
+    }
+
     fclose(fp);
 }

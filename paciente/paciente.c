@@ -217,7 +217,7 @@ void tela_deletar_paciente() {
 void solicitar_nome(char *nome) {
     int valido = 0; // Inicializando como não válido
     do {
-        printf("║ ↪Nome Completo:");
+        printf("║ ↪Nome Completo do paciente:");
         scanf(" %[^\n]", nome);
         getchar();
         if (validarNome(nome)==1) { 
