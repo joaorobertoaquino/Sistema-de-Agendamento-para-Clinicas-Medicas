@@ -370,11 +370,18 @@ void excluirMedico(const char *crm_busca) {
 // Função para listar médicos com a opção de escolher entre todos ou apenas ativos
 void listar_medicos() {
     int opcao;
-    printf("\nEscolha a opção para listar os médicos:\n");
-    printf("1. Listar todos os médicos (ativos e inativos)\n");
-    printf("2. Listar apenas médicos ativos\n");
-    printf("Digite a opção: ");
+    system("clear||cls");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                            LISTAR MÉDICOS CADASTRADOS                       ║\n");
+    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║                  1. Listar todos os médicos (ativos e inativos)             ║\n");
+    printf("║                  2. Listar apenas médicos ativos                            ║\n");
+    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+    printf(" ↪ Escolha a opção para listar os médicos: ");
     scanf("%d", &opcao);
+    system("clear||cls");
+
 
     FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir o arquivo em modo de leitura binária
     if (fp == NULL) {
@@ -384,10 +391,6 @@ void listar_medicos() {
 
     Medico medico;
     int encontrou = 0; // Para verificar se encontrou algum médico
-
-    printf("\n╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                            LISTAR MÉDICOS CADASTRADOS                       ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
 
     // Ler o arquivo e exibir as informações de cada médico
     while (fread(&medico, sizeof(Medico), 1, fp)) {
