@@ -4,7 +4,8 @@ typedef struct paciente{
     char data_nascimento[11];
     char celular[13];
     char email[51];
-    char endereco[80];    
+    char endereco[80];
+    char status;    
 } Paciente;
 
 
