@@ -5,5 +5,6 @@
 #include "../agendamento/agendamento.h"
 
 int obterProximoID(const char* nomeArquivo, size_t tamanhoEstrutura);
+void gravaArquivo(char nomeDoArquivo[], void* estrutura, size_t tamanhoEstrutura);
 
 #endif

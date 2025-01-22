@@ -7,13 +7,13 @@ CC := gcc
 CFLAGS := -Wall -Wextra -pedantic
 
 # Source files
-SRCS := main.c agendamento/agendamento.c informacoes/informacoes.c medico/medico.c paciente/paciente.c procedimento/procedimento.c relatorio/relatorio.c validacoes/validacoes.c
+SRCS := main.c agendamento/agendamento.c informacoes/informacoes.c medico/medico.c paciente/paciente.c procedimento/procedimento.c relatorio/relatorio.c validacoes/validacoes.c util/util.c
 
 # Object files
 OBJS := $(SRCS:.c=.o)
 
 # Header files
-HDRS := agendamento/agendamento.h informacoes/informacoes.h medico/medico.h paciente/paciente.h procedimento/procedimento.h relatorio/relatorio.h validacoes/validacoes.h
+HDRS := agendamento/agendamento.h informacoes/informacoes.h medico/medico.h paciente/paciente.h procedimento/procedimento.h relatorio/relatorio.h validacoes/validacoes.h util/util.h
 
 # Executable name
 TARGET := main
