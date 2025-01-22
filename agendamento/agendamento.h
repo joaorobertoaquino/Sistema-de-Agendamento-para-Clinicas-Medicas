@@ -1,4 +1,5 @@
-
+#ifndef AGENDAMENTO_H
+#define AGENDAMENTO_H
 struct agendamentos{
     char data[11];
     char hora[6];
@@ -15,3 +16,5 @@ void solicitar_data(char *data_cadastro);
 void solicitar_hora(char *hora);
 void solicitar_CPF(char *CPF);
 void solicitar_CRM(char *CRM);
+
+#endif
