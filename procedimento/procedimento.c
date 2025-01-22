@@ -115,22 +115,6 @@ void tela_ver_procedimento() {
   getchar();
 }
 
-void solicitar_ID(){
-   int valido = 0; // Inicializando como não válido
-   do {
-       printf("║ ↪ID do procedimento:");
-       scanf("%d", &procedimento1.ID_procedimento); 
-       getchar();
-       if (validar_ID(procedimento1.ID_procedimento)==1) { 
-           valido = 1; // Marca como válido
-       } else {
-           printf("==⊳ Entrada inválida, digite um número maior que 0                            ║\n");
-           printf("==⊳ DIGITE ENTER para continuar                                            ═══╝\n");
-           valido = 0; // Marca como não válido
-           while (getchar() != '\n'); // Limpar o buffer
-       }
-   } while (!valido); // até ser valido
- }
 
 void solicitar_nome_procedimento(char *nome) {
     int valido = 0; // Inicializando como não válido
