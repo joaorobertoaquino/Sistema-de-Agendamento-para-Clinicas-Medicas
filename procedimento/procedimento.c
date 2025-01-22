@@ -50,14 +50,16 @@ void tela_procedimentos(void) {
 }
 
 void tela_cadastrar_procedimento() {
-  solicitar_ID();
-  solicitar_nome_procedimento(procedimento1.nome);
-  solicitar_tempo(procedimento1.duracao);
-
   system("clear||cls");
   printf("\n");
   printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                         CADASTRAR PROCEDIMENTO                              ║\n");
+  printf("║                          CADASTRAR PROCEDIMENTO                             ║\n");
+  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+  solicitar_ID();
+  solicitar_nome_procedimento(procedimento1.nome);
+  solicitar_tempo(procedimento1.duracao);
+  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+  printf("║                          PROCEDIMENTO  CADASTRADO                           ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   printf("║                                                                             ║\n");
   printf("║    ID Procedimento:%d                                                       ║\n",procedimento1.ID_procedimento);
