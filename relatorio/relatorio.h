@@ -12,5 +12,7 @@ void tela_relatorio_medico(void);
 void tela_relatorio_paciente(void);
 void tela_relatorio_procedimento(void);
 void tela_relatorio_agendamento(void);
+int compararDatas(const char *data1, const char *data2);
+void listarAgendamentosDeHoje(void);
 
 #endif

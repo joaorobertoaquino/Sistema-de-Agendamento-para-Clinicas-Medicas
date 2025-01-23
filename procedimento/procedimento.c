@@ -221,9 +221,9 @@ void deletarProcedimento(void) {
 
 
 void listar_procedimentos() {
-    system("clear||cls");
-    
-    FILE *fp = fopen("procedimento/procedimentos.dat", "rb");
+    system("clear||cls"); // Limpa a tela
+
+    FILE *fp = fopen("procedimentos.dat", "rb");
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo de procedimentos.\n");
         return;

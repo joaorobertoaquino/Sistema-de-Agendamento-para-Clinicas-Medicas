@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "relatorio.h"
 #include "../util/util.h"
 #include "../paciente/paciente.h"
@@ -33,6 +34,7 @@ void tela_relatorio(void){
     getchar();
     switch (opcao){
       case 1:
+        listarAgendamentosDeHoje();
         break;
       case 2:
         tela_relatorio_medico();
@@ -53,6 +55,69 @@ void tela_relatorio(void){
     }
   }while(opcao != 0);
 }
+
+
+int compararDatas(const char *data1, const char *data2) {
+    // Função para comparar as datas no formato "DDMMYYYY"
+    return strcmp(data1, data2);
+}
+
+void listarAgendamentosDeHoje(void) {
+    FILE *fp = fopen("agendamentos.dat", "rb");
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de agendamentos.\n");
+        return;
+    }
+
+    Agendamentos agendamento;
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    // Formatar a data atual no formato "DDMMYYYY"
+    char dataAtual[9];
+    snprintf(dataAtual, sizeof(dataAtual), "%02d%02d%04d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+
+    // Imprimir a data atual para depuração
+    printf("Data atual: %s\n", dataAtual);
+
+    int encontrou = 0;
+
+    system("clear||cls");
+    printf("\n");
+    printf("╔════════════════════════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                                  AGENDAMENTOS DE HOJE                                          ║\n");
+    printf("╠════╦══════════════════╦═════════════════════╦═══════╦══════════════════╦═══════════════════════╣\n");
+    printf("║ ID ║ CPF              ║ Data do Agendamento ║ Hora  ║ Procedimento     ║ CRM                   ║\n");
+    printf("╠════╬══════════════════╬═════════════════════╬═══════╬══════════════════╬═══════════════════════╣\n");
+
+    while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
+        // Comparar a data do agendamento com a data atual
+        if (compararDatas(agendamento.data, dataAtual) == 0) {
+            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║\n", 
+                  agendamento.id, 
+                  agendamento.CPF, 
+                  agendamento.data, 
+                  agendamento.hora, 
+                  agendamento.procedimento, 
+                  agendamento.CRM);
+            encontrou = 1;
+        }
+    }
+
+    printf("╚════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+    if (!encontrou) {
+        printf("Nenhum agendamento para hoje.\n");
+    }
+
+    fclose(fp);
+
+    printf("\nPressione <ENTER> para continuar...");
+    getchar();
+    getchar(); // Espera o ENTER para continuar
+}
+
+
 //Creditos: ChatGpt
 void listarPacientesOrdemAlfabetica(void) {
     FILE *fp = fopen("paciente/paciente.dat", "rb");
