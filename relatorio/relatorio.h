@@ -14,5 +14,6 @@ void tela_relatorio_procedimento(void);
 void tela_relatorio_agendamento(void);
 int compararDatas(const char *data1, const char *data2);
 void listarAgendamentosDeHoje(void);
+void listarAgendamentosPorData(void);
 
 #endif

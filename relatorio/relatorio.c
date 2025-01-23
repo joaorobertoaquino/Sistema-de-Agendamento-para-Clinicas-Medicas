@@ -37,7 +37,7 @@ void tela_relatorio(void){
         listarAgendamentosDeHoje();
         break;
       case 2:
-        tela_relatorio_medico();
+        listarAgendamentosPorData();
         break;
       case 3:
         listarPacientesOrdemAlfabetica();
@@ -117,6 +117,58 @@ void listarAgendamentosDeHoje(void) {
     getchar(); // Espera o ENTER para continuar
 }
 
+
+void listarAgendamentosPorData(void) {
+    FILE *fp = fopen("agendamentos.dat", "rb");
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de agendamentos.\n");
+        return;
+    }
+
+    Agendamentos agendamento;
+    char dataBusca[9];
+
+    // Solicita a data a ser buscada no formato "DDMMYYYY"
+    printf("Digite a data para buscar agendamentos (formato DDMMYYYY): ");
+    scanf("%8s", dataBusca);
+    getchar(); // Limpa o buffer de entrada
+
+
+    int encontrou = 0;
+
+    system("clear||cls");
+    printf("\n");
+    printf("╔════════════════════════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                                AGENDAMENTOS POR DATA                                           ║\n");
+    printf("╠════╦══════════════════╦═════════════════════╦═══════╦══════════════════╦═══════════════════════╣\n");
+    printf("║ ID ║ CPF              ║ Data do Agendamento ║ Hora  ║ Procedimento     ║ CRM                   ║\n");
+    printf("╠════╬══════════════════╬═════════════════════╬═══════╬══════════════════╬═══════════════════════╣\n");
+
+    while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
+        // Comparar a data do agendamento com a data buscada
+        if (compararDatas(agendamento.data, dataBusca) == 0) {
+            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║\n", 
+                  agendamento.id, 
+                  agendamento.CPF, 
+                  agendamento.data, 
+                  agendamento.hora, 
+                  agendamento.procedimento, 
+                  agendamento.CRM);
+            encontrou = 1;
+        }
+    }
+
+    printf("╚════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+    if (!encontrou) {
+        printf("Nenhum agendamento encontrado para a data informada.\n");
+    }
+
+    fclose(fp);
+
+    printf("\nPressione <ENTER> para continuar...");
+    getchar();
+}
 
 //Creditos: ChatGpt
 void listarPacientesOrdemAlfabetica(void) {
