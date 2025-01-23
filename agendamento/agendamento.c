@@ -469,15 +469,15 @@ int obterProximoIDAgendamento(const char* nomeArquivo) {
 
 void exibeAgendamento(Agendamentos* agen, int codigoProcedimento) {
     if (agen == NULL) {
-      printf("\n= = = Agendamento Inexistente = = =\n");
+        printf("\n= = = Agendamento Inexistente = = =\n");
     } else {
-      printf("\n= = = Agendamento Cadastrado = = =\n");
-      printf("║ ID: %d\n", agen->id);
-      printf("║ Data: %s\n", agen->data);
-      printf("║ Hora: %s\n", agen->hora);
-      printf("║ CPF: %s\n", agen->CPF);
-      printf("║ CRM: %s\n", agen->CRM);
-      printf("║ Procedimento: %d\n", codigoProcedimento);
+        printf("\n= = = Agendamento Cadastrado = = =\n");
+        printf("║ ID: %d\n", agen->id);
+        printf("║ Data: %s\n", agen->data);
+        printf("║ Hora: %s\n", agen->hora);
+        printf("║ CPF: %s\n", agen->CPF);
+        printf("║ CRM: %s\n", agen->CRM);
+        printf("║ Procedimento: %d\n", codigoProcedimento);
     }
     printf("Tecle <ENTER> para continuar...");
     getchar();
@@ -496,25 +496,26 @@ void listar_agendamentos() {
     int encontrou = 0;
 
     printf("\n");
-    printf("╔════════════════════════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                                  AGENDAMENTOS                                                  ║\n");
-    printf("╠════╦══════════════════╦═════════════════════╦═══════╦══════════════════╦═══════════════════════╣\n");
-    printf("║ ID ║ CPF              ║ Data do Agendamento ║ Hora  ║ Procedimento     ║ CRM                   ║\n");
-    printf("╠════╬══════════════════╬═════════════════════╬═══════╬══════════════════╬═══════════════════════╣\n");
+    printf("╔════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                                         AGENDAMENTOS                                                       ║\n");
+    printf("╠════╦══════════════════╦═════════════════════╦═══════╦══════════════════╦═══════════════════════╣═══════════╣\n");
+    printf("║ ID ║ CPF              ║ Data do Agendamento ║ Hora  ║ Procedimento     ║ CRM                   ║ Status    ║\n");
+    printf("╠════╬══════════════════╬═════════════════════╬═══════╬══════════════════╬═══════════════════════╣═══════════╣\n"); 
 
     // Lê e imprime todos os procedimentos do arquivo
     while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
-        printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║\n", 
+        printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║ %-9d ║\n", 
             agendamento.id, 
             agendamento.CPF, 
             agendamento.data, 
             agendamento.hora, 
             agendamento.procedimento, 
-            agendamento.CRM);
+            agendamento.CRM,
+            agendamento.status);
         encontrou = 1;
     }
 
-    printf("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("╚════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
     if (!encontrou) {
         printf("Nenhum procedimento encontrado.\n");
