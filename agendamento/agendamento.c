@@ -204,7 +204,7 @@ void solicitar_CRM_existente(char *crm) {
 }
 
 int verificar_CRM(const char *crm) {
-    FILE *fp = fopen("../medico/medico.dat", "rb"); 
+    FILE *fp = fopen("medico/medico.dat", "rb"); 
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo de médicos.\n");
         exit(1);
@@ -273,23 +273,31 @@ int verificar_CPF(const char *cpf) {
     return encontrado;
 }
 
-
 int verificar_procedimento(const char *procedimento) {
-    FILE *arquivo = fopen("../procedimento/procedimento.dat", "rb");
-    
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de procedimentos.\n");
-        return 0;
+    FILE *fp = fopen("procedimento/procedimentos.dat", "rb");
+  if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de procedimentos. Caminho: procedimento/procedimento.dat\n");
+        exit(1);
     }
     Procedimento proc;
-    while (fread(&proc, sizeof(Procedimento), 1, arquivo)) {
+    int encontrado = 0;
+    while (fread(&proc, sizeof(Procedimento), 1, fp)) {
         if (strcmp(proc.nome, procedimento) == 0) {
-            fclose(arquivo);
-            return 1;  // Procedimento encontrado
+            if (proc.status == 'i') {  // Verificando se o procedimento está inativo
+                printf("\nO procedimento %s está inativo.\n", proc.nome);
+                encontrado = 1;
+                break;
+            } else {
+                encontrado = 1;
+                break;
+            }
         }
     }
-    fclose(arquivo);
-    return 0;  // Procedimento não encontrado
+    if (!encontrado) {
+        printf("Procedimento %s não encontrado.\n", procedimento);
+    }
+    fclose(fp);
+    return encontrado;
 }
 
 void salvar_agendamento(Agendamentos *agendamentos) {
