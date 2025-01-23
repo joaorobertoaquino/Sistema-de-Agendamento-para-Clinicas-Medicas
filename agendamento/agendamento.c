@@ -24,6 +24,7 @@ void tela_agendamento(void) {
         printf("║                          2. Pesquisar Agendamento                           ║\n");
         printf("║                          3. Atualizar Agendamento                           ║\n");
         printf("║                          4. Remover Agendamento                             ║\n");
+        printf("║                          5. Lista todos Agendamentos                        ║\n");
         printf("║                                                                             ║\n");
         printf("║                          0. Cancelar e sair                                 ║\n");
         printf("║                                                                             ║\n");
@@ -46,6 +47,9 @@ void tela_agendamento(void) {
             break;
         case 4:
             tela_deletar_agendamento();
+            break;
+        case 5:
+            listar_agendamentos();
             break;
         default:
             printf("Valor invalido");
@@ -452,4 +456,47 @@ void exibeAgendamento(Agendamentos* agen, int codigoProcedimento) {
     }
     printf("Tecle <ENTER> para continuar...");
     getchar();
+}
+
+void listar_agendamentos() {
+    system("clear||cls"); // Limpa a tela
+
+    FILE *fp = fopen("agendamentos.dat", "rb");
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de agendamentos.\n");
+        return;
+    }
+
+    Agendamentos agendamento;
+    int encontrou = 0;
+
+    printf("\n");
+    printf("╔════════════════════════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                                  AGENDAMENTOS                                                  ║\n");
+    printf("╠════╦══════════════════╦═════════════════════╦═══════╦══════════════════╦═══════════════════════╣\n");
+    printf("║ ID ║ CPF              ║ Data do Agendamento ║ Hora  ║ Procedimento     ║ CRM                   ║\n");
+    printf("╠════╬══════════════════╬═════════════════════╬═══════╬══════════════════╬═══════════════════════╣\n");
+
+    // Lê e imprime todos os procedimentos do arquivo
+    while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
+        printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║\n", 
+            agendamento.id, 
+            agendamento.CPF, 
+            agendamento.data, 
+            agendamento.hora, 
+            agendamento.procedimento, 
+            agendamento.CRM);
+        encontrou = 1;
+    }
+
+    printf("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+    if (!encontrou) {
+        printf("Nenhum procedimento encontrado.\n");
+    }
+
+    fclose(fp); 
+    printf("\nPressione <ENTER> para continuar...");
+    getchar(); 
+    getchar(); // Espera o ENTER para continuar
 }

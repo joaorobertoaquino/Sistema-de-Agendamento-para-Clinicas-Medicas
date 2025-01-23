@@ -28,5 +28,5 @@ void salvar_agendamento(Agendamentos *agendamentos);
 int obterProximoIDAgendamento(const char* nomeArquivo);
 void exibeAgendamento(Agendamentos* agen, int codigoProcedimento);
 void regravarAgendamento(Agendamentos* agendamentos);
-
+void listar_agendamentos();
 #endif
