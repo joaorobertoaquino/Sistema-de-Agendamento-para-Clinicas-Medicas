@@ -57,7 +57,7 @@ void tela_cadastrar_agendamento() {
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
 
     Agendamentos agendamento;
-    const char* arquivoAgendamentos = "agenamentos.dat";
+    const char* arquivoAgendamentos = "agendamentos.dat";
     // Preenche agendamento
     agendamento.id = obterProximoIDAgendamento(arquivoAgendamentos);
     solicitar_data(agendamento.data);
@@ -93,7 +93,7 @@ void tela_cadastrar_agendamento() {
     }
 
     // Preenche o campo do procedimento com o código
-    agendamento.id = codigoProcedimento;
+    snprintf(agendamento.procedimento, sizeof(agendamento.procedimento), "%d", codigoProcedimento);
 
     // Salva o agendamento no arquivo
     salvar_agendamento(&agendamento);
