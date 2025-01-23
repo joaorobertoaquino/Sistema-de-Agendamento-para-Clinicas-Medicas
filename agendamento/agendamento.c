@@ -46,7 +46,7 @@ void tela_agendamento(void) {
             atualizarAgendamentos();
             break;
         case 4:
-            tela_deletar_agendamento();
+            deletarAgendamento();
             break;
         case 5:
             listar_agendamentos();
@@ -108,6 +108,8 @@ void tela_cadastrar_agendamento() {
     // Salva o agendamento no arquivo
     salvar_agendamento(&agendamento);
 
+    agendamento.status = 1;
+
     exibeAgendamento(&agendamento, codigoProcedimento);
     getchar();
 }
@@ -135,10 +137,10 @@ Agendamentos* pesquisarAgendamento(void) {
 
     // Lê o arquivo e procura o agendamento com o ID correspondente
     while (fread(agen, sizeof(Agendamentos), 1, fp) == 1) {
-        if (agen->id == id) {
-            encontrado = 1;
-            break;  // Encontrou o agendamento, sai do loop
-        }
+      if (agen->id == id && agen->status == 1) {
+        fclose(fp);
+        return agen;
+      }
     }
 
     fclose(fp);
@@ -170,6 +172,7 @@ void atualizarAgendamentos(void) {
         free(novoAgen);
         return;
     }else {
+        agen->status = 0;
         novoAgen = preencherAgendamento(agen->id);
         regravarAgendamento(novoAgen);
         free(agen);
@@ -257,19 +260,41 @@ void regravarAgendamento(Agendamentos* agendamento) {
 }
 
 
-void tela_deletar_agendamento() {
-  system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                            DELETAR AGENDAMENTO                              ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    Informe o ID do agendamento:                                             ║\n");
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
+void deletarAgendamento(void) {
+    int id;
+    FILE* fp;
+    Agendamentos* agendamento = (Agendamentos*) malloc(sizeof(Agendamentos));
+    char* nomeArquivo = "agendamentos.dat";
+
+    fp = fopen(nomeArquivo, "r+b");
+    if (fp == NULL) {
+      printf("Erro ao abrir arquivo!!\n\n");
+      return;
+    }
+    
+    system("clear||cls");
+    printf("\n╔═══════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                               Deletar Agendamento                             ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("║ Informe o ID do agendamento a excluir: ");
+    scanf("%d", &id);
+
+    agendamento = encontrarPeloID(agendamento, nomeArquivo, sizeof(Agendamentos), id);
+    if (agendamento == NULL) {
+      printf("Agendamento não encontrado!!\n\n");
+      while (getchar() != '\n');
+      getchar();
+      return;
+    }else {
+      agendamento->status = 0;
+      regravarAgendamento(agendamento);
+      printf("║                                                                               ║\n");
+      printf("║                      Agendamento excluído com sucesso!                        ║\n");
+      printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n");
+      printf("Tecle <ENTER> para continuar...");
+      getchar();
+      getchar();
+    }
 }
 
 
