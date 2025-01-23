@@ -57,8 +57,9 @@ void tela_cadastrar_agendamento() {
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
 
     Agendamentos agendamento;
-
+    const char* arquivoAgendamentos = "agenamentos.dat";
     // Preenche agendamento
+    agendamento.id = obterProximoIDAgendamento(arquivoAgendamentos);
     solicitar_data(agendamento.data);
     solicitar_hora(agendamento.hora);
     solicitar_CPF_existente(agendamento.CPF);
@@ -78,26 +79,26 @@ void tela_cadastrar_agendamento() {
         return;  
     }
 
-    char procedimento[50];
-    printf("Informe o procedimento: ");
-    scanf(" %[^\n]", procedimento);
+    int codigoProcedimento;
+    printf("║ ↪ Informe o código do procedimento: ");
+    scanf("%d", &codigoProcedimento);
     getchar();
 
-    if (!verificar_procedimento(procedimento)) {
-        printf("Erro: Procedimento não encontrado no banco de dados.\n");
+    // Verifica se o código do procedimento existe
+    if (!verificar_codigo_procedimento(codigoProcedimento)) {
+        printf("Erro: Código do procedimento não encontrado no banco de dados.\n");
         printf("Pressione ENTER para continuar...\n");
         getchar();
         return;  
     }
 
-    // Preenche o campo do procedimento
-    strcpy(agendamento.procedimento, procedimento);
+    // Preenche o campo do procedimento com o código
+    agendamento.id = codigoProcedimento;
 
-    // Chama a função para salvar o agendamento no arquivo
+    // Salva o agendamento no arquivo
     salvar_agendamento(&agendamento);
 
-    printf("Agendamento cadastrado com sucesso!\n");
-    printf("Pressione ENTER para continuar...\n");
+    exibeAgendamento(&agendamento);
     getchar();
 }
 
@@ -273,31 +274,23 @@ int verificar_CPF(const char *cpf) {
     return encontrado;
 }
 
-int verificar_procedimento(const char *procedimento) {
-    FILE *fp = fopen("procedimento/procedimentos.dat", "rb");
-  if (fp == NULL) {
-        printf("Erro ao abrir o arquivo de procedimentos. Caminho: procedimento/procedimento.dat\n");
-        exit(1);
+int verificar_codigo_procedimento(int codigo) {
+    FILE* fp = fopen("procedimentos.dat", "rb");
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de procedimentos.\n");
+        return 0;
     }
-    Procedimento proc;
-    int encontrado = 0;
-    while (fread(&proc, sizeof(Procedimento), 1, fp)) {
-        if (strcmp(proc.nome, procedimento) == 0) {
-            if (proc.status == 'i') {  // Verificando se o procedimento está inativo
-                printf("\nO procedimento %s está inativo.\n", proc.nome);
-                encontrado = 1;
-                break;
-            } else {
-                encontrado = 1;
-                break;
-            }
+
+    Procedimento procedimento;
+    while (fread(&procedimento, sizeof(Procedimento), 1, fp) == 1) {
+        if (procedimento.ID_procedimento == codigo && procedimento.status == 1) {
+            fclose(fp);
+            return 1; // Código encontrado
         }
     }
-    if (!encontrado) {
-        printf("Procedimento %s não encontrado.\n", procedimento);
-    }
+
     fclose(fp);
-    return encontrado;
+    return 0; // Código não encontrado
 }
 
 void salvar_agendamento(Agendamentos *agendamentos) {
@@ -310,4 +303,34 @@ void salvar_agendamento(Agendamentos *agendamentos) {
     // Grava o agendamento no arquivo
     fwrite(agendamentos, sizeof(Agendamentos), 1, fp);
     fclose(fp);
+}
+
+int obterProximoIDAgendamento(const char* nomeArquivo) {
+    FILE* arquivo = fopen(nomeArquivo, "rb");
+    if (arquivo == NULL) {
+        return 1; // Arquivo não existe ainda, ID inicial é 1
+    }
+    Agendamentos agen;
+    int ultimoID = 0;
+    while (fread(&agen, sizeof(Agendamentos), 1, arquivo) == 1) {
+        ultimoID = agen.id; // Obtém o ID do último registro
+    }
+    fclose(arquivo);
+    return ultimoID + 1; // Próximo ID
+}
+
+void exibeAgendamento(Agendamentos* agen) {
+    if (agen == NULL) {
+      printf("\n= = = Agendamento Inexistente = = =\n");
+    } else {
+      printf("\n= = = Agendamento Cadastrado = = =\n");
+      printf("║ ID: %d\n", agen->id);
+      printf("║ Data: %s\n", agen->data);
+      printf("║ Hora: %s\n", agen->hora);
+      printf("║ CPF: %s\n", agen->CPF);
+      printf("║ CRM: %s\n", agen->CRM);
+      printf("║ Procedimento: %s\n", agen->procedimento);
+    }
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
 }

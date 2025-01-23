@@ -1,6 +1,7 @@
 #ifndef AGENDAMENTO_H
 #define AGENDAMENTO_H
 typedef struct agendamentos {
+    int id;
     char data[11];
     char hora[6];
     char CPF[12];
@@ -18,10 +19,12 @@ void solicitar_hora(char *hora);
 void solicitar_CPF(char *CPF);
 void solicitar_CRM(char *CRM);
 int verificar_CPF(const char *cpf);
-int verificar_procedimento(const char *procedimento);
+int verificar_codigo_procedimento(int codigo);
 void solicitar_CRM_existente(char *crm);
 void solicitar_CPF_existente(char *cpf);
 int verificar_CRM(const char *crm);
 void salvar_agendamento(Agendamentos *agendamentos);
+int obterProximoIDAgendamento(const char* nomeArquivo);
+void exibeAgendamento(Agendamentos* agen);
 
 #endif
