@@ -210,7 +210,7 @@ void deletarProcedimento(void) {
       procedimento->status = 0;
       regravarProcedimento(procedimento);
       printf("║                                                                               ║\n");
-      printf("║                          Patinete excluído com sucesso!                       ║\n");
+      printf("║                      Procedimento excluído com sucesso!                       ║\n");
       printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n");
       printf("Tecle <ENTER> para continuar...");
       getchar();
