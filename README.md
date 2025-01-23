@@ -62,4 +62,4 @@ Para mais informações, entre em contato com os desenvolvedores:
 - @riamxpp - [GitHub](https://github.com/riamxpp)
 - @jGean09 - [GitHub](https://github.com/jGean09) 
 - @joaorobertoaquino - [GitHub](https://github.com/joaorobertoaquino)
-
+- @ariadnyD - [GitHub] (https://github.com/ariadnyD)
