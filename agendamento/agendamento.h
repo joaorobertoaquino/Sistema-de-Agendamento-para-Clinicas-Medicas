@@ -10,10 +10,11 @@ typedef struct agendamentos {
 } Agendamentos;
 
 void tela_agendamento(void);
-void tela_cadastrar_agendamento(void);
-void tela_atualizar_agendamento(void);
+void tela_cadastrar_agendamento();
+Agendamentos* preencherAgendamento(int id);
+Agendamentos* pesquisarAgendamento(void);
+void atualizarAgendamentos(void);
 void tela_deletar_agendamento(void);
-void tela_ver_agendamento(void);
 void solicitar_data(char *data_cadastro);
 void solicitar_hora(char *hora);
 void solicitar_CPF(char *CPF);
@@ -26,5 +27,6 @@ int verificar_CRM(const char *crm);
 void salvar_agendamento(Agendamentos *agendamentos);
 int obterProximoIDAgendamento(const char* nomeArquivo);
 void exibeAgendamento(Agendamentos* agen, int codigoProcedimento);
+void regravarAgendamento(Agendamentos* agendamentos);
 
 #endif

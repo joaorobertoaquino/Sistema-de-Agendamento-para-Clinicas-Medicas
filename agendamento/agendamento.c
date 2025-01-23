@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "agendamento.h"
+#include "../util/util.h"
 #include "../paciente/paciente.h"
 #include "../medico/medico.h"
 #include "../validacoes/validacoes.h"
@@ -9,44 +10,48 @@
 
 
 void tela_agendamento(void) {
-  int opcao;
-  do {
-    system("clear||cls");
-    printf("\n");
-    printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║                         ------ AGENDAMENTO ------                           ║\n");
-    printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║                                                                             ║\n");
-    printf("║                          1. Cadastrar Agendamento                           ║\n");
-    printf("║                          2. Pesquisar Agendamento                           ║\n");
-    printf("║                          3. Atualizar Agendamento                           ║\n");
-    printf("║                          4. Remover Agendamento                             ║\n");
-    printf("║                                                                             ║\n");
-    printf("║                          0. Cancelar e sair                                 ║\n");
-    printf("║                                                                             ║\n");
-    printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-    printf("║  ↪Escolha a opção desejada: ");
-    
-    scanf("%d", &opcao);
-    getchar();
-    switch (opcao) {
-      case 1:
-        tela_cadastrar_agendamento();
-        break;
-      case 2:
-        tela_ver_agendamento();
-        break;
-      case 3:
-        tela_atualizar_agendamento();
-        break;
-      case 4:
-        tela_deletar_agendamento();
-        break;
-      default:
-        printf("Valor invalido");
-        break;
-    }
-  } while(opcao != 0);
+    Agendamentos* agen;
+    int opcao;
+    int codigoProcedimento; 
+    do {
+        system("clear||cls");
+        printf("\n");
+        printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
+        printf("║                         ------ AGENDAMENTO ------                           ║\n");
+        printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
+        printf("║                                                                             ║\n");
+        printf("║                          1. Cadastrar Agendamento                           ║\n");
+        printf("║                          2. Pesquisar Agendamento                           ║\n");
+        printf("║                          3. Atualizar Agendamento                           ║\n");
+        printf("║                          4. Remover Agendamento                             ║\n");
+        printf("║                                                                             ║\n");
+        printf("║                          0. Cancelar e sair                                 ║\n");
+        printf("║                                                                             ║\n");
+        printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
+        printf("║  ↪Escolha a opção desejada: ");
+        
+        scanf("%d", &opcao);
+        getchar();
+        switch (opcao) {
+        case 1:
+            tela_cadastrar_agendamento();
+            break;
+        case 2:
+            agen = pesquisarAgendamento();
+            codigoProcedimento = atoi(agen->procedimento);
+            exibeAgendamento(agen, codigoProcedimento);
+            break;
+        case 3:
+            atualizarAgendamentos();
+            break;
+        case 4:
+            tela_deletar_agendamento();
+            break;
+        default:
+            printf("Valor invalido");
+            break;
+        }
+    } while(opcao != 0);
 }
 
 void tela_cadastrar_agendamento() {
@@ -55,11 +60,12 @@ void tela_cadastrar_agendamento() {
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                         CADASTRAR AGENDAMENTO                               ║\n");
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-
     Agendamentos agendamento;
     const char* arquivoAgendamentos = "agendamentos.dat";
     // Preenche agendamento
+    
     agendamento.id = obterProximoIDAgendamento(arquivoAgendamentos);
+    
     solicitar_data(agendamento.data);
     solicitar_hora(agendamento.hora);
     solicitar_CPF_existente(agendamento.CPF);
@@ -102,21 +108,150 @@ void tela_cadastrar_agendamento() {
     getchar();
 }
 
+Agendamentos* pesquisarAgendamento(void) {
+    FILE *fp;
+    Agendamentos* agen = (Agendamentos*) malloc(sizeof(Agendamentos));
+    int id;
+    int encontrado = 0;  // Variável para controlar se o agendamento foi encontrado
 
-void tela_atualizar_agendamento() {
-  system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                         ATUALIZAR AGENDAMENTO                               ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║     Informe o ID do agendamento                                             ║\n");
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
+    system("clear||cls");
+    printf("\n╔═══════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                               Pesquisar Agendamentos                          ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("║ Informe o ID do Agendamento: ");
+    scanf("%d", &id);
+    getchar();
+
+    fp = fopen("agendamentos.dat", "rb");
+    if (fp == NULL) {
+        printf("Ops! Erro na abertura do arquivo!\n");
+        printf("Não é possível continuar...\n");
+        exit(1);
+    }
+
+    // Lê o arquivo e procura o agendamento com o ID correspondente
+    while (fread(agen, sizeof(Agendamentos), 1, fp) == 1) {
+        if (agen->id == id) {
+            encontrado = 1;
+            break;  // Encontrou o agendamento, sai do loop
+        }
+    }
+
+    fclose(fp);
+
+    // Se não encontrou, retorna NULL
+    if (!encontrado) {
+        printf("Agendamento com o ID %d não encontrado.\n", id);
+        free(agen);  // Libera a memória antes de retornar NULL
+        return NULL;
+    }
+
+    return agen;  // Retorna o agendamento encontrado
 }
+
+void atualizarAgendamentos(void) {
+    Agendamentos* agen = (Agendamentos*) malloc(sizeof(Agendamentos));
+    Agendamentos* novoAgen = (Agendamentos*) malloc(sizeof(Agendamentos));
+
+    system("clear||cls");
+    printf("\n╔═══════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                          Atualizar Dados do Agendamento                       ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n"); 
+    printf("║ Informe o ID do Agendamento: ");
+    scanf("%d", &agen->id);
+    agen = encontrarPeloID(agen, "agendamentos.dat", sizeof(Agendamentos), agen->id);
+    if (agen == NULL) {
+        printf("Erro ao alocar memória para 'agen'.\n");
+        free(agen);
+        free(novoAgen);
+        return;
+    }else {
+        novoAgen = preencherAgendamento(agen->id);
+        regravarAgendamento(novoAgen);
+        free(agen);
+    }
+
+    printf("║                                                                               ║\n");
+    printf("║                  Procedimento Atualizado com sucesso!                         ║\n");
+    printf("║                                   Aguarde...                                  ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
+}
+
+Agendamentos* preencherAgendamento(int id){
+    Agendamentos *agendamento = (Agendamentos*) malloc(sizeof(Agendamentos));
+    // Preenche agendamento
+    
+    agendamento->id=id;
+    solicitar_data(agendamento->data);
+    solicitar_hora(agendamento->hora);
+    solicitar_CPF_existente(agendamento->CPF);
+    solicitar_CRM_existente(agendamento->CRM);
+
+    if (!verificar_CPF(agendamento->CPF)) {
+        printf("Erro: CPF não encontrado no banco de dados de pacientes.\n");
+        printf("Pressione ENTER para continuar...\n");
+        getchar();
+        return NULL; 
+    }
+
+    if (!verificar_CRM(agendamento->CRM)) {
+        printf("Erro: CRM não encontrado no banco de dados de médicos.\n");
+        printf("Pressione ENTER para continuar...\n");
+        getchar();
+        return NULL;  
+    }
+
+    int codigoProcedimento;
+    printf("║ ↪ Informe o código do procedimento: ");
+    scanf("%d", &codigoProcedimento);
+    getchar();
+
+    // Verifica se o código do procedimento existe
+    if (!verificar_codigo_procedimento(codigoProcedimento)) {
+        printf("Erro: Código do procedimento não encontrado no banco de dados.\n");
+        printf("Pressione ENTER para continuar...\n");
+        getchar();
+        return NULL;  
+    }
+
+    // Preenche o campo do procedimento com o código
+    snprintf(agendamento->procedimento, sizeof(agendamento->procedimento), "%d", codigoProcedimento);
+    //exibeAgendamento(agendamento, codigoProcedimento);
+    return agendamento;
+    getchar();
+}
+
+void regravarAgendamento(Agendamentos* agendamento) {
+    int achou = 0;
+    FILE* fp;
+    Agendamentos* agenLido = (Agendamentos*) malloc(sizeof(Agendamentos));
+
+    fp = fopen("agendamentos.dat", "r+b");
+
+    if (fp == NULL) {
+        printf("Erro ao abrir arquivo!!\n\n");
+        getchar();
+        fclose(fp);
+        free(agendamento);
+        free(agenLido);
+        return;
+    }
+
+    while (fread(agenLido, sizeof(Agendamentos), 1, fp) && !achou) {
+        if (agenLido->id == agendamento->id) {
+            achou = 1;
+            fseek(fp, -1*sizeof(Agendamentos), SEEK_CUR);
+            fwrite(agendamento, sizeof(Agendamentos), 1, fp);
+        }
+    }
+
+    fclose(fp);
+    free(agendamento);
+    free(agenLido);
+}
+
 
 void tela_deletar_agendamento() {
   system("clear||cls");
@@ -132,22 +267,6 @@ void tela_deletar_agendamento() {
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
 }
-
-void tela_ver_agendamento() {
-  system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                              VER AGENDAMENTO                                ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    Informe o ID do agendamento:                                             ║\n");
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
-}
-
 
 
 void solicitar_data(char *data_cadastro) {
