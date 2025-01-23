@@ -25,6 +25,6 @@ void solicitar_CPF_existente(char *cpf);
 int verificar_CRM(const char *crm);
 void salvar_agendamento(Agendamentos *agendamentos);
 int obterProximoIDAgendamento(const char* nomeArquivo);
-void exibeAgendamento(Agendamentos* agen);
+void exibeAgendamento(Agendamentos* agen, int codigoProcedimento);
 
 #endif

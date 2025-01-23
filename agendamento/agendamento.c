@@ -98,7 +98,7 @@ void tela_cadastrar_agendamento() {
     // Salva o agendamento no arquivo
     salvar_agendamento(&agendamento);
 
-    exibeAgendamento(&agendamento);
+    exibeAgendamento(&agendamento, codigoProcedimento);
     getchar();
 }
 
@@ -319,7 +319,7 @@ int obterProximoIDAgendamento(const char* nomeArquivo) {
     return ultimoID + 1; // Próximo ID
 }
 
-void exibeAgendamento(Agendamentos* agen) {
+void exibeAgendamento(Agendamentos* agen, int codigoProcedimento) {
     if (agen == NULL) {
       printf("\n= = = Agendamento Inexistente = = =\n");
     } else {
@@ -329,7 +329,7 @@ void exibeAgendamento(Agendamentos* agen) {
       printf("║ Hora: %s\n", agen->hora);
       printf("║ CPF: %s\n", agen->CPF);
       printf("║ CRM: %s\n", agen->CRM);
-      printf("║ Procedimento: %s\n", agen->procedimento);
+      printf("║ Procedimento: %d\n", codigoProcedimento);
     }
     printf("Tecle <ENTER> para continuar...");
     getchar();
