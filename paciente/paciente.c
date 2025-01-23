@@ -265,29 +265,48 @@ void listar_pacientes() {
     scanf("%d", &opcao);
     system("clear||cls");
 
-    FILE *fp = fopen("paciente/paciente.dat", "rb"); // Abrir o arquivo em modo de leitura binária
+    FILE *fp = fopen("paciente/paciente.dat", "rb");
     if (fp == NULL) {
-        printf("Erro ao abrir o arquivo de médicos.\n");
+        printf("Erro ao abrir o arquivo de pacientes.\n");
         return;
     }
 
     Paciente paciente;
-    int encontrou = 0; 
+    int encontrou = 0;
     
+    printf("\n");
+    printf("╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                                                     LISTAR TODOS OS PACIENTES                                                            ║\n");
+    printf("╠════╦══════════════════════╦══════════════════╦═════════════════════╦══════════════════╦═══════════════════════╦══════════════════════════╗\n");
+    printf("║ ID ║ Nome                 ║ CPF              ║ Data de Nascimento  ║ Celular          ║ Email                 ║ Endereço                 ║\n");
+    printf("╠════╬══════════════════════╬══════════════════╬═════════════════════╬══════════════════╬═══════════════════════╬══════════════════════════╣\n");
+
+    int id = 1;
     while (fread(&paciente, sizeof(Paciente), 1, fp)) {
         if ((opcao == 1) || (opcao == 2 && paciente.status == 'a')) { 
-            exibir_paciente(paciente); 
+            printf("║ %-2d ║ %-20s ║ %-16s ║ %-19s ║ %-16s ║ %-21s ║ %-24s ║\n", 
+                id++, 
+                paciente.nome, 
+                paciente.CPF, 
+                paciente.data_nascimento, 
+                paciente.celular, 
+                paciente.email, 
+                paciente.endereco);
             encontrou = 1;
         }
     }
+
+    printf("╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
     if (!encontrou) {
         printf("Nenhum paciente encontrado.\n");
     }
+
     fclose(fp);
 
-    while (getchar() != '\n');
     printf("\nPressione <ENTER> para continuar...");
     getchar(); 
+    getchar(); // Espera o ENTER para continuar
 }
 
 // ##########################

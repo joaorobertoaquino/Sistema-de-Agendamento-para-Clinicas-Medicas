@@ -191,7 +191,7 @@ void tela_deletar_medico() {
 
 
 // ##########################
-// ##   Listar Clientes    ##
+// ##   Listar Medico    ##
 // ##########################
 void listar_medicos() {
     int opcao;
@@ -200,39 +200,52 @@ void listar_medicos() {
     printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                            LISTAR MÉDICOS CADASTRADOS                       ║\n");
     printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-    printf("║                  1. Listar todos os médicos (ativos e inativos)             ║\n");
-    printf("║                  2. Listar apenas médicos ativos                            ║\n");
+    printf("║                  1. Listar Todos os Médicos (Ativos e Inativos)             ║\n");
+    printf("║                  2. Listar Apenas Médicos Ativos                            ║\n");
     printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
     printf("\n ↪ Escolha a opção para listar os médicos: ");
     scanf("%d", &opcao);
     system("clear||cls");
 
-
-    FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir o arquivo em modo de leitura binária
+    FILE *fp = fopen("medico/medico.dat", "rb");
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo de médicos.\n");
         return;
     }
 
     Medico medico;
-    int encontrou = 0; 
-
+    int encontrou = 0;
     
+    printf("\n");
+    printf("╔═══════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                         LISTAR TODOS OS MÉDICOS                           ║\n");
+    printf("╠═══════════╦══════════════════════╦══════════════════╦═════════════════════╗\n");
+    printf("║ CRM       ║ Nome                 ║ Especialização   ║ Status              ║\n");
+    printf("╠═══════════╬══════════════════════╬══════════════════╬═════════════════════╣\n");
+
     while (fread(&medico, sizeof(Medico), 1, fp)) {
         if ((opcao == 1) || (opcao == 2 && medico.status == 'a')) { 
-            exibir_medico(medico); 
+            printf("║ %-4s ║ %-20s ║ %-16s ║ %-19c ║\n", 
+                medico.CRM, 
+                medico.nome, 
+                medico.especializacao, 
+                medico.status);
             encontrou = 1;
         }
     }
+
+    printf("╚═══════════════════════════════════════════════════════════════════════════╝");
     if (!encontrou) {
         printf("Nenhum médico encontrado.\n");
     }
+
     fclose(fp);
 
-    while (getchar() != '\n');
-    printf("Pressione <ENTER> para continuar...\n");
+    printf("\nPressione <ENTER> para continuar...");
     getchar(); 
+    getchar(); // Espera o ENTER para continuar
 }
+
 
 // ##########################
 // ##    Funçoes de Ler    ##
