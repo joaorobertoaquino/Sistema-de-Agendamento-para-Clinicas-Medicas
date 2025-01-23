@@ -40,7 +40,7 @@ void tela_procedimentos(void) {
         atualizarProcedimento();
         break;
       case 4:
-        tela_deletar_procedimento();
+        deletarProcedimento();
         break;
       default:
         printf("Valor invalido");
@@ -177,19 +177,41 @@ void regravarProcedimento(Procedimento* procedimento) {
     free(procedLido);
 }
 
-void tela_deletar_procedimento() {
-  system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                            DELETAR PROCEDIMENTO                             ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    Informe o ID do procedimento que deseja deletar:                         ║\n");
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
+void deletarProcedimento(void) {
+    int id;
+    FILE* fp;
+    Procedimento* procedimento = (Procedimento*) malloc(sizeof(Procedimento));
+    char* nomeArquivo = "procedimentos.dat";
+
+    fp = fopen(nomeArquivo, "r+b");
+    if (fp == NULL) {
+      printf("Erro ao abrir arquivo!!\n\n");
+      return;
+    }
+    
+    system("clear||cls");
+    printf("\n╔═══════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                               Deletar Procedimento                            ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n");
+    printf("║ Informe o ID do procedimento a excluir: ");
+    scanf("%d", &id);
+
+    procedimento = encontrarPeloID(procedimento, nomeArquivo, sizeof(Procedimento), id);
+    if (procedimento == NULL) {
+      printf("Procedimento não encontrado!!\n\n");
+      while (getchar() != '\n');
+      getchar();
+      return;
+    }else {
+      procedimento->status = 0;
+      regravarProcedimento(procedimento);
+      printf("║                                                                               ║\n");
+      printf("║                          Patinete excluído com sucesso!                       ║\n");
+      printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n");
+      printf("Tecle <ENTER> para continuar...");
+      getchar();
+      getchar();
+    }
 }
 void solicitar_nome_procedimento(char *nome) {
     int valido = 0; // Inicializando como não válido

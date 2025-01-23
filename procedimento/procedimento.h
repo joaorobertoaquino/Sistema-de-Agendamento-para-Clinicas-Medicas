@@ -13,7 +13,7 @@ Procedimento* preencheProcedimento(int id);
 Procedimento* pesquisarProcedimento(void);
 void exibeProcedimento(Procedimento* pro);
 void atualizarProcedimento(void);
-void tela_deletar_procedimento(void);
+void deletarProcedimento(void);
 void solicitar_ID();
 void solicitar_nome_procedimento(char *nome);
 void solicitar_tempo(char *duracao);
