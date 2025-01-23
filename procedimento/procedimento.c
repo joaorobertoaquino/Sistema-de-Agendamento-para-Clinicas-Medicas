@@ -18,6 +18,7 @@ void tela_procedimentos(void) {
     printf("║                         2. Pesquisar Procedimento                           ║\n");
     printf("║                         3. Atualizar Procedimento                           ║\n");
     printf("║                         4. Remover Procedimento                             ║\n");
+    printf("║                         5. Listar Procedimentos                             ║\n");
     printf("║                                                                             ║\n");
     printf("║                         0. Cancelar e sair                                  ║\n");
     printf("║                                                                             ║\n");
@@ -41,6 +42,9 @@ void tela_procedimentos(void) {
         break;
       case 4:
         deletarProcedimento();
+        break;
+      case 5:
+        listar_procedimentos();
         break;
       default:
         printf("Valor invalido");
@@ -213,6 +217,52 @@ void deletarProcedimento(void) {
       getchar();
     }
 }
+
+
+
+void listar_procedimentos() {
+    system("clear||cls");
+    
+    FILE *fp = fopen("procedimento/procedimentos.dat", "rb");
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de procedimentos.\n");
+        return;
+    }
+
+    Procedimento procedimento;
+    int encontrou = 0;
+
+    printf("\n");
+    printf("╔══════════════════════════════════════════════════════════════════╗\n");
+    printf("║                       LISTAR PROCEDIMENTOS                       ║\n");
+    printf("╠════╦════════════════════════════╦════════════════════╦═══════════╣\n");
+    printf("║ ID ║ Nome                       ║ Duração            ║ Status    ║\n");
+    printf("╠════╬════════════════════════════╬════════════════════╬═══════════╣\n");
+
+    // Lê e imprime todos os procedimentos do arquivo
+    while (fread(&procedimento, sizeof(Procedimento), 1, fp)) {
+        printf("║ %-2d ║ %-26s ║ %-18s ║ %-9d ║\n", 
+                procedimento.ID_procedimento, 
+                procedimento.nome, 
+                procedimento.duracao, 
+                procedimento.status);
+        encontrou = 1;
+    }
+
+    printf("╚══════════════════════════════════════════════════════════════════╝\n");
+
+    if (!encontrou) {
+        printf("Nenhum procedimento encontrado.\n");
+    }
+
+    fclose(fp); 
+    printf("\nPressione <ENTER> para continuar...");
+    getchar(); 
+    getchar(); // Espera o ENTER para continuar
+}
+
+
+
 void solicitar_nome_procedimento(char *nome) {
     int valido = 0; // Inicializando como não válido
     do {

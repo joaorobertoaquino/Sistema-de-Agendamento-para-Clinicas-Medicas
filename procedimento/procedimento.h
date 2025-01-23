@@ -19,5 +19,6 @@ void solicitar_nome_procedimento(char *nome);
 void solicitar_tempo(char *duracao);
 int obterProximoIDProcedimento(const char* nomeArquivo);
 void regravarProcedimento(Procedimento* procedimento);
+void listar_procedimentos();
 
 #endif
