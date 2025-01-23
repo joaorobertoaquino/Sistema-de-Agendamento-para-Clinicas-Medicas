@@ -2,6 +2,8 @@
 #define RELATORIO_H
 // Assinaturas RELATORIO
 void listarPacientesOrdemAlfabetica();
+void ListarMedicosOrdemAlfabetica();
+int comparar_medicos_por_nome(const void *a, const void *b);
 int comparar_nomes(const void *a, const void *b);
 void tela_relatorio(void);
 void tela_relatorio_medico(void);

@@ -41,7 +41,7 @@ void tela_relatorio(void){
         listarPacientesOrdemAlfabetica();
         break;
       case 4:
-        listarPacientesOrdemAlfabetica();
+        ListarMedicosOrdemAlfabetica();
         break;
       case 0:
         break;
@@ -117,6 +117,67 @@ void listarPacientesOrdemAlfabetica(void) {
     // Liberar memória
     free(pacientes);
 }
+
+void ListarMedicosOrdemAlfabetica() {
+    FILE *fp = fopen("medico/medico.dat", "rb");
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de médicos.\n");
+        return;
+    }
+
+    // Contar quantos médicos existem no arquivo
+    fseek(fp, 0, SEEK_END);
+    long tamanho = ftell(fp);
+    int total_medicos = tamanho / sizeof(Medico);
+    rewind(fp); // Retorna ao início do arquivo
+
+    if (total_medicos == 0) {
+        printf("Nenhum médico cadastrado.\n");
+        fclose(fp);
+        return;
+    }
+
+    // Alocar memória para armazenar os médicos
+    Medico *medicos = malloc(total_medicos * sizeof(Medico));
+    if (medicos == NULL) {
+        printf("Erro ao alocar memória.\n");
+        fclose(fp);
+        return;
+    }
+
+    // Ler os médicos do arquivo
+    fread(medicos, sizeof(Medico), total_medicos, fp);
+    fclose(fp);
+
+    // Ordenar os médicos pelo nome (usando qsort)
+    qsort(medicos, total_medicos, sizeof(Medico), comparar_medicos_por_nome);
+
+    system("clear||cls");
+    printf("\n");
+    printf("╔══════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                           MÉDICOS EM ORDEM ALFABÉTICA                        ║\n");
+    printf("╠═══════════════╦════════════════════════════════════════╦═════════════════════╣\n");
+    printf("║      CRM      ║                 Nome                   ║    Especialização   ║\n");
+    printf("╠═══════════════╬════════════════════════════════════════╬═════════════════════╣\n");
+    for (int i = 0; i < total_medicos; i++) {
+        if (medicos[i].status == 'a') { // Exibir apenas médicos ativos
+            printf("║ %-13s ║ %-38s ║ %-19s ║\n", medicos[i].CRM, medicos[i].nome, medicos[i].especializacao);
+        }
+    }
+    printf("╚═══════════════╩════════════════════════════════════════╩═════════════════════╝\n");
+
+    free(medicos); // Liberar a memória alocada
+    printf("Pressione <ENTER> para continuar...\n");
+    getchar();
+}
+
+// Função auxiliar para comparar os nomes dos médicos
+int comparar_medicos_por_nome(const void *a, const void *b) {
+    Medico *medicoA = (Medico *)a;
+    Medico *medicoB = (Medico *)b;
+    return strcmp(medicoA->nome, medicoB->nome);
+}
+
 
 int comparar_nomes(const void *a, const void *b) {
     Paciente *p1 = (Paciente *)a;
