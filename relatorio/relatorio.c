@@ -43,6 +43,9 @@ void tela_relatorio(void){
       case 4:
         ListarMedicosOrdemAlfabetica();
         break;
+      case 5:
+        ListarProcedimentosOrdemAlfabetica();
+        break;
       case 0:
         break;
       default:
@@ -171,14 +174,75 @@ void ListarMedicosOrdemAlfabetica() {
     getchar();
 }
 
+void ListarProcedimentosOrdemAlfabetica() {
+    FILE *fp = fopen("procedimentos.dat", "rb");
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo de procedimentos.\n");
+        return;
+    }
+
+    // Contar quantos procedimentos existem no arquivo
+    fseek(fp, 0, SEEK_END);
+    long tamanho = ftell(fp);
+    int total_procedimentos = tamanho / sizeof(Procedimento);
+    rewind(fp); // Retorna ao início do arquivo
+
+    if (total_procedimentos == 0) {
+        printf("Nenhum procedimento cadastrado.\n");
+        fclose(fp);
+        return;
+    }
+
+    // Alocar memória para armazenar os procedimentos
+    Procedimento *procedimentos = malloc(total_procedimentos * sizeof(Procedimento));
+    if (procedimentos == NULL) {
+        printf("Erro ao alocar memória.\n");
+        fclose(fp);
+        return;
+    }
+
+    // Ler os procedimentos do arquivo
+    fread(procedimentos, sizeof(Procedimento), total_procedimentos, fp);
+    fclose(fp);
+
+    // Ordenar os procedimentos pelo nome (usando qsort)
+    qsort(procedimentos, total_procedimentos, sizeof(Procedimento), comparar_procedimentos_por_nome);
+
+    system("clear||cls");
+    printf("\n");
+    printf("╔══════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                      PROCEDIMENTOS EM ORDEM ALFABÉTICA                       ║\n");
+    printf("╠═══════════╦════════════════════════════════════════╦═════════════════════════╣\n");
+    printf("║     ID    ║                 Nome                   ║       Duração           ║\n");
+    printf("╠═══════════╬════════════════════════════════════════╬═════════════════════════╣\n");
+    for (int i = 0; i < total_procedimentos; i++) {
+        if (procedimentos[i].status == 1) { // Exibir apenas procedimentos ativos
+            printf("║ %-9d ║ %-38s ║ %-23s ║\n", 
+                procedimentos[i].ID_procedimento, 
+                procedimentos[i].nome, 
+                procedimentos[i].duracao);
+        }
+    }
+    printf("╚═══════════╩════════════════════════════════════════╩═════════════════════════╝\n");
+
+    free(procedimentos); // Liberar a memória alocada
+    printf("Pressione <ENTER> para continuar...\n");
+    getchar();
+}
+
+// Função auxiliar para comparar os nomes dos procedimentos
+int comparar_procedimentos_por_nome(const void *a, const void *b) {
+    Procedimento *procedimentoA = (Procedimento *)a;
+    Procedimento *procedimentoB = (Procedimento *)b;
+    return strcmp(procedimentoA->nome, procedimentoB->nome);
+}
+
 // Função auxiliar para comparar os nomes dos médicos
 int comparar_medicos_por_nome(const void *a, const void *b) {
     Medico *medicoA = (Medico *)a;
     Medico *medicoB = (Medico *)b;
     return strcmp(medicoA->nome, medicoB->nome);
 }
-
-
 int comparar_nomes(const void *a, const void *b) {
     Paciente *p1 = (Paciente *)a;
     Paciente *p2 = (Paciente *)b;
