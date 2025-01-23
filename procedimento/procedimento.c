@@ -27,7 +27,8 @@ void tela_procedimentos(void) {
     getchar();
     switch (opcao) {
       case 1:
-        pro = preencheProcedimento();
+        pro = preencheProcedimento(0);
+        exibeProcedimento(pro);
         gravaArquivo("procedimentos.dat", pro, sizeof(Procedimento));
         break;
       case 2:
@@ -36,7 +37,7 @@ void tela_procedimentos(void) {
         getchar();
         break;
       case 3:
-        tela_atualizar_procedimento();
+        atualizarProcedimento();
         break;
       case 4:
         tela_deletar_procedimento();
@@ -49,7 +50,7 @@ void tela_procedimentos(void) {
 
 }
 
-Procedimento* preencheProcedimento(void) {
+Procedimento* preencheProcedimento(int id) {
   Procedimento* pro;
   pro = (Procedimento*) malloc(sizeof(Procedimento));
   if (pro == NULL) {
@@ -62,20 +63,14 @@ Procedimento* preencheProcedimento(void) {
   printf("║                          CADASTRAR PROCEDIMENTO                             ║\n");
   printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
   const char* arquivoProcedimentos = "procedimentos.dat";
-  pro->ID_procedimento = obterProximoIDProcedimento(arquivoProcedimentos);
+  if (id) {
+    pro->ID_procedimento = id;
+  }else {
+    pro->ID_procedimento = obterProximoIDProcedimento(arquivoProcedimentos);
+  }
   solicitar_nome_procedimento(pro->nome);
   solicitar_tempo(pro->duracao);
   pro->status = 1;
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                          PROCEDIMENTO  CADASTRADO                           ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    ID:%d                                                                    ║\n",pro->ID_procedimento);
-  printf("║    Nome:%s                                                                  ║\n",pro->nome);
-  printf("║    Duração:%s                                                               ║\n",pro->duracao);
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
   return pro;
@@ -123,21 +118,65 @@ void exibeProcedimento(Procedimento* pro) {
     getchar();
 }
 
-
-void tela_atualizar_procedimento() {
+void atualizarProcedimento(void) {
+  Procedimento* pro = (Procedimento*) malloc(sizeof(Procedimento));
+  Procedimento* novoPro = (Procedimento*) malloc(sizeof(Procedimento));
   system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                         ATUALIZAR PROCEDIMENTO                              ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    Informe o ID do procedimento que deseja atualizar:                       ║\n");
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
+  printf("\n╔═══════════════════════════════════════════════════════════════════════════════╗\n");
+  printf("║                          Atualizar Dados do Procedimento                      ║\n");
+  printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n"); 
+  printf("║ Informe o ID do Procedimento: ");
+  scanf("%d", &pro->ID_procedimento);
+  pro = encontrarPeloID(pro, "procedimentos.dat", sizeof(Procedimento), pro->ID_procedimento);
+  if (pro == NULL) {
+    printf("Procedimento não encontrado!!\n\n");
+    free(pro);
+    free(novoPro);
+    return;
+  }else {
+    pro->status = 0;
+    novoPro = preencheProcedimento(pro->ID_procedimento);
+    regravarProcedimento(novoPro);
+    free(pro);
+  }
+
+  printf("║                                                                               ║\n");
+  printf("║                  Procedimento Atualizado com sucesso!                         ║\n");
+  printf("║                                   Aguarde...                                  ║\n");
+  printf("╚═══════════════════════════════════════════════════════════════════════════════╝\n");
+  printf("Tecle <ENTER> para continuar...");
   getchar();
 }
+
+void regravarProcedimento(Procedimento* procedimento) {
+    int achou = 0;
+    FILE* fp;
+    Procedimento* procedLido = (Procedimento*) malloc(sizeof(Procedimento));
+
+    fp = fopen("procedimentos.dat", "r+b");
+
+    if (fp == NULL) {
+        printf("Erro ao abrir arquivo!!\n\n");
+        getchar();
+        fclose(fp);
+        free(procedimento);
+        free(procedLido);
+        return;
+    }
+
+    while (fread(procedLido, sizeof(Procedimento), 1, fp) && !achou) {
+        if (procedLido->ID_procedimento == procedimento->ID_procedimento) {
+            achou = 1;
+            fseek(fp, -1*sizeof(Procedimento), SEEK_CUR);
+            fwrite(procedimento, sizeof(Procedimento), 1, fp);
+        }
+    }
+
+    fclose(fp);
+    free(procedimento);
+    free(procedLido);
+}
+
 void tela_deletar_procedimento() {
   system("clear||cls");
   printf("\n");
@@ -152,22 +191,6 @@ void tela_deletar_procedimento() {
   printf("Pressione a tecla <ENTER> para continuar...\n");
   getchar();
 }
-void tela_ver_procedimento() {
-  system("clear||cls");
-  printf("\n");
-  printf("╔═════════════════════════════════════════════════════════════════════════════╗\n");
-  printf("║                              VER PROCEDIMENTO                               ║\n");
-  printf("╠═════════════════════════════════════════════════════════════════════════════╣\n");
-  printf("║                                                                             ║\n");
-  printf("║    Informe o ID do procedimento que deseja ver informações:                 ║\n");
-  printf("║                                                                             ║\n");
-  printf("╚═════════════════════════════════════════════════════════════════════════════╝\n");
-  printf("\n");
-  printf("Pressione a tecla <ENTER> para continuar...\n");
-  getchar();
-}
-
-
 void solicitar_nome_procedimento(char *nome) {
     int valido = 0; // Inicializando como não válido
     do {

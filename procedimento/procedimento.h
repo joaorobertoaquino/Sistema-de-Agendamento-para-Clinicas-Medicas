@@ -9,15 +9,15 @@ typedef struct procedimento{
 } Procedimento;
 
 void tela_procedimentos(void);
-Procedimento* preencheProcedimento(void);
+Procedimento* preencheProcedimento(int id);
 Procedimento* pesquisarProcedimento(void);
 void exibeProcedimento(Procedimento* pro);
-void tela_atualizar_procedimento(void);
+void atualizarProcedimento(void);
 void tela_deletar_procedimento(void);
-void tela_ver_procedimento(void);
 void solicitar_ID();
 void solicitar_nome_procedimento(char *nome);
 void solicitar_tempo(char *duracao);
 int obterProximoIDProcedimento(const char* nomeArquivo);
+void regravarProcedimento(Procedimento* procedimento);
 
 #endif
