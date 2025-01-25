@@ -103,7 +103,7 @@ void tela_ver_paciente() {
 }
 
 void buscar_paciente_ativo(const char *cpf_busca) {
-    FILE *fp = fopen("paciente/paciente.dat", "rb"); 
+    FILE *fp = fopen("paciente/pacientes.dat", "rb"); 
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
@@ -168,7 +168,7 @@ void tela_atualizar_paciente() {
 }
 
 void alterar_paciente(const char *cpf_busca) {
-    FILE *fp = fopen("paciente/paciente.dat", "rb+"); // Abrir para leitura e escrita binária
+    FILE *fp = fopen("paciente/pacientes.dat", "rb+"); // Abrir para leitura e escrita binária
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
@@ -224,7 +224,7 @@ void tela_deletar_paciente() {
 }
 
     void excluirPaciente(const char *CPF_busca) {
-    FILE *fp = fopen("paciente/paciente.dat", "rb+"); // Abrir para leitura e escrita binária
+    FILE *fp = fopen("paciente/pacientes.dat", "rb+"); // Abrir para leitura e escrita binária
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
@@ -265,7 +265,7 @@ void listar_pacientes() {
     scanf("%d", &opcao);
     system("clear||cls");
 
-    FILE *fp = fopen("paciente/paciente.dat", "rb");
+    FILE *fp = fopen("paciente/pacientes.dat", "rb");
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo de pacientes.\n");
         return;

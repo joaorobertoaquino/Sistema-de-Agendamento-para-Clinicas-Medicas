@@ -97,7 +97,7 @@ void tela_ver_medico() {
 
 
 void buscar_medico_ativo(const char *crm_busca) {
-    FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir para leitura binária
+    FILE *fp = fopen("medico/medicos.dat", "rb"); // Abrir para leitura binária
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
@@ -207,7 +207,7 @@ void listar_medicos() {
     scanf("%d", &opcao);
     system("clear||cls");
 
-    FILE *fp = fopen("medico/medico.dat", "rb");
+    FILE *fp = fopen("medico/medicos.dat", "rb");
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo de médicos.\n");
         return;
@@ -308,7 +308,7 @@ void solicitar_CRM(char *CRM) {
 // ##       Arquivo        ##
 // ##########################
 int verificar_CRM_existente(const char *crm_busca) {
-    FILE *fp = fopen("medico/medico.dat", "rb"); // Abrir o arquivo para leitura binária
+    FILE *fp = fopen("medico/medicos.dat", "rb"); // Abrir o arquivo para leitura binária
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         return 0; // Retorna 0 porque não foi possível verificar
@@ -326,7 +326,7 @@ int verificar_CRM_existente(const char *crm_busca) {
 }
 
 void salvar_medico(Medico *medico1) {
-    FILE *fp = fopen("medico/medico.dat", "ab"); // Abrir para adicionar binário
+    FILE *fp = fopen("medico/medicos.dat", "ab"); // Abrir para adicionar binário
     if (fp == NULL) {
         printf("Erro na Abertura");
         exit(1);
@@ -338,7 +338,7 @@ void salvar_medico(Medico *medico1) {
 
 
 void alterar_medico(const char *crm_busca) {
-    FILE *fp = fopen("medico/medico.dat", "rb+"); // Abrir para leitura e escrita binária
+    FILE *fp = fopen("medico/medicos.dat", "rb+"); // Abrir para leitura e escrita binária
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
@@ -388,7 +388,7 @@ void alterar_medico(const char *crm_busca) {
 }
 
 void excluirMedico(const char *crm_busca) {
-    FILE *fp = fopen("medico/medico.dat", "rb+"); // Abrir para leitura e escrita binária
+    FILE *fp = fopen("medico/medicos.dat", "rb+"); // Abrir para leitura e escrita binária
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
