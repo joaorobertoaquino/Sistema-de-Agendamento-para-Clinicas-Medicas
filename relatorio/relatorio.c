@@ -93,7 +93,7 @@ void listarAgendamentosDeHoje(void) {
     while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
         // Comparar a data do agendamento com a data atual
         if (compararDatas(agendamento.data, dataAtual) == 0){
-            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║\n", 
+            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16d ║ %-21s ║\n", 
                   agendamento.id, 
                   agendamento.CPF, 
                   agendamento.data, 
@@ -147,7 +147,7 @@ void listarAgendamentosPorData(void) {
     while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
         // Comparar a data do agendamento com a data buscada
         if (compararDatas(agendamento.data, dataBusca) == 0) {
-            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║\n", 
+            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16d ║ %-21s ║\n", 
                   agendamento.id, 
                   agendamento.CPF, 
                   agendamento.data, 

@@ -39,7 +39,7 @@ void tela_agendamento(void) {
             break;
         case 2:
             agen = pesquisarAgendamento();
-            codigoProcedimento = atoi(agen->procedimento);
+            codigoProcedimento = agen->procedimento;
             exibeAgendamento(agen, codigoProcedimento);
             break;
         case 3:
@@ -102,13 +102,11 @@ void tela_cadastrar_agendamento() {
         return;  
     }
 
+    agendamento.status = 1;
     // Preenche o campo do procedimento com o código
-    snprintf(agendamento.procedimento, sizeof(agendamento.procedimento), "%d", codigoProcedimento);
-
+    agendamento.procedimento = codigoProcedimento;
     // Salva o agendamento no arquivo
     salvar_agendamento(&agendamento);
-
-    agendamento.status = 1;
 
     exibeAgendamento(&agendamento, codigoProcedimento);
     getchar();
@@ -224,7 +222,7 @@ Agendamentos* preencherAgendamento(int id){
     }
 
     // Preenche o campo do procedimento com o código
-    snprintf(agendamento->procedimento, sizeof(agendamento->procedimento), "%d", codigoProcedimento);
+    agendamento->procedimento = codigoProcedimento;
     //exibeAgendamento(agendamento, codigoProcedimento);
     return agendamento;
     getchar();
@@ -504,7 +502,7 @@ void listar_agendamentos() {
 
     // Lê e imprime todos os procedimentos do arquivo
     while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
-        printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║ %-9d ║\n", 
+        printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16d ║ %-21s ║ %-9d ║\n", 
             agendamento.id, 
             agendamento.CPF, 
             agendamento.data, 

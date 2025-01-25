@@ -6,7 +6,7 @@ typedef struct agendamentos {
     char hora[6];
     char CPF[12];
     char CRM[8];
-    char procedimento[50];
+    int procedimento;
     char status;
 } Agendamentos;
 
