@@ -421,7 +421,7 @@ void solicitar_endereco(char *endereco){
 // #############################
 
 void salvar_paciente(Paciente *paciente1) {
-    FILE *fp = fopen("paciente/paciente.dat", "ab"); // Abrir para adicionar binário
+    FILE *fp = fopen("paciente/pacientes.dat", "ab"); // Abrir para adicionar binário
     if (fp == NULL) {
         printf("Erro na Abertura");
         exit(1);
@@ -433,7 +433,7 @@ void salvar_paciente(Paciente *paciente1) {
 
 
 int verificar_CPF_existente(const char *cpf_busca) {
-    FILE *fp = fopen("paciente/paciente.dat", "rb"); 
+    FILE *fp = fopen("paciente/pacientes.dat", "rb"); 
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         return 0;

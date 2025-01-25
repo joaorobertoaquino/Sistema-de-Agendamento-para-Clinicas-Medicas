@@ -95,7 +95,7 @@ void listarAgendamentosDeHoje(void) {
             char nomeProcedimento[50] = "N/A";
 
             // Buscar nome do paciente
-            FILE *fpPacientes = fopen("pacientes.dat", "rb");
+            FILE *fpPacientes = fopen("paciente/pacientes.dat", "rb");
             if (fpPacientes != NULL) {
                 Paciente paciente;
                 while (fread(&paciente, sizeof(Paciente), 1, fpPacientes)) {
@@ -108,7 +108,7 @@ void listarAgendamentosDeHoje(void) {
             }
 
             // Buscar nome do médico
-            FILE *fpMedicos = fopen("medicos.dat", "rb");
+            FILE *fpMedicos = fopen("medico/medicos.dat", "rb");
             if (fpMedicos != NULL) {
                 Medico medico;
                 while (fread(&medico, sizeof(Medico), 1, fpMedicos)) {
@@ -161,8 +161,8 @@ void listarAgendamentosDeHoje(void) {
 
 
 void listarAgendamentosPorData(void) {
-    FILE *fp = fopen("agendamentos.dat", "rb");
-    if (fp == NULL) {
+    FILE *fpAgendamentos = fopen("agendamentos.dat", "rb");
+    if (fpAgendamentos == NULL) {
         printf("Erro ao abrir o arquivo de agendamentos.\n");
         return;
     }
@@ -175,7 +175,6 @@ void listarAgendamentosPorData(void) {
     scanf("%8s", dataBusca);
     getchar(); // Limpa o buffer de entrada
 
-
     int encontrou = 0;
 
     system("clear||cls");
@@ -183,19 +182,63 @@ void listarAgendamentosPorData(void) {
     printf("╔════════════════════════════════════════════════════════════════════════════════════════════════╗\n");
     printf("║                                AGENDAMENTOS POR DATA                                           ║\n");
     printf("╠════╦══════════════════╦═════════════════════╦═══════╦══════════════════╦═══════════════════════╣\n");
-    printf("║ ID ║ CPF              ║ Data do Agendamento ║ Hora  ║ Procedimento     ║ CRM                   ║\n");
+    printf("║ ID ║ Nome do Paciente ║ Data do Agendamento ║ Hora  ║ Procedimento     ║ Nome do Médico        ║\n");
     printf("╠════╬══════════════════╬═════════════════════╬═══════╬══════════════════╬═══════════════════════╣\n");
 
-    while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
+    while (fread(&agendamento, sizeof(Agendamentos), 1, fpAgendamentos)) {
         // Comparar a data do agendamento com a data buscada
         if (compararDatas(agendamento.data, dataBusca) == 0) {
-            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16d ║ %-21s ║\n", 
+            char nomePaciente[50] = "N/A";
+            char nomeMedico[50] = "N/A";
+            char nomeProcedimento[50] = "N/A";
+
+            // Buscar nome do paciente
+            FILE *fpPacientes = fopen("paciente/pacientes.dat", "rb");
+            if (fpPacientes != NULL) {
+                Paciente paciente;
+                while (fread(&paciente, sizeof(Paciente), 1, fpPacientes)) {
+                    if (strcmp(paciente.CPF, agendamento.CPF) == 0) {
+                        strncpy(nomePaciente, paciente.nome, sizeof(nomePaciente));
+                        break;
+                    }
+                }
+                fclose(fpPacientes);
+            }
+
+            // Buscar nome do médico
+            FILE *fpMedicos = fopen("medico/medicos.dat", "rb");
+            if (fpMedicos != NULL) {
+                Medico medico;
+                while (fread(&medico, sizeof(Medico), 1, fpMedicos)) {
+                    if (strcmp(medico.CRM, agendamento.CRM) == 0) {
+                        strncpy(nomeMedico, medico.nome, sizeof(nomeMedico));
+                        break;
+                    }
+                }
+                fclose(fpMedicos);
+            }
+
+            // Buscar nome do procedimento
+            FILE *fpProcedimentos = fopen("procedimentos.dat", "rb");
+            if (fpProcedimentos != NULL) {
+                Procedimento procedimento;
+                while (fread(&procedimento, sizeof(Procedimento), 1, fpProcedimentos)) {
+                    if (procedimento.ID_procedimento == agendamento.procedimento) {
+                        strncpy(nomeProcedimento, procedimento.nome, sizeof(nomeProcedimento));
+                        break;
+                    }
+                }
+                fclose(fpProcedimentos);
+            }
+
+            // Exibir o agendamento
+            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16s ║ %-21s ║\n", 
                   agendamento.id, 
-                  agendamento.CPF, 
+                  nomePaciente, 
                   agendamento.data, 
                   agendamento.hora, 
-                  agendamento.procedimento, 
-                  agendamento.CRM);
+                  nomeProcedimento, 
+                  nomeMedico);
             encontrou = 1;
         }
     }
@@ -206,15 +249,16 @@ void listarAgendamentosPorData(void) {
         printf("Nenhum agendamento encontrado para a data informada.\n");
     }
 
-    fclose(fp);
+    fclose(fpAgendamentos);
 
     printf("\nPressione <ENTER> para continuar...");
     getchar();
 }
 
+
 //Creditos: ChatGpt
 void listarPacientesOrdemAlfabetica(void) {
-    FILE *fp = fopen("paciente/paciente.dat", "rb");
+    FILE *fp = fopen("paciente/pacientes.dat", "rb");
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo de pacientes.\n");
         return;
@@ -280,7 +324,7 @@ void listarPacientesOrdemAlfabetica(void) {
 }
 
 void ListarMedicosOrdemAlfabetica() {
-    FILE *fp = fopen("medico/medico.dat", "rb");
+    FILE *fp = fopen("medico/medicos.dat", "rb");
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo de médicos.\n");
         return;

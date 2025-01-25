@@ -1,6 +1,6 @@
 typedef struct paciente{
-    char nome[51];
-    char CPF [13];
+    char nome[50];
+    char CPF [15];
     char data_nascimento[11];
     char celular[13];
     char email[51];

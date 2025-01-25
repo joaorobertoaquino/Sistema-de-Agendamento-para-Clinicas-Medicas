@@ -351,7 +351,7 @@ void solicitar_CRM_existente(char *crm) {
 }
 
 int verificar_CRM(const char *crm) {
-    FILE *fp = fopen("medico/medico.dat", "rb"); 
+    FILE *fp = fopen("medico/medicos.dat", "rb"); 
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo de médicos.\n");
         exit(1);
@@ -394,7 +394,7 @@ void solicitar_CPF_existente(char *cpf) {
 }
 
 int verificar_CPF(const char *cpf) {
-    FILE *fp = fopen("paciente/paciente.dat", "rb"); 
+    FILE *fp = fopen("paciente/pacientes.dat", "rb"); 
     if (fp == NULL) {
         printf("Erro ao abrir o arquivo\n");
         exit(1);
