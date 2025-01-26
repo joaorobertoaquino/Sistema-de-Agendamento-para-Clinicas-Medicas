@@ -89,7 +89,7 @@ void listarAgendamentosDeHoje(void) {
 
     while (fread(&agendamento, sizeof(Agendamentos), 1, fpAgendamentos)) {
         // Comparar a data do agendamento com a data atual
-        if (compararDatas(agendamento.data, dataAtual) == 0) {
+        if ((compararDatas(agendamento.data, dataAtual) == 0) && agendamento.status == 1) {
             char nomePaciente[50] = "N/A";
             char nomeMedico[50] = "N/A";
             char nomeProcedimento[50] = "N/A";
@@ -187,7 +187,7 @@ void listarAgendamentosPorData(void) {
 
     while (fread(&agendamento, sizeof(Agendamentos), 1, fpAgendamentos)) {
         // Comparar a data do agendamento com a data buscada
-        if (compararDatas(agendamento.data, dataBusca) == 0) {
+        if ((compararDatas(agendamento.data, dataBusca) == 0) && agendamento.status ==1) {
             char nomePaciente[50] = "N/A";
             char nomeMedico[50] = "N/A";
             char nomeProcedimento[50] = "N/A";
