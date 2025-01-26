@@ -502,7 +502,8 @@ void listar_agendamentos() {
 
     // Lê e imprime todos os procedimentos do arquivo
     while (fread(&agendamento, sizeof(Agendamentos), 1, fp)) {
-        printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16d ║ %-21s ║ %-9d ║\n", 
+        if(agendamento.status == 1){
+            printf("║ %-2d ║ %-16s ║ %-19s ║ %-5s ║ %-16d ║ %-21s ║ %-9d ║\n", 
             agendamento.id, 
             agendamento.CPF, 
             agendamento.data, 
@@ -511,6 +512,7 @@ void listar_agendamentos() {
             agendamento.CRM,
             agendamento.status);
         encontrou = 1;
+        }
     }
 
     printf("╚════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
